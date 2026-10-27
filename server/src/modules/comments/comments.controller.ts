@@ -19,6 +19,8 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
+import { THROTTLE } from '../../common/throttle';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { ErrorCode } from '../../common/error-code';
@@ -61,6 +63,7 @@ export class CommentsController {
   }
 
   @Post('posts/:postId/comments')
+  @Throttle(THROTTLE.createComment)
   @UseGuards(JwtAuthGuard, NotBlockedGuard)
   @ApiCookieAuth()
   @ApiParam({

@@ -6,6 +6,7 @@ import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { pageArgs, paginate } from '../../common/utils/pagination';
 import { PrismaService } from '../../prisma/prisma.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import {
   CommentResponseDto,
   CreateCommentDto,
@@ -18,7 +19,10 @@ const COMMENT_INCLUDE = {
 
 @Injectable()
 export class CommentsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notifications: NotificationsService,
+  ) {}
 
   async list(
     postId: string,
@@ -52,7 +56,7 @@ export class CommentsService {
       data: { body: dto.body, postId, authorId: user.id },
       include: COMMENT_INCLUDE,
     });
-    // Day 5: the post author gets a NEW_COMMENT notification here.
+    await this.notifications.notifyNewComment(post.authorId, user, postId);
     return toResponse(comment);
   }
 
@@ -74,7 +78,7 @@ export class CommentsService {
   private async findVisiblePost(postId: string) {
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
-      select: { id: true, status: true, expiresAt: true },
+      select: { id: true, status: true, expiresAt: true, authorId: true },
     });
     if (!post || post.status === PostStatus.REMOVED) {
       throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);

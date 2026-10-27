@@ -20,6 +20,8 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
+import { THROTTLE } from '../../common/throttle';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ErrorCode } from '../../common/error-code';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
@@ -128,6 +130,7 @@ export class PostsController {
   }
 
   @Post()
+  @Throttle(THROTTLE.createPost)
   @UseGuards(JwtAuthGuard, NotBlockedGuard)
   @ApiCookieAuth()
   @ApiOperation({

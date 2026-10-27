@@ -5,6 +5,7 @@ import { AppException } from '../../common/app.exception';
 import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { PrismaService } from '../../prisma/prisma.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import { CommentsService } from './comments.service';
 
 const user: AuthUser = {
@@ -51,6 +52,7 @@ describe('CommentsService', () => {
       delete: jest.fn(),
     },
   };
+  const notifications = { notifyNewComment: jest.fn() };
 
   beforeEach(async () => {
     jest.resetAllMocks();
@@ -58,6 +60,7 @@ describe('CommentsService', () => {
       providers: [
         CommentsService,
         { provide: PrismaService, useValue: prisma },
+        { provide: NotificationsService, useValue: notifications },
       ],
     }).compile();
     service = moduleRef.get(CommentsService);
@@ -118,6 +121,22 @@ describe('CommentsService', () => {
   });
 
   describe('create', () => {
+    it('tells the post author about the new comment', async () => {
+      prisma.post.findUnique.mockResolvedValue({
+        id: 'p1',
+        status: PostStatus.ACTIVE,
+        expiresAt: future,
+        authorId: 'u2',
+      });
+      prisma.comment.create.mockResolvedValue(makeComment());
+      await service.create(user, 'p1', { body: 'Is this still available?' });
+      expect(notifications.notifyNewComment).toHaveBeenCalledWith(
+        'u2',
+        user,
+        'p1',
+      );
+    });
+
     it('creates a comment on an ACTIVE post', async () => {
       prisma.post.findUnique.mockResolvedValue({
         id: 'p1',

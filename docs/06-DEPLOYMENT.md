@@ -80,6 +80,8 @@ Note: Neon free databases sleep when unused; the first request wakes them (a sec
 
 ## 8. Production security
 
+- **Rate limits need the real visitor IP.** The backend counts requests per IP address. Behind Vercel (the `/api` proxy) and Render, the IP the server sees can be Vercel's, which would make all visitors share one limit (for example 5 logins per minute for everybody). On day 12/13 Claude changes the rate-limit tracker to use the first address in the `X-Forwarded-For` header (Vercel sets it to the real visitor IP) and tests it with two devices. `THROTTLE_DISABLED` must never be set in production.
+
 - Change demo passwords. Do not leave `Admin12345` on a live site: create the real admin by running the seed's admin step with a new password from an env variable (`SEED_ADMIN_PASSWORD`), or change it with an SQL update through Neon's SQL editor.
 - Never commit `.env`. Rotate any key that was shown in a chat or screenshot.
 

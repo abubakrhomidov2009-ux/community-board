@@ -96,11 +96,27 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 ## Day 5: Admin, Notifications, Email, Rate limits
 
-**Finished:**
-**Owner check and result:**
+**Finished**
+
+- Notifications (feature 23): `GET /notifications`, `GET /notifications/unread-count`, `POST /notifications/:id/read`, `POST /notifications/read-all`. NEW_COMMENT is created when someone comments on your post (not on your own), POST_REMOVED when an admin removes your post, POST_EXPIRING by the daily job; NEW_MESSAGE is ready for day 6.
+- Admin API (feature 22), admin only: `GET /admin/stats`, reports (list with filter/sort/pagination, `PATCH` to RESOLVED/DISMISSED), posts (list, remove, restore), users (list, block, unblock). Removing a post closes its open reports and notifies the author; admins cannot be blocked.
+- University email (feature 24): `POST /users/me/university-email` and `POST /users/me/university-email/verify`; `MailService` sends through Brevo's HTTP API; email templates in Tajik, Russian and English (user's `preferredLocale`); tokens stored only as SHA-256 hashes, valid 24 hours, single use; allowed domains in `server/src/config/university-domains.ts` or `ALLOWED_UNIVERSITY_DOMAINS` in `server/.env`.
+- Map (feature 25): coordinates were validated on day 3 (pair rule, ranges); `GET /posts/map` and clearing a pin are covered by live checks.
+- Rate limiting (feature 27): global 100/min per IP, login 5/min, register 5/min, create post 10/hour, comment 20 per 10 min, report 10/hour, university email 3/hour; 429 with `TOO_MANY_REQUESTS`. `THROTTLE_DISABLED=true` switches it off for automated tests only.
+- Brevo set up (verified Gmail sender, restricted API key); a real test email in Tajik arrived in the Gmail **Primary** tab, not spam.
+- 153 unit tests pass; lint passes; a live script ran 73 checks with 0 failures.
+
+**Problems and fixes**
+
+- The "limits off for tests" setting did not apply to routes with their own limit: replaced by `AppThrottlerGuard` (overrides `shouldSkip`).
+- My own test run once logged the "guest" session in as a user, so one check sent a real verification email to a made-up address; the script now uses a fresh anonymous session and cleans up tokens.
+- Running a second Nest server for tests shared the `dist/` folder with the main one and stopped it; the test copy is no longer used at the same time.
+- Brevo shows DKIM/DMARC warnings for a Gmail sender: expected without an own domain. Mail still arrives; users are told to check spam.
+
+**Owner check:** pending (days 3 and 4 are also still open).
 **Bugs found and fixed:**
-**Open:**
-**Next:**
+**Open:** behind Vercel the rate limit would see Vercel's IP for every user: the client IP must come from `X-Forwarded-For` (to do on day 12/13, noted in docs/06). Brevo may land mails in spam for some students.
+**Next:** Day 6, Messages + complete tests (unit + e2e) + finish the seed.
 
 ## Day 6: Messages + tests
 

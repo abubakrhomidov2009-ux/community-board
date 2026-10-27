@@ -1,10 +1,13 @@
+import { createHash } from 'node:crypto';
 import { HttpStatus } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
-import { Locale, Role } from '@prisma/client';
+import { Locale, Prisma, Role } from '@prisma/client';
 import { AppException } from '../../common/app.exception';
 import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { PrismaService } from '../../prisma/prisma.service';
+import { MailService } from '../mail/mail.service';
 import { PostsService } from '../posts/posts.service';
 import { UsersService } from './users.service';
 
@@ -24,18 +27,33 @@ const user: AuthUser = {
 describe('UsersService', () => {
   let service: UsersService;
   const prisma = {
-    user: { findUnique: jest.fn(), update: jest.fn() },
+    user: { findUnique: jest.fn(), findFirst: jest.fn(), update: jest.fn() },
     post: { count: jest.fn() },
+    emailVerificationToken: {
+      deleteMany: jest.fn(),
+      create: jest.fn(),
+      delete: jest.fn(),
+      findFirst: jest.fn(),
+      update: jest.fn(),
+    },
+    $transaction: jest.fn(),
   };
   const posts = { listByAuthor: jest.fn() };
+  const mail = { sendVerificationEmail: jest.fn() };
+  const settings: Record<string, string> = {};
+  const config = { get: jest.fn((key: string) => settings[key]) };
 
   beforeEach(async () => {
     jest.resetAllMocks();
+    for (const key of Object.keys(settings)) delete settings[key];
+    config.get.mockImplementation((key: string) => settings[key]);
     const moduleRef = await Test.createTestingModule({
       providers: [
         UsersService,
         { provide: PrismaService, useValue: prisma },
         { provide: PostsService, useValue: posts },
+        { provide: MailService, useValue: mail },
+        { provide: ConfigService, useValue: config },
       ],
     }).compile();
     service = moduleRef.get(UsersService);
@@ -108,6 +126,246 @@ describe('UsersService', () => {
     it('throws USER_NOT_FOUND for an unknown user', async () => {
       prisma.user.findUnique.mockResolvedValue(null);
       await expectNotFound(service.listPosts('nobody', { page: 1, limit: 20 }));
+    });
+  });
+
+  describe('requestUniversityEmail', () => {
+    const dto = { universityEmail: 'madina@students.university.tj' };
+
+    async function expectError(
+      promise: Promise<unknown>,
+      code: ErrorCode,
+      status: HttpStatus,
+    ) {
+      const error = await promise.catch((e: unknown) => e);
+      expect(error).toBeInstanceOf(AppException);
+      expect((error as AppException).errorCode).toBe(code);
+      expect((error as AppException).getStatus()).toBe(status);
+    }
+
+    beforeEach(() => {
+      prisma.user.findFirst.mockResolvedValue(null);
+      prisma.emailVerificationToken.create.mockResolvedValue({ id: 't1' });
+      mail.sendVerificationEmail.mockResolvedValue(undefined);
+    });
+
+    it('sends the email in the user language with a link that holds the token, and stores only its hash', async () => {
+      settings.SITE_URL = 'https://site.example/';
+      await service.requestUniversityEmail(
+        { ...user, preferredLocale: Locale.TG },
+        dto,
+      );
+
+      const sent = (
+        mail.sendVerificationEmail.mock.calls[0] as unknown[]
+      )[0] as {
+        to: string;
+        locale: Locale;
+        link: string;
+      };
+      expect(sent.to).toBe(dto.universityEmail);
+      expect(sent.locale).toBe(Locale.TG);
+      const token = new URL(sent.link).searchParams.get('token') as string;
+      expect(
+        sent.link.startsWith(
+          'https://site.example/tg/settings/verify-email?token=',
+        ),
+      ).toBe(true);
+      expect(token).toHaveLength(64);
+
+      const saved = (
+        prisma.emailVerificationToken.create.mock.calls[0] as unknown[]
+      )[0] as {
+        data: { tokenHash: string; expiresAt: Date; universityEmail: string };
+      };
+      expect(saved.data.tokenHash).toBe(
+        createHash('sha256').update(token).digest('hex'),
+      );
+      expect(saved.data.tokenHash).not.toBe(token);
+      const hours = (saved.data.expiresAt.getTime() - Date.now()) / 3_600_000;
+      expect(hours).toBeGreaterThan(23.9);
+      expect(hours).toBeLessThan(24.1);
+    });
+
+    it('removes older unused links first', async () => {
+      await service.requestUniversityEmail(user, dto);
+      expect(prisma.emailVerificationToken.deleteMany).toHaveBeenCalledWith({
+        where: { userId: 'u1', usedAt: null },
+      });
+    });
+
+    it('throws UNIVERSITY_DOMAIN_NOT_ALLOWED for a gmail address', async () => {
+      await expectError(
+        service.requestUniversityEmail(user, {
+          universityEmail: 'a@gmail.com',
+        }),
+        ErrorCode.UNIVERSITY_DOMAIN_NOT_ALLOWED,
+        HttpStatus.BAD_REQUEST,
+      );
+      expect(mail.sendVerificationEmail).not.toHaveBeenCalled();
+    });
+
+    it('does not accept a look-alike domain such as evil-university.tj', async () => {
+      await expectError(
+        service.requestUniversityEmail(user, {
+          universityEmail: 'a@evil-university.tj',
+        }),
+        ErrorCode.UNIVERSITY_DOMAIN_NOT_ALLOWED,
+        HttpStatus.BAD_REQUEST,
+      );
+    });
+
+    it('uses ALLOWED_UNIVERSITY_DOMAINS from the settings when it is set', async () => {
+      settings.ALLOWED_UNIVERSITY_DOMAINS = 'tgu.tj, ttu.tj';
+      await expect(
+        service.requestUniversityEmail(user, { universityEmail: 'x@tgu.tj' }),
+      ).resolves.toBeUndefined();
+      await expectError(
+        service.requestUniversityEmail(user, dto),
+        ErrorCode.UNIVERSITY_DOMAIN_NOT_ALLOWED,
+        HttpStatus.BAD_REQUEST,
+      );
+    });
+
+    it('throws UNIVERSITY_EMAIL_TAKEN when another user already verified that email', async () => {
+      prisma.user.findFirst.mockResolvedValue({ id: 'u9' });
+      await expectError(
+        service.requestUniversityEmail(user, dto),
+        ErrorCode.UNIVERSITY_EMAIL_TAKEN,
+        HttpStatus.CONFLICT,
+      );
+    });
+
+    it('throws ALREADY_VERIFIED for a user who is already a student', async () => {
+      await expectError(
+        service.requestUniversityEmail(
+          { ...user, isStudentVerified: true },
+          dto,
+        ),
+        ErrorCode.ALREADY_VERIFIED,
+        HttpStatus.CONFLICT,
+      );
+    });
+
+    it('deletes the token again when the email cannot be sent', async () => {
+      mail.sendVerificationEmail.mockRejectedValue(
+        new AppException(ErrorCode.MAIL_SEND_FAILED, HttpStatus.BAD_GATEWAY),
+      );
+      await expectError(
+        service.requestUniversityEmail(user, dto),
+        ErrorCode.MAIL_SEND_FAILED,
+        HttpStatus.BAD_GATEWAY,
+      );
+      expect(prisma.emailVerificationToken.delete).toHaveBeenCalledWith({
+        where: { id: 't1' },
+      });
+    });
+  });
+
+  describe('verifyUniversityEmail', () => {
+    const token = 'a'.repeat(64);
+    const record = (overrides: Record<string, unknown> = {}) => ({
+      id: 't1',
+      userId: 'u1',
+      universityEmail: 'madina@students.university.tj',
+      expiresAt: new Date(Date.now() + 3_600_000),
+      usedAt: null,
+      ...overrides,
+    });
+
+    async function expectError(
+      promise: Promise<unknown>,
+      code: ErrorCode,
+      status: HttpStatus,
+    ) {
+      const error = await promise.catch((e: unknown) => e);
+      expect(error).toBeInstanceOf(AppException);
+      expect((error as AppException).errorCode).toBe(code);
+      expect((error as AppException).getStatus()).toBe(status);
+    }
+
+    beforeEach(() => {
+      prisma.$transaction.mockImplementation((operations: unknown[]) =>
+        Promise.all(operations),
+      );
+      prisma.emailVerificationToken.update.mockReturnValue({ id: 't1' });
+    });
+
+    it('marks the token used and gives the student badge (never returns the password hash)', async () => {
+      prisma.emailVerificationToken.findFirst.mockResolvedValue(record());
+      prisma.user.update.mockResolvedValue({
+        ...user,
+        passwordHash: 'secret',
+        isStudentVerified: true,
+        universityEmail: 'madina@students.university.tj',
+      });
+      const result = await service.verifyUniversityEmail(user, { token });
+      expect(result.isStudentVerified).toBe(true);
+      expect(result.universityEmail).toBe('madina@students.university.tj');
+      expect(result).not.toHaveProperty('passwordHash');
+      const lookup = (
+        prisma.emailVerificationToken.findFirst.mock.calls[0] as unknown[]
+      )[0] as {
+        where: { tokenHash: string; userId: string };
+      };
+      expect(lookup.where).toEqual({
+        tokenHash: createHash('sha256').update(token).digest('hex'),
+        userId: 'u1',
+      });
+    });
+
+    it('throws VERIFICATION_TOKEN_INVALID for an unknown token, a used token, or a token of another user', async () => {
+      prisma.emailVerificationToken.findFirst.mockResolvedValue(null);
+      await expectError(
+        service.verifyUniversityEmail(user, { token }),
+        ErrorCode.VERIFICATION_TOKEN_INVALID,
+        HttpStatus.BAD_REQUEST,
+      );
+      prisma.emailVerificationToken.findFirst.mockResolvedValue(
+        record({ usedAt: new Date() }),
+      );
+      await expectError(
+        service.verifyUniversityEmail(user, { token }),
+        ErrorCode.VERIFICATION_TOKEN_INVALID,
+        HttpStatus.BAD_REQUEST,
+      );
+    });
+
+    it('throws VERIFICATION_TOKEN_EXPIRED after 24 hours', async () => {
+      prisma.emailVerificationToken.findFirst.mockResolvedValue(
+        record({ expiresAt: new Date(Date.now() - 1000) }),
+      );
+      await expectError(
+        service.verifyUniversityEmail(user, { token }),
+        ErrorCode.VERIFICATION_TOKEN_EXPIRED,
+        HttpStatus.BAD_REQUEST,
+      );
+    });
+
+    it('throws ALREADY_VERIFIED for a user who is already a student', async () => {
+      await expectError(
+        service.verifyUniversityEmail(
+          { ...user, isStudentVerified: true },
+          { token },
+        ),
+        ErrorCode.ALREADY_VERIFIED,
+        HttpStatus.CONFLICT,
+      );
+    });
+
+    it('maps a database unique-key clash to UNIVERSITY_EMAIL_TAKEN', async () => {
+      prisma.emailVerificationToken.findFirst.mockResolvedValue(record());
+      prisma.$transaction.mockRejectedValue(
+        new Prisma.PrismaClientKnownRequestError('Unique constraint', {
+          code: 'P2002',
+          clientVersion: 'test',
+        }),
+      );
+      await expectError(
+        service.verifyUniversityEmail(user, { token }),
+        ErrorCode.UNIVERSITY_EMAIL_TAKEN,
+        HttpStatus.CONFLICT,
+      );
     });
   });
 

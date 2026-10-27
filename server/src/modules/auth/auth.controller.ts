@@ -17,7 +17,9 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 import type { Response } from 'express';
+import { THROTTLE } from '../../common/throttle';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ErrorCode } from '../../common/error-code';
 import {
@@ -41,6 +43,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @Throttle(THROTTLE.register)
   @ApiOperation({
     summary: 'Create an account and log in (sets the access_token cookie)',
   })
@@ -60,6 +63,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @Throttle(THROTTLE.login)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Log in with email or username (sets the access_token cookie)',

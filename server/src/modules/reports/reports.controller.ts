@@ -6,6 +6,8 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
+import { THROTTLE } from '../../common/throttle';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ErrorCode } from '../../common/error-code';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
@@ -21,6 +23,7 @@ export class ReportsController {
   constructor(private readonly reports: ReportsService) {}
 
   @Post(':id/report')
+  @Throttle(THROTTLE.report)
   @UseGuards(JwtAuthGuard, NotBlockedGuard)
   @ApiCookieAuth()
   @ApiParam({ name: 'id', description: 'Post id', example: 'cm2xpost0000abc' })
