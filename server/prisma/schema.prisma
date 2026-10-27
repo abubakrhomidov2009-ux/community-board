@@ -1,8 +1,4 @@
-﻿// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Community Board database schema. See docs/02-SPEC.md section 3.
 
 generator client {
   provider = "prisma-client-js"
@@ -13,3 +9,232 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Category {
+  LOST_FOUND
+  TUTORING
+  RENTALS
+  OTHER
+}
+
+enum District {
+  SINO
+  FIRDAVSI
+  SHOHMANSUR
+  ISMOILI_SOMONI
+  UNIVERSITY_CAMPUS
+  OTHER
+}
+
+enum PostStatus {
+  ACTIVE
+  RESOLVED
+  EXPIRED
+  REMOVED
+}
+
+enum PriceUnit {
+  ONCE
+  PER_HOUR
+  PER_MONTH
+}
+
+enum ReportReason {
+  SPAM
+  SCAM
+  OFFENSIVE
+  OTHER
+}
+
+enum ReportStatus {
+  OPEN
+  RESOLVED
+  DISMISSED
+}
+
+enum NotificationType {
+  NEW_COMMENT
+  POST_EXPIRING
+  POST_REMOVED
+  NEW_MESSAGE
+}
+
+enum Locale {
+  TG
+  RU
+  EN
+}
+
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  username          String   @unique
+  passwordHash      String
+  role              Role     @default(USER)
+  isBlocked         Boolean  @default(false)
+  universityEmail   String?  @unique
+  isStudentVerified Boolean  @default(false)
+  preferredLocale   Locale   @default(EN)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  posts                   Post[]
+  comments                Comment[]
+  favorites               Favorite[]
+  reports                 Report[]                  @relation("Reporter")
+  notifications           Notification[]            @relation("NotificationOwner")
+  conversations           ConversationParticipant[]
+  messages                Message[]
+  emailVerificationTokens EmailVerificationToken[]
+}
+
+model Post {
+  id                  String     @id @default(cuid())
+  title               String     @db.VarChar(120)
+  description         String     @db.Text
+  category            Category
+  district            District
+  status              PostStatus @default(ACTIVE)
+  price               Int?
+  priceUnit           PriceUnit?
+  contactTelegram     String?
+  contactPhone        String?
+  latitude            Float?
+  longitude           Float?
+  expiresAt           DateTime
+  expiryWarningSentAt DateTime?
+  removedReason       String?
+  authorId            String
+  author              User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  images    PostImage[]
+  comments  Comment[]
+  favorites Favorite[]
+  reports   Report[]
+
+  @@index([category])
+  @@index([district])
+  @@index([status])
+  @@index([createdAt])
+  @@index([authorId])
+  @@index([status, expiresAt])
+}
+
+model PostImage {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  url       String
+  publicId  String // Cloudinary id, needed to delete the file
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([postId, position])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String   @db.VarChar(1000)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([postId, createdAt])
+  @@index([authorId])
+}
+
+model Favorite {
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId])
+  @@index([postId])
+}
+
+model Report {
+  id         String       @id @default(cuid())
+  postId     String
+  post       Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  reporterId String
+  reporter   User         @relation("Reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reason     ReportReason
+  details    String?      @db.VarChar(500)
+  status     ReportStatus @default(OPEN)
+  createdAt  DateTime     @default(now())
+  resolvedAt DateTime?
+
+  @@unique([postId, reporterId])
+  @@index([status, createdAt])
+}
+
+model Notification {
+  id             String           @id @default(cuid())
+  userId         String
+  user           User             @relation("NotificationOwner", fields: [userId], references: [id], onDelete: Cascade)
+  type           NotificationType
+  postId         String? // link target; no relation so the notification survives post deletion
+  conversationId String?
+  actorUsername  String? // a copy of who commented or wrote, shown in the UI text
+  readAt         DateTime?
+  createdAt      DateTime         @default(now())
+
+  @@index([userId, readAt, createdAt])
+}
+
+model Conversation {
+  id            String   @id @default(cuid())
+  lastMessageAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@index([lastMessageAt])
+}
+
+model ConversationParticipant {
+  conversationId String
+  userId         String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lastReadAt     DateTime     @default(now())
+
+  @@id([conversationId, userId])
+  @@index([userId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  body           String       @db.VarChar(2000)
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId, createdAt])
+}
+
+model EmailVerificationToken {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  universityEmail String
+  tokenHash       String    @unique // only a hash of the token is stored
+  expiresAt       DateTime
+  usedAt          DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@index([userId])
+}

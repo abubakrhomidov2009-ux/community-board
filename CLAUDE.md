@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 1 (setup finished, docs written; waiting for the owner's check). Next: Day 2, Prisma schema + Auth.**
+**Current day: 2 (schema + Auth built; waiting for the owner's Swagger check). Next: Day 3, Posts + Comments.**
 
 ## Project
 
@@ -120,7 +120,7 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 
 | #   | Feature                                     | Backend                            | Frontend |
 | --- | ------------------------------------------- | ---------------------------------- | -------- |
-| 1   | Register / login / logout, unique username  | [ ]                                | [ ]      |
+| 1   | Register / login / logout, unique username  | [x]                                | [ ]      |
 | 2   | Create, edit, delete own posts              | [ ]                                | [ ]      |
 | 3   | Categories                                  | [ ]                                | [ ]      |
 | 4   | Browse: category filter, search, pagination | [ ]                                | [ ]      |

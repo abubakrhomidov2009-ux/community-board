@@ -31,11 +31,24 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 ## Day 2: Schema + Auth
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished**
+
+- Full Prisma schema (11 models, 9 enums) and migration `init`; applied to the local database.
+- `PrismaService` (global), env validation, shared error system (`ErrorCode`, `AppException`, `AllExceptionsFilter`, `ErrorResponseDto`), validation pipe that returns the shared error format, `PaginationQueryDto`, `@ApiErrors()` Swagger helper.
+- Guards: `JwtAuthGuard` (cookie, fresh user from DB, refuses blocked users), `OptionalJwtAuthGuard`, `RolesGuard` + `@Roles()`, `NotBlockedGuard`; `@CurrentUser()`.
+- Auth: `POST /auth/register`, `POST /auth/login`, `POST /auth/logout`, `GET /auth/me` (feature 1, backend), documented in Swagger with cookie auth.
+- Swagger CLI plugin enabled in `nest-cli.json`.
+- Seed (`npm run db:seed`): admin, aziza, rustam, madina (student), blocked.
+- 10 unit tests for `AuthService`; lint passes.
+
+**Problems and fixes**
+
+- A hidden BOM character (from a PowerShell write) broke `schema.prisma` and could break other files: removed. Rule: never write config files with PowerShell `Set-Content -Encoding utf8`.
+- ESLint now allows unused variables that start with `_` (used to drop `passwordHash`).
+
+**Owner check:** pending.
+**Open:** rate limiting on login/register comes on day 5.
+**Next:** Day 3, Posts + Comments.
 
 ## Day 3: Posts + Comments
 

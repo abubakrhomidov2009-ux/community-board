@@ -343,7 +343,7 @@ Legend: **Auth** = `public`, `user` (logged in, not blocked), `admin`, `owner` (
 }
 ```
 
-`message` is a short English hint for developers. **The frontend never shows it**; it maps `errorCode` to a translated string (`errors.POST_NOT_FOUND`). For validation errors `errorCode` is `VALIDATION_FAILED` and `details` is `[{ "field": "title", "code": "TITLE_TOO_SHORT" }]` (field-level codes also map to translations).
+`message` is a short English hint for developers. **The frontend never shows it**; it maps `errorCode` to a translated string (`errors.POST_NOT_FOUND`). For validation errors `errorCode` is `VALIDATION_FAILED` and `details` is `[{ "field": "password", "code": "minLength" }]`, where `code` is the name of the failed validation rule (`isEmail`, `minLength`, `matches`, `isEnum`...). The frontend maps these to `validation.<rule>` keys when it needs a field-level message.
 
 ### 4.2 Error codes
 
@@ -386,6 +386,7 @@ Legend: **Auth** = `public`, `user` (logged in, not blocked), `admin`, `owner` (
 | TOO_MANY_REQUESTS             | 429  | Rate limit                                                     |
 | UPLOAD_FAILED                 | 502  | Cloudinary failed                                              |
 | MAIL_SEND_FAILED              | 502  | Brevo failed                                                   |
+| NOT_FOUND                     | 404  | Unknown URL (no such route)                                    |
 | INTERNAL_ERROR                | 500  | Unexpected error (details are logged, never sent)              |
 
 ### 4.3 Endpoints
