@@ -4,7 +4,9 @@ import { AppException } from '../../common/app.exception';
 import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { pageArgs, paginate } from '../../common/utils/pagination';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { PrismaService } from '../../prisma/prisma.service';
+import { CloudinaryService } from '../uploads/cloudinary.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import {
   ListPostsQueryDto,
@@ -25,10 +27,12 @@ import {
 import { UpdatePostDto } from './dto/update-post.dto';
 import {
   addDays,
+  DAY_MS,
   EXPIRE_SWEEP_INTERVAL_MS,
   POST_LIFETIME_DAYS,
   PRICE_CATEGORIES,
   PUBLIC_STATUSES,
+  RENEW_WINDOW_DAYS,
 } from './posts.constants';
 
 const MAP_PIN_LIMIT = 300;
@@ -48,7 +52,10 @@ interface RuleFields {
 export class PostsService {
   private lastSweep = 0;
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cloudinary: CloudinaryService,
+  ) {}
 
   // ---------- reading ----------
 
@@ -239,7 +246,11 @@ export class PostsService {
   async remove(user: AuthUser, id: string): Promise<void> {
     const post = await this.prisma.post.findUnique({
       where: { id },
-      select: { id: true, authorId: true },
+      select: {
+        id: true,
+        authorId: true,
+        images: { select: { publicId: true } },
+      },
     });
     if (!post) {
       throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -247,8 +258,66 @@ export class PostsService {
     if (post.authorId !== user.id && user.role !== Role.ADMIN) {
       throw new AppException(ErrorCode.POST_NOT_OWNER, HttpStatus.FORBIDDEN);
     }
-    // Day 4: images are deleted from Cloudinary here before the row is removed.
     await this.prisma.post.delete({ where: { id } });
+    // After the row is gone, delete the photos too (a failed cleanup never blocks the delete).
+    await this.cloudinary.destroyMany(
+      post.images.map((image) => image.publicId),
+    );
+  }
+
+  /**
+   * Gives an expired post (or one about to expire) another 30 days.
+   * Allowed for EXPIRED posts, and for ACTIVE posts that expire within 3 days.
+   */
+  async renew(user: AuthUser, id: string): Promise<PostResponseDto> {
+    const existing = await this.findOwned(user, id);
+    const now = new Date();
+    const expired =
+      existing.status === PostStatus.EXPIRED ||
+      (existing.status === PostStatus.ACTIVE && existing.expiresAt <= now);
+    const expiresSoon =
+      existing.status === PostStatus.ACTIVE &&
+      existing.expiresAt.getTime() - now.getTime() <=
+        RENEW_WINDOW_DAYS * DAY_MS;
+    if (!expired && !expiresSoon) {
+      throw new AppException(ErrorCode.RENEW_NOT_ALLOWED, HttpStatus.CONFLICT);
+    }
+    const post = await this.prisma.post.update({
+      where: { id },
+      data: {
+        status: PostStatus.ACTIVE,
+        expiresAt: addDays(now, POST_LIFETIME_DAYS),
+        expiryWarningSentAt: null,
+      },
+      include: POST_INCLUDE,
+    });
+    return PostResponseDto.from(post, await this.isFavorite(user, id));
+  }
+
+  /** The visible (ACTIVE, not expired) posts of one author. Used by the public profile. */
+  async listByAuthor(
+    authorId: string,
+    query: PaginationQueryDto,
+    viewer?: AuthUser,
+  ): Promise<PaginatedPostsResponseDto> {
+    await this.expireOverdue();
+    const now = new Date();
+    const where: Prisma.PostWhereInput = {
+      authorId,
+      status: PostStatus.ACTIVE,
+      expiresAt: { gt: now },
+    };
+    const [rows, total] = await Promise.all([
+      this.prisma.post.findMany({
+        where,
+        include: POST_INCLUDE,
+        orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
+        ...pageArgs(query.page, query.limit),
+      }),
+      this.prisma.post.count({ where }),
+    ]);
+    const items = await this.toResponses(rows, viewer, now);
+    return paginate(items, total, query.page, query.limit);
   }
 
   async resolve(user: AuthUser, id: string): Promise<PostResponseDto> {

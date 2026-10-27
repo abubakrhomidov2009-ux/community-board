@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 3 (Posts + Comments built; waiting for the owner's Swagger check). Next: Day 4, Uploads, Users, Favorites, Reports, expiry job.**
+**Current day: 4 (Uploads, Users, Favorites, Reports, expiry + renew built; waiting for the owner's Swagger check; the Day 3 check is also still open). Next: Day 5, Admin, Notifications, Email, Rate limits.**
 
 ## Project
 
@@ -134,12 +134,12 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 | 12  | Dark mode                                   | n/a                                | [ ]      |
 | 13  | About page                                  | n/a                                | [ ]      |
 | 14  | Post count per category                     | [x]                                | [ ]      |
-| 15  | Images on posts                             | [ ]                                | [ ]      |
+| 15  | Images on posts                             | [x]                                | [ ]      |
 | 16  | Three languages                             | [ ] (error codes, email templates) | [ ]      |
-| 17  | Favorites / Saved                           | [ ]                                | [ ]      |
-| 18  | Public user profile                         | [ ]                                | [ ]      |
-| 19  | Post expiry + renew                         | [ ]                                | [ ]      |
-| 20  | Report button                               | [ ]                                | [ ]      |
+| 17  | Favorites / Saved                           | [x]                                | [ ]      |
+| 18  | Public user profile                         | [x]                                | [ ]      |
+| 19  | Post expiry + renew                         | [x]                                | [ ]      |
+| 20  | Report button                               | [x]                                | [ ]      |
 | 21  | Share button                                | n/a                                | [ ]      |
 | 22  | Admin role and panel                        | [ ]                                | [ ]      |
 | 23  | In-app notifications                        | [ ]                                | [ ]      |

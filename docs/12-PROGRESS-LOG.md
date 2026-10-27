@@ -75,11 +75,24 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 ## Day 4: Uploads, Users, Favorites, Reports, Expiry
 
-**Finished:**
-**Owner check and result:**
+**Finished**
+
+- Uploads (feature 15): `POST /posts/:id/images` (multipart, up to 5 per post, jpg/png/webp, max 5 MB; type checked by MIME **and** file signature), `DELETE /posts/:id/images/:imageId`. Files go through the backend to Cloudinary (resized to max 1600px). Photos are deleted from Cloudinary when an image or a post is deleted. A failed upload cleans up the files already sent.
+- Favorites (feature 17): `PUT/DELETE /posts/:id/favorite` (safe to repeat), `GET /favorites`; `isFavorite` is real in every post response.
+- Public profile (feature 18): `GET /users/:username` (no email, no id), `GET /users/:username/posts`; blocked users have no public profile. `PATCH /users/me` saves the preferred language.
+- Expiry and renew (feature 19): `POST /posts/:id/renew` (EXPIRED posts, or ACTIVE posts expiring within 3 days); daily job at 03:00 expires posts and creates the POST_EXPIRING notification 3 days before expiry (once per post); expiry is also checked on read.
+- Reports (feature 20): `POST /posts/:id/report`, one per user per post, not on your own post.
+- Cloudinary keys set in `server/.env`; a real upload, gallery order, limit and delete were tested against the live account.
+- 102 unit tests pass; lint passes; a live script ran about 65 checks with 0 real failures.
+
+**Problems and fixes**
+
+- The one failed check in my live script was a PowerShell time-zone mistake in the script, not in the API.
+
+**Owner check:** pending (the Day 3 check is also still open).
 **Bugs found and fixed:**
-**Open:**
-**Next:**
+**Open:** the NEW_COMMENT notification and the notification endpoints come on day 5 (the daily job already writes POST_EXPIRING rows).
+**Next:** Day 5, Admin, Notifications, University email (Brevo), Map checks, Rate limiting.
 
 ## Day 5: Admin, Notifications, Email, Rate limits
 

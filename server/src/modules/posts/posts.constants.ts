@@ -17,6 +17,11 @@ export const PUBLIC_STATUSES: PostStatus[] = [
 
 export const MAX_PRICE = 1_000_000;
 
+export const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** An ACTIVE post can be renewed when it expires within this many days (EXPIRED posts always can). */
+export const RENEW_WINDOW_DAYS = 3;
+
 /** The expiry sweep on read runs at most this often per server (it writes to the database). */
 export const EXPIRE_SWEEP_INTERVAL_MS = 60_000;
 

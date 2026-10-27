@@ -12,6 +12,7 @@ import { AppException } from '../../common/app.exception';
 import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { PrismaService } from '../../prisma/prisma.service';
+import { CloudinaryService } from '../uploads/cloudinary.service';
 import { PostSort } from './dto/post-query.dto';
 import { PostsService } from './posts.service';
 
@@ -90,13 +91,18 @@ describe('PostsService', () => {
     },
     favorite: { findMany: jest.fn() },
   };
+  const cloudinary = { destroyMany: jest.fn() };
 
   beforeEach(async () => {
     jest.resetAllMocks();
     prisma.favorite.findMany.mockResolvedValue([]);
     prisma.post.updateMany.mockResolvedValue({ count: 0 });
     const moduleRef = await Test.createTestingModule({
-      providers: [PostsService, { provide: PrismaService, useValue: prisma }],
+      providers: [
+        PostsService,
+        { provide: PrismaService, useValue: prisma },
+        { provide: CloudinaryService, useValue: cloudinary },
+      ],
     }).compile();
     service = moduleRef.get(PostsService);
   });
@@ -306,16 +312,123 @@ describe('PostsService', () => {
       expect(prisma.post.delete).not.toHaveBeenCalled();
     });
 
-    it('lets the author delete', async () => {
-      prisma.post.findUnique.mockResolvedValue({ id: 'p1', authorId: 'u1' });
+    it('lets the author delete and deletes the photos from Cloudinary', async () => {
+      prisma.post.findUnique.mockResolvedValue({
+        id: 'p1',
+        authorId: 'u1',
+        images: [{ publicId: 'img/a' }, { publicId: 'img/b' }],
+      });
       await service.remove(user, 'p1');
       expect(prisma.post.delete).toHaveBeenCalledWith({ where: { id: 'p1' } });
+      expect(cloudinary.destroyMany).toHaveBeenCalledWith(['img/a', 'img/b']);
     });
 
     it('lets an admin delete', async () => {
-      prisma.post.findUnique.mockResolvedValue({ id: 'p1', authorId: 'u1' });
+      prisma.post.findUnique.mockResolvedValue({
+        id: 'p1',
+        authorId: 'u1',
+        images: [],
+      });
       await service.remove(admin, 'p1');
       expect(prisma.post.delete).toHaveBeenCalled();
+    });
+  });
+
+  describe('renew', () => {
+    const renewed = () =>
+      lastArgs<{
+        data: {
+          status: PostStatus;
+          expiresAt: Date;
+          expiryWarningSentAt: null;
+        };
+      }>(prisma.post.update).data;
+
+    it('throws POST_NOT_OWNER for another user', async () => {
+      prisma.post.findUnique.mockResolvedValue(
+        makePost({ status: PostStatus.EXPIRED, expiresAt: past }),
+      );
+      await expectError(
+        service.renew(other, 'p1'),
+        ErrorCode.POST_NOT_OWNER,
+        HttpStatus.FORBIDDEN,
+      );
+    });
+
+    it('throws RENEW_NOT_ALLOWED for a fresh ACTIVE post', async () => {
+      prisma.post.findUnique.mockResolvedValue(makePost());
+      await expectError(
+        service.renew(user, 'p1'),
+        ErrorCode.RENEW_NOT_ALLOWED,
+        HttpStatus.CONFLICT,
+      );
+    });
+
+    it('throws RENEW_NOT_ALLOWED for a RESOLVED or REMOVED post', async () => {
+      prisma.post.findUnique.mockResolvedValue(
+        makePost({ status: PostStatus.RESOLVED, expiresAt: past }),
+      );
+      await expectError(
+        service.renew(user, 'p1'),
+        ErrorCode.RENEW_NOT_ALLOWED,
+        HttpStatus.CONFLICT,
+      );
+      prisma.post.findUnique.mockResolvedValue(
+        makePost({ status: PostStatus.REMOVED, expiresAt: past }),
+      );
+      await expectError(
+        service.renew(user, 'p1'),
+        ErrorCode.RENEW_NOT_ALLOWED,
+        HttpStatus.CONFLICT,
+      );
+    });
+
+    it.each([
+      ['an EXPIRED post', { status: PostStatus.EXPIRED, expiresAt: past }],
+      [
+        'an ACTIVE post that is past its date',
+        { status: PostStatus.ACTIVE, expiresAt: past },
+      ],
+      [
+        'an ACTIVE post expiring in 2 days',
+        {
+          status: PostStatus.ACTIVE,
+          expiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+        },
+      ],
+    ])(
+      'renews %s for 30 days and resets the warning',
+      async (_label, overrides) => {
+        prisma.post.findUnique.mockResolvedValue(makePost(overrides));
+        prisma.post.update.mockResolvedValue(makePost());
+        await service.renew(user, 'p1');
+        const data = renewed();
+        expect(data.status).toBe(PostStatus.ACTIVE);
+        expect(data.expiryWarningSentAt).toBeNull();
+        const days =
+          (data.expiresAt.getTime() - Date.now()) / (24 * 60 * 60 * 1000);
+        expect(days).toBeGreaterThan(29.9);
+        expect(days).toBeLessThan(30.1);
+      },
+    );
+  });
+
+  describe('listByAuthor', () => {
+    it('only lists the ACTIVE, not expired posts of that author', async () => {
+      prisma.post.findMany.mockResolvedValue([makePost()]);
+      prisma.post.count.mockResolvedValue(1);
+      const result = await service.listByAuthor('u1', { page: 1, limit: 20 });
+      const { where } = lastArgs<{
+        where: {
+          authorId: string;
+          status: PostStatus;
+          expiresAt: { gt: Date };
+        };
+      }>(prisma.post.findMany);
+      expect(where.authorId).toBe('u1');
+      expect(where.status).toBe(PostStatus.ACTIVE);
+      expect(where.expiresAt.gt).toBeInstanceOf(Date);
+      expect(result.total).toBe(1);
     });
   });
 

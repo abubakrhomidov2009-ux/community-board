@@ -226,4 +226,28 @@ export class PostsController {
   ): Promise<PostResponseDto> {
     return this.posts.resolve(user, id);
   }
+
+  @Post(':id/renew')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, NotBlockedGuard)
+  @ApiCookieAuth()
+  @ApiParam(POST_ID)
+  @ApiOperation({
+    summary: 'Renew my post for another 30 days',
+    description:
+      'Only the author. Allowed when the post is EXPIRED, or ACTIVE and expiring within 3 days. The post becomes ACTIVE again.',
+  })
+  @ApiOkResponse({ type: PostResponseDto })
+  @ApiErrors({
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.POST_NOT_OWNER, ErrorCode.USER_BLOCKED],
+    404: [ErrorCode.POST_NOT_FOUND],
+    409: [ErrorCode.RENEW_NOT_ALLOWED],
+  })
+  renew(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+  ): Promise<PostResponseDto> {
+    return this.posts.renew(user, id);
+  }
 }
