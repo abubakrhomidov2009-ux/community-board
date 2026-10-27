@@ -1,0 +1,7 @@
+node_modules
+dist
+.next
+coverage
+package-lock.json
+client/src/lib/api/schema.d.ts
+server/prisma/migrations

@@ -1,0 +1,22 @@
+node_modules
+dist
+.next
+coverage
+out
+build
+*.tsbuildinfo
+
+# env files (keep the examples)
+.env
+.env.*
+!.env.example
+
+# logs and OS files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/*
+!.vscode/extensions.json
