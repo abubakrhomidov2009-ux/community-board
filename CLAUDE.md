@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 2 (schema + Auth built; waiting for the owner's Swagger check). Next: Day 3, Posts + Comments.**
+**Current day: 3 (Posts + Comments built; waiting for the owner's Swagger check). Next: Day 4, Uploads, Users, Favorites, Reports, expiry job.**
 
 ## Project
 
@@ -121,19 +121,19 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 | #   | Feature                                     | Backend                            | Frontend |
 | --- | ------------------------------------------- | ---------------------------------- | -------- |
 | 1   | Register / login / logout, unique username  | [x]                                | [ ]      |
-| 2   | Create, edit, delete own posts              | [ ]                                | [ ]      |
-| 3   | Categories                                  | [ ]                                | [ ]      |
-| 4   | Browse: category filter, search, pagination | [ ]                                | [ ]      |
-| 5   | Comments                                    | [ ]                                | [ ]      |
-| 6   | Post detail + mark as resolved              | [ ]                                | [ ]      |
-| 7   | My profile with my posts                    | [ ]                                | [ ]      |
-| 8   | Price + unit                                | [ ]                                | [ ]      |
-| 9   | District + filter                           | [ ]                                | [ ]      |
-| 10  | Contact options (Telegram / phone)          | [ ]                                | [ ]      |
-| 11  | Sort options                                | [ ]                                | [ ]      |
+| 2   | Create, edit, delete own posts              | [x]                                | [ ]      |
+| 3   | Categories                                  | [x]                                | [ ]      |
+| 4   | Browse: category filter, search, pagination | [x]                                | [ ]      |
+| 5   | Comments                                    | [x]                                | [ ]      |
+| 6   | Post detail + mark as resolved              | [x]                                | [ ]      |
+| 7   | My profile with my posts                    | [x]                                | [ ]      |
+| 8   | Price + unit                                | [x]                                | [ ]      |
+| 9   | District + filter                           | [x]                                | [ ]      |
+| 10  | Contact options (Telegram / phone)          | [x]                                | [ ]      |
+| 11  | Sort options                                | [x]                                | [ ]      |
 | 12  | Dark mode                                   | n/a                                | [ ]      |
 | 13  | About page                                  | n/a                                | [ ]      |
-| 14  | Post count per category                     | [ ]                                | [ ]      |
+| 14  | Post count per category                     | [x]                                | [ ]      |
 | 15  | Images on posts                             | [ ]                                | [ ]      |
 | 16  | Three languages                             | [ ] (error codes, email templates) | [ ]      |
 | 17  | Favorites / Saved                           | [ ]                                | [ ]      |

@@ -46,17 +46,32 @@ Updated at the end of every day: what was finished, what the owner checked and t
 - A hidden BOM character (from a PowerShell write) broke `schema.prisma` and could break other files: removed. Rule: never write config files with PowerShell `Set-Content -Encoding utf8`.
 - ESLint now allows unused variables that start with `_` (used to drop `passwordHash`).
 
-**Owner check:** pending.
+**Owner check:** passed (register, duplicate email/username, login, blocked user, wrong password, logout).
+**Bugs found and fixed:** Swagger showed the same wrong example (404 POST_NOT_FOUND) for every error status: each status now has its own example.
 **Open:** rate limiting on login/register comes on day 5.
 **Next:** Day 3, Posts + Comments.
 
 ## Day 3: Posts + Comments
 
-**Finished:**
-**Owner check and result:**
+**Finished**
+
+- Posts (features 2, 3, 4, 6, 8, 9, 10, 11, 14): `GET /posts` (filters, search, sort, pagination), `GET /posts/counts`, `GET /posts/map`, `GET /posts/mine`, `GET /posts/:id`, `POST /posts`, `PATCH /posts/:id`, `DELETE /posts/:id`, `POST /posts/:id/resolve`.
+- Rules: contact required, price only for TUTORING/RENTALS, unit required with price, coordinates in pairs, 30-day expiry, owner checks (404 before 403), removed posts hidden from everyone except the author and admins, expired posts hidden from lists.
+- Expiry check on read: ACTIVE posts past `expiresAt` are marked EXPIRED (at most once a minute per server).
+- `isFavorite` is already computed from the `Favorite` table (the favorite endpoints come on day 4).
+- Comments (feature 5): list (oldest first), add (only on ACTIVE posts), delete (author or admin).
+- Feature 7 (my profile) backend = `GET /posts/mine`.
+- Seed now adds 15 demo posts (every category and district; resolved, expired, expiring soon and removed examples) and 6 comments.
+- 61 unit tests pass (auth 10, posts 34, comments 17); lint passes; a live script ran about 60 API checks with 0 failures.
+
+**Problems and fixes**
+
+- The tool that approves shell commands failed for a while: wrote code and tests first, then ran everything once it recovered.
+
+**Owner check:** pending.
 **Bugs found and fixed:**
-**Open:**
-**Next:**
+**Open:** the NEW_COMMENT notification is added on day 5; deleting Cloudinary images on post delete is added on day 4.
+**Next:** Day 4, Uploads, Users, Favorites, Reports, expiry job + renew.
 
 ## Day 4: Uploads, Users, Favorites, Reports, Expiry
 
