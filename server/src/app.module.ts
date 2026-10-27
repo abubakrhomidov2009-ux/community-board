@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { HealthModule } from './modules/health/health.module';
+import { MessagesModule } from './modules/messages/messages.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { ReportsModule } from './modules/reports/reports.module';
@@ -35,6 +36,7 @@ import { PrismaModule } from './prisma/prisma.module';
     UploadsModule,
     FavoritesModule,
     ReportsModule,
+    MessagesModule,
     AdminModule,
     TasksModule,
     HealthModule,

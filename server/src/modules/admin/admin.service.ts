@@ -6,6 +6,7 @@ import type { AuthUser } from '../../common/types/authenticated-request';
 import { pageArgs, paginate } from '../../common/utils/pagination';
 import { PrismaService } from '../../prisma/prisma.service';
 import { NotificationsService } from '../notifications/notifications.service';
+import { statusWhere } from '../posts/post-status-filter';
 import {
   AdminPostResponseDto,
   AdminPostsQueryDto,
@@ -122,7 +123,7 @@ export class AdminService {
     query: AdminPostsQueryDto,
   ): Promise<PaginatedAdminPostsResponseDto> {
     const where: Prisma.PostWhereInput = {
-      ...(query.status ? { status: query.status } : {}),
+      ...(query.status ? statusWhere(query.status, new Date()) : {}),
       ...(query.q ? { title: { contains: query.q, mode: 'insensitive' } } : {}),
     };
     const [rows, total] = await Promise.all([

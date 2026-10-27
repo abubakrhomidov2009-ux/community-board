@@ -7,6 +7,7 @@ import { pageArgs, paginate } from '../../common/utils/pagination';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CloudinaryService } from '../uploads/cloudinary.service';
+import { statusWhere } from './post-status-filter';
 import { CreatePostDto } from './dto/create-post.dto';
 import {
   ListPostsQueryDto,
@@ -139,7 +140,7 @@ export class PostsService {
     await this.expireOverdue();
     const where: Prisma.PostWhereInput = {
       authorId: user.id,
-      ...(query.status ? { status: query.status } : {}),
+      ...(query.status ? statusWhere(query.status, new Date()) : {}),
     };
     const [rows, total] = await Promise.all([
       this.prisma.post.findMany({

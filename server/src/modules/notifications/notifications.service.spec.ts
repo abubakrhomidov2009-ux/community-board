@@ -155,6 +155,20 @@ describe('NotificationsService', () => {
       });
     });
 
+    it('sends only one unread "new message" notification per conversation', async () => {
+      prisma.notification.findFirst.mockResolvedValue({ id: 'n1' });
+      await service.notifyNewMessage('u2', user, 'c1');
+      expect(prisma.notification.create).not.toHaveBeenCalled();
+      expect(
+        firstArg<{ where: unknown }>(prisma.notification.findFirst).where,
+      ).toEqual({
+        userId: 'u2',
+        type: NotificationType.NEW_MESSAGE,
+        conversationId: 'c1',
+        readAt: null,
+      });
+    });
+
     it('notifies the recipient of a new message', async () => {
       await service.notifyNewMessage('u2', user, 'c1');
       expect(prisma.notification.create).toHaveBeenCalledWith({

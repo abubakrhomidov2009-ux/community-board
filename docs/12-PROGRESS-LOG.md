@@ -120,11 +120,24 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 ## Day 6: Messages + tests
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished**
+
+- Private messages (feature 26): `GET /conversations`, `POST /conversations` (reuses the chat with that person), `GET /conversations/:id/messages` (with `after` for polling), `POST /conversations/:id/messages`, `POST /conversations/:id/read`. Unread counts per conversation, only the two people can see a chat, at most one unread NEW_MESSAGE notification per chat, reading clears it.
+- Unit tests for every service, the guards, the error filter, the status filter, the mail service and the email templates: **192 tests, 16 files**.
+- End-to-end tests (Jest + Supertest, own database `community_board_test`): **56 tests, 7 files**: the main flow (register → login → create post → comment → resolve), report → admin removes post, blocked user refused everywhere, messages, favorites/profile/student badge, real multipart uploads with a fake Cloudinary, all rate limits, and a **Swagger quality gate** that checks all 47 endpoints are documented.
+- Seed finished: 5 users, 15 posts, 6 comments, 5 reports, 4 favorites, 5 notifications, 1 conversation with 3 messages. Safe to run twice.
+- Live smoke checks against the running server (messages with the demo data, Swagger lists 47 endpoints): 25 checks, 0 failures.
+
+**Problems and fixes**
+
+- **Bug found by the e2e tests:** `GET /posts/mine?status=EXPIRED` (and the admin posts filter) missed a post that had just passed its expiry date but was not swept yet. The status filter now uses the status users see (new `post-status-filter.ts`).
+- **Bug found while checking the build:** the build output had moved to `dist/src/main.js` (the seed and Prisma config were included), which would have broken `npm run start:prod` on Render. `tsconfig.build.json` now excludes them; `dist/main.js` is correct.
+- The Nest watch mode on Windows stops after many quick file changes ("The process … not found"). The server is now run from the production build (`node dist/main`) during checks.
+
+**Owner check:** the owner asked me to run all the checks myself and report the results, so Claude ran them (unit, e2e and live). The owner's own Swagger check of days 3 to 6 is still open and will be the big check on day 7.
+**Bugs found and fixed:** see above.
+**Open:** the client IP for rate limits behind Vercel (day 12/13); owner's Swagger big check (day 7).
+**Next:** Day 7, the backend gate: full Swagger review, spec sync, tag `api-v1.0.0`, owner's big check.
 
 ## Day 7: Backend gate (big check)
 

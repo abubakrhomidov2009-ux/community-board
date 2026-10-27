@@ -91,7 +91,23 @@ npm run db:seed                 # demo data
 | Student (verified) | madina@example.com  | madina   | `Demo12345`  |
 | Blocked user       | blocked@example.com | blocked  | `Demo12345`  |
 
-These are demo-only accounts for the local and demo databases. The seed also adds posts in every category and district, comments and reports. **Do not run the seed with these passwords on a database with real users.**
+These are demo-only accounts for the local and demo databases. The seed also adds 15 posts (every category and district, plus one resolved, one expired, one expiring in 2 days and one removed), 6 comments, 5 reports (3 open, 1 resolved, 1 dismissed), 4 favorites, 5 notifications and one conversation between aziza and madina. Running the seed again is safe: it updates the same records. **Do not run the seed with these passwords on a database with real users.**
+
+### Automated tests (backend)
+
+```bash
+cd server
+npm test            # unit tests (Jest): every service, the guards and the error filter
+npm run test:e2e    # end-to-end tests (Jest + Supertest): the real app against a real database
+```
+
+The end-to-end tests use their **own database**, `community_board_test`. They create it and apply the migrations by themselves (the PostgreSQL user needs the CREATEDB right, which the setup gives it), and they empty it before each test file, so your demo data is never touched. To use another database (for example in CI) set `E2E_DATABASE_URL`. The tests never send real emails or upload real photos (Brevo and Cloudinary are switched off or replaced). Set `E2E_LOGS=true` to see the app logs while a test fails.
+
+### Production build
+
+`npm run build` in `server/` creates `dist/main.js`; `npm run start:prod` runs it. `server/tsconfig.build.json` excludes `prisma/`, `prisma.config.ts`, `test/` and spec files, so that `dist/main.js` stays at the top of `dist/`.
+
+On Windows the watch mode (`npm run start:dev`) can stop with "The process … not found" after many quick file changes (a Nest CLI quirk). If that happens, start it again.
 
 ## 4. Environment variables
 

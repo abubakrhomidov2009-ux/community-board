@@ -106,12 +106,25 @@ export class NotificationsService {
     });
   }
 
-  /** You have a new private message. */
+  /**
+   * You have a new private message. Only one unread notification per conversation,
+   * so a busy chat does not flood the bell. Reading the chat clears it.
+   */
   async notifyNewMessage(
     recipientId: string,
     sender: AuthUser,
     conversationId: string,
   ): Promise<void> {
+    const alreadyUnread = await this.prisma.notification.findFirst({
+      where: {
+        userId: recipientId,
+        type: NotificationType.NEW_MESSAGE,
+        conversationId,
+        readAt: null,
+      },
+      select: { id: true },
+    });
+    if (alreadyUnread) return;
     await this.prisma.notification.create({
       data: {
         userId: recipientId,

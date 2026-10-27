@@ -4,9 +4,12 @@ import {
   Category,
   District,
   Locale,
+  NotificationType,
   PostStatus,
   PriceUnit,
   PrismaClient,
+  ReportReason,
+  ReportStatus,
   Role,
 } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -73,7 +76,7 @@ async function main() {
   console.log(`Seeded ${users.length} users.`);
 
   await seedPosts();
-  // Reports, favorites, notifications and messages are added on days 4 to 6.
+  await seedSocial();
 }
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -386,6 +389,217 @@ async function seedPosts() {
     });
   }
   console.log(`Seeded ${comments.length} comments.`);
+}
+
+/** Reports, favorites, notifications and one conversation, so the admin panel and the chat are not empty. */
+async function seedSocial() {
+  const userIds = new Map(
+    (await prisma.user.findMany({ select: { id: true, username: true } })).map(
+      (u) => [u.username, u.id],
+    ),
+  );
+  const idOf = (username: string) => {
+    const id = userIds.get(username);
+    if (!id) throw new Error(`Seed user not found: ${username}`);
+    return id;
+  };
+
+  // Reports: open ones for the admin to review, plus a resolved and a dismissed one.
+  const reports = [
+    {
+      id: 'seed-report-1',
+      post: 'seed-post-wallet',
+      by: 'madina',
+      reason: ReportReason.SPAM,
+      details: 'Looks like a duplicate post',
+      status: ReportStatus.OPEN,
+    },
+    {
+      id: 'seed-report-2',
+      post: 'seed-post-room-campus',
+      by: 'aziza',
+      reason: ReportReason.OTHER,
+      details: null,
+      status: ReportStatus.OPEN,
+    },
+    {
+      id: 'seed-report-3',
+      post: 'seed-post-programming',
+      by: 'rustam',
+      reason: ReportReason.SCAM,
+      details: 'The price looks too good',
+      status: ReportStatus.OPEN,
+    },
+    {
+      id: 'seed-report-4',
+      post: 'seed-post-removed',
+      by: 'aziza',
+      reason: ReportReason.SPAM,
+      details: null,
+      status: ReportStatus.RESOLVED,
+    },
+    {
+      id: 'seed-report-5',
+      post: 'seed-post-event',
+      by: 'madina',
+      reason: ReportReason.OFFENSIVE,
+      details: null,
+      status: ReportStatus.DISMISSED,
+    },
+  ];
+  for (const report of reports) {
+    const data = {
+      postId: report.post,
+      reporterId: idOf(report.by),
+      reason: report.reason,
+      details: report.details,
+      status: report.status,
+      resolvedAt: report.status === ReportStatus.OPEN ? null : daysAgo(1),
+      createdAt: daysAgo(2),
+    };
+    await prisma.report.upsert({
+      where: { id: report.id },
+      update: data,
+      create: { id: report.id, ...data },
+    });
+  }
+  console.log(`Seeded ${reports.length} reports.`);
+
+  // Favorites (the posts used in the manual checks stay un-saved).
+  const favorites = [
+    ['aziza', 'seed-post-programming'],
+    ['aziza', 'seed-post-books'],
+    ['rustam', 'seed-post-math'],
+    ['madina', 'seed-post-flat'],
+  ];
+  for (const [username, postId] of favorites) {
+    const key = { userId: idOf(username), postId };
+    await prisma.favorite.upsert({
+      where: { userId_postId: key },
+      update: {},
+      create: key,
+    });
+  }
+  console.log(`Seeded ${favorites.length} favorites.`);
+
+  // One conversation between aziza and madina. Madina has 1 unread message.
+  const conversationId = 'seed-conversation-1';
+  const lastMessageAt = daysAgo(1);
+  await prisma.conversation.upsert({
+    where: { id: conversationId },
+    update: { lastMessageAt },
+    create: { id: conversationId, lastMessageAt, createdAt: daysAgo(3) },
+  });
+  const participants = [
+    { username: 'aziza', lastReadAt: new Date() },
+    { username: 'madina', lastReadAt: daysAgo(2) },
+  ];
+  for (const { username, lastReadAt } of participants) {
+    const key = { conversationId, userId: idOf(username) };
+    await prisma.conversationParticipant.upsert({
+      where: { conversationId_userId: key },
+      update: { lastReadAt },
+      create: { ...key, lastReadAt },
+    });
+  }
+  const messages = [
+    {
+      id: 'seed-message-1',
+      from: 'aziza',
+      body: 'Hi Madina! Do you still have the engineering textbooks?',
+      daysAgo: 3,
+    },
+    {
+      id: 'seed-message-2',
+      from: 'madina',
+      body: 'Yes! You can pick them up at the library on Monday.',
+      daysAgo: 2.5,
+    },
+    {
+      id: 'seed-message-3',
+      from: 'aziza',
+      body: 'Great, see you on Monday. Thank you!',
+      daysAgo: 1,
+    },
+  ];
+  for (const message of messages) {
+    const data = {
+      conversationId,
+      senderId: idOf(message.from),
+      body: message.body,
+      createdAt: daysAgo(message.daysAgo),
+    };
+    await prisma.message.upsert({
+      where: { id: message.id },
+      update: data,
+      create: { id: message.id, ...data },
+    });
+  }
+  console.log(`Seeded 1 conversation with ${messages.length} messages.`);
+
+  // Notifications: a mix of read and unread (none unread for aziza, so manual checks start clean).
+  const notifications = [
+    {
+      id: 'seed-notification-1',
+      user: 'aziza',
+      type: NotificationType.NEW_COMMENT,
+      postId: 'seed-post-math',
+      actor: 'rustam',
+      read: true,
+      daysAgo: 2,
+    },
+    {
+      id: 'seed-notification-2',
+      user: 'madina',
+      type: NotificationType.NEW_COMMENT,
+      postId: 'seed-post-books',
+      actor: 'aziza',
+      read: false,
+      daysAgo: 4,
+    },
+    {
+      id: 'seed-notification-3',
+      user: 'madina',
+      type: NotificationType.NEW_MESSAGE,
+      conversationId,
+      actor: 'aziza',
+      read: false,
+      daysAgo: 1,
+    },
+    {
+      id: 'seed-notification-4',
+      user: 'rustam',
+      type: NotificationType.POST_EXPIRING,
+      postId: 'seed-post-expiring',
+      read: false,
+      daysAgo: 0.5,
+    },
+    {
+      id: 'seed-notification-5',
+      user: 'rustam',
+      type: NotificationType.POST_REMOVED,
+      postId: 'seed-post-removed',
+      read: true,
+      daysAgo: 3,
+    },
+  ];
+  for (const n of notifications) {
+    const data = {
+      userId: idOf(n.user),
+      type: n.type,
+      postId: n.postId ?? null,
+      conversationId: n.conversationId ?? null,
+      actorUsername: n.actor ?? null,
+      readAt: n.read ? daysAgo(n.daysAgo - 0.1) : null,
+      createdAt: daysAgo(n.daysAgo),
+    };
+    await prisma.notification.upsert({
+      where: { id: n.id },
+      update: data,
+      create: { id: n.id, ...data },
+    });
+  }
+  console.log(`Seeded ${notifications.length} notifications.`);
 }
 
 main()

@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 5 (Admin, Notifications, University email, Map, Rate limits built; waiting for the owner's Swagger checks for days 3, 4 and 5). Next: Day 6, Messages + all tests + seed.**
+**Current day: 6 (Messages, all unit + e2e tests and the full seed are done; the owner has asked me to run the checks myself, so I run them and report results). Next: Day 7, the backend gate (Swagger review, spec sync, tag api-v1.0.0, owner's big check).**
 
 ## Project
 
@@ -135,7 +135,7 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 | 13  | About page                                  | n/a                                | [ ]      |
 | 14  | Post count per category                     | [x]                                | [ ]      |
 | 15  | Images on posts                             | [x]                                | [ ]      |
-| 16  | Three languages                             | [ ] (error codes, email templates) | [ ]      |
+| 16  | Three languages                             | [x] (error codes, email templates) | [ ]      |
 | 17  | Favorites / Saved                           | [x]                                | [ ]      |
 | 18  | Public user profile                         | [x]                                | [ ]      |
 | 19  | Post expiry + renew                         | [x]                                | [ ]      |
@@ -145,7 +145,7 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 | 23  | In-app notifications                        | [x]                                | [ ]      |
 | 24  | University email verification               | [x]                                | [ ]      |
 | 25  | Map (pin + map view)                        | [x]                                | [ ]      |
-| 26  | Private messages                            | [ ]                                | [ ]      |
+| 26  | Private messages                            | [x]                                | [ ]      |
 | 27  | Rate limiting; blocked users                | [x]                                | [ ]      |
 
 ## "Backend done" gate (all must be checked before ANY frontend work)
