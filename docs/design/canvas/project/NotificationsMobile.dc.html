@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Notifications on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="TopBar" title="Notifications" hint-size="390px,64px"></dc-import>
+<div style="padding: 0 14px; display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 14px; font-weight: 600; color: #44524E;">3 new</span><button style="height: 40px; padding: 0 14px; border: 1.5px solid #0E1A17; border-radius: 999px; background: #FFFFFF; font-size: 13px; font-weight: 700;">Mark all read</button></div>
+<div style="flex: 1; min-height: 0; overflow: hidden; padding: 14px 14px 0; display: flex; flex-direction: column; gap: 10px;">
+<sc-for list="{{items}}" as="n" hint-placeholder-count="5">
+<a href="{{n.href}}" style="display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 18px; background: #FFFFFF; border: {{n.border}}; text-decoration: none; color: #0E1A17;">
+<span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: {{n.iconBg}}; color: {{n.iconFg}}; display: flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.icon}}"></path></svg></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 14px; line-height: 1.45; font-weight: {{n.weight}};">{{n.text}}</span><span style="font-size: 12px; color: #5D6B67;">{{n.time}}</span></span>
+</a>
+</sc-for>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0;"><dc-import name="TabBar" active="none" hint-size="390px,100px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const ic = {
+comment: { icon: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z', iconBg: '#DBEAFE', iconFg: '#1E40AF' },
+expiring: { icon: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20M12 6v6l4 2', iconBg: '#FEF3C7', iconFg: '#92400E' },
+removed: { icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10', iconBg: '#FEE2E2', iconFg: '#991B1B' },
+message: { icon: 'm22 2-7 20-4-9-9-4ZM22 2 11 13', iconBg: '#E6F4F1', iconFg: '#0B4F4A' }
+};
+const rows = [
+{ t: 'comment', unread: true, text: 'Dilshod S. left a note on “Math lessons”.', time: '10 min ago', href: 'PostMobile.dc.html' },
+{ t: 'message', unread: true, text: 'New message from Firuza N.', time: '1 hour ago', href: 'ChatMobile.dc.html' },
+{ t: 'expiring', unread: true, text: '“Chess club” comes down in 3 days. Renew it.', time: '09:00', href: 'EditMobile.dc.html' },
+{ t: 'removed', unread: false, text: 'An admin took down “Selling old textbooks”.', time: 'Yesterday', href: 'AboutMobile.dc.html' },
+{ t: 'comment', unread: false, text: 'Madina T. left a note on “Roommate near campus”.', time: '3 days ago', href: 'PostMobile.dc.html' }
+];
+return { items: rows.map((r) => Object.assign({}, r, ic[r.t], { border: r.unread ? '2px solid #0E1A17' : '1px solid #D9E1DD', weight: r.unread ? 600 : 400 })) };
+}
+}
+</script>
+</body>
+</html>

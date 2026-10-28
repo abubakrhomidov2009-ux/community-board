@@ -155,10 +155,18 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 - **Security bug found by the new e2e tests (before it shipped):** my 10-second "two tabs" grace window also applied to logged-out tokens, so a refresh token could work for 10 seconds after logout. Fixed by separating `rotatedAt` (replaced, grace allowed) from `revokedAt` (closed for good, never works again), with a regression test.
 
-**Owner check and result:** not yet.
-**Bugs found and fixed:** see above.
-**Open:** the owner must add `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` to `server/.env`; `docs/design/logo.png` and the design canvas export are needed before Day 8; the Swagger review and spec sync (part 2), the owner's big check and the tag `api-v1.0.0`; client IP for rate limits (day 12/13).
-**Next:** Day 7 part 2 (Swagger review, spec sync, big check, tag).
+**Finished (part 2, 2026-10-28: the gate review)**
+
+- Swagger audit script on the live document: **56 operations**, every one has a tag, a summary, a success response with a schema, 401 and 403 where a login is needed, an example on every error response, descriptions on every path parameter, and an example on every request-body and response field. No problems.
+- Spec sync: the endpoints in docs/02-SPEC.md §4.3 and the real API are identical (**56 = 56**, none missing either way).
+- Error codes: all **44** codes are thrown in the code, documented in Swagger, listed in the spec and covered by an e2e test. Five codes had only unit tests; they now have e2e tests too. A new test keeps the spec's error-code table equal to the `ErrorCode` list.
+- Your super admin account (`SUPER_ADMIN_EMAIL` / `SUPER_ADMIN_PASSWORD` in `server/.env`) works: the server created it on start (username `superadmin`), login answers 200 with role SUPER_ADMIN, and the admin panel opens. The seed still loads.
+- Logo saved at `docs/design/logo.png`; the design canvas files (canvas.json and the artboards) saved in `docs/design/canvas/`. No frontend code was touched.
+- Final numbers: **230 unit tests (16 files), 105 e2e tests (11 files)**, lint and type check clean.
+
+**Owner check and result:** the big check in Swagger is next (short list in docs/08 Part A: Auth, Users profile, Admin, Super admin).
+**Open:** the owner's big check; then the tag `api-v1.0.0`; client IP for rate limits (day 12/13); frontend waits until the owner says go.
+**Next:** the owner does the big check; Claude fixes anything found; tag `api-v1.0.0`; then Day 8 only when the owner says so.
 
 ## Day 8: Frontend shell + auth
 

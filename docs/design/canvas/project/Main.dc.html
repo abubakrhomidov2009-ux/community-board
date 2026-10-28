@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · The board</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+a{color:#0F766E}a:hover{color:#0B4F4A}
+button,input,select{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 100%; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif;">
+<dc-import name="NavPill" hint-size="100%,92px"></dc-import>
+<main style="max-width: 1280px; margin: 0 auto; padding: 36px 24px 64px; display: flex; flex-direction: column; gap: 28px;">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<p style="margin: 0; font-size: 14px; font-weight: 600; color: #44524E;">Tuesday, 28 October · Dushanbe</p>
+<h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 46px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.05;">The board</h1>
+</div>
+<div style="flex: 0 1 460px; min-width: 260px; position: relative;">
+<label for="hq" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search the board</label>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#44524E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; left: 20px; top: 18px;"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input id="hq" type="search" placeholder="Keys, IELTS, room near campus…" style="width: 100%; height: 56px; padding: 0 20px 0 52px; border: 1.5px solid #0E1A17; border-radius: 999px; background: #FFFFFF; font-size: 16px; color: #0E1A17;">
+</div>
+</div>
+<div>
+<div role="tablist" aria-label="Category" style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px; padding-left: 4px;">
+<button role="tab" aria-selected="true" style="height: 52px; padding: 0 20px; border: 1px solid #D9E1DD; border-bottom: 0; border-radius: 14px 14px 0 0; background: #FFFFFF; color: #0E1A17; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;">All <span style="font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #0E1A17; color: #FFFFFF;">86</span></button>
+<button role="tab" aria-selected="false" style="height: 44px; padding: 0 18px; border: 1px solid #D9E1DD; border-bottom: 0; border-radius: 14px 14px 0 0; background: #E2E9E5; color: #2B3835; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;"><span style="width: 9px; height: 9px; border-radius: 5px; background: #F97316;"></span>Lost and found <span style="color: #44524E;">18</span></button>
+<button role="tab" aria-selected="false" style="height: 44px; padding: 0 18px; border: 1px solid #D9E1DD; border-bottom: 0; border-radius: 14px 14px 0 0; background: #E2E9E5; color: #2B3835; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;"><span style="width: 9px; height: 9px; border-radius: 5px; background: #3B82F6;"></span>Tutoring <span style="color: #44524E;">24</span></button>
+<button role="tab" aria-selected="false" style="height: 44px; padding: 0 18px; border: 1px solid #D9E1DD; border-bottom: 0; border-radius: 14px 14px 0 0; background: #E2E9E5; color: #2B3835; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;"><span style="width: 9px; height: 9px; border-radius: 5px; background: #22C55E;"></span>Rentals <span style="color: #44524E;">31</span></button>
+<button role="tab" aria-selected="false" style="height: 44px; padding: 0 18px; border: 1px solid #D9E1DD; border-bottom: 0; border-radius: 14px 14px 0 0; background: #E2E9E5; color: #2B3835; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;"><span style="width: 9px; height: 9px; border-radius: 5px; background: #94A3B8;"></span>Other <span style="color: #44524E;">13</span></button>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 0 18px 18px 18px; padding: 18px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: #44524E; margin-right: 4px;">Where</span>
+<button aria-pressed="true" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #0E1A17; background: #0E1A17; color: #FFFFFF; font-size: 14px; font-weight: 600;">University campus</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #C9D3CF; background: #FFFFFF; color: #0E1A17; font-size: 14px; font-weight: 500;">Sino</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #C9D3CF; background: #FFFFFF; color: #0E1A17; font-size: 14px; font-weight: 500;">Firdavsi</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #C9D3CF; background: #FFFFFF; color: #0E1A17; font-size: 14px; font-weight: 500;">Shohmansur</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #C9D3CF; background: #FFFFFF; color: #0E1A17; font-size: 14px; font-weight: 500;">Ismoili Somoni</button>
+<span style="flex: 1 1 20px;"></span>
+<label for="hs" style="font-size: 14px; color: #44524E;">Sort</label>
+<select id="hs" style="height: 40px; padding: 0 12px; border: 1.5px solid #C9D3CF; border-radius: 999px; background: #FFFFFF; font-size: 14px; font-weight: 600; color: #0E1A17;"><option>Newest</option><option>Oldest</option><option>Price: low to high</option><option>Price: high to low</option></select>
+<button style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #C9D3CF; background: #FFFFFF; color: #0E1A17; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>Price</button>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); column-gap: 28px; row-gap: 40px; padding-top: 10px;">
+<sc-for list="{{slips}}" as="s" hint-placeholder-count="6">
+<dc-import name="Slip" item="{{s}}" hint-size="100%,440px"></dc-import>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+<button style="height: 52px; padding: 0 28px; border: 1.5px solid #0E1A17; border-radius: 999px; background: #FFFFFF; color: #0E1A17; font-size: 15px; font-weight: 700;">Show more slips</button>
+<span style="font-size: 13px; color: #44524E;">Showing 6 of 86</span>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1360}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+slips: [
+{ kind: 'lost', cat: 'Lost and found', time: '2 h ago', title: 'Black leather wallet near the central library', price: 'Reward offered', district: 'University campus', photo: true, tilt: '-0.6deg' },
+{ kind: 'tutor', cat: 'Tutoring', time: '5 h ago', title: 'English for IELTS, evening groups', price: '50 somoni / hour', district: 'Firdavsi', tilt: '0.5deg' },
+{ kind: 'rent', cat: 'Rentals', time: 'Yesterday', title: 'Room for a student, 10 minutes from campus', price: '800 somoni / month', district: 'University campus', photo: true, saved: true, tilt: '-0.3deg' },
+{ kind: 'lost', cat: 'Lost and found', time: '2 days ago', title: 'Found: student ID card near bus stop 12', price: 'Found item', district: 'Shohmansur', status: 'Resolved', tilt: '0.4deg' },
+{ kind: 'tutor', cat: 'Tutoring', time: '3 days ago', title: 'Math and physics for school exams', price: '40 somoni / hour', district: 'Ismoili Somoni', photo: true, tilt: '-0.5deg' },
+{ kind: 'other', cat: 'Other', time: '4 days ago', title: 'Players wanted for Saturday football', price: 'Free', district: 'Sino', tilt: '0.3deg' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

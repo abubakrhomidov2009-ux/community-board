@@ -91,6 +91,8 @@ npm run db:seed                 # demo data
 | Student (verified) | madina@example.com  | madina   | `Demo12345`  |
 | Blocked user       | blocked@example.com | blocked  | `Demo12345`  |
 
+**Your own account (super admin):** the email and password you put in `server/.env` (`SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`). The username is `superadmin`. It is created or upgraded every time the server starts. It is the only account that can promote or demote admins.
+
 These are demo-only accounts for the local and demo databases. The seed also adds 15 posts (every category and district, plus one resolved, one expired, one expiring in 2 days and one removed), 6 comments, 5 reports (3 open, 1 resolved, 1 dismissed), 4 favorites, 5 notifications and one conversation between aziza and madina. Running the seed again is safe: it updates the same records. **Do not run the seed with these passwords on a database with real users.**
 
 ### Automated tests (backend)

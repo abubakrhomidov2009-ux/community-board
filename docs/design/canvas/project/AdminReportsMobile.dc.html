@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Admin reports on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="AdminBar" active="reports" hint-size="390px,120px"></dc-import>
+<div style="padding: 16px 14px; display: flex; flex-direction: column; gap: 12px;">
+<sc-for list="{{reports}}" as="r" hint-placeholder-count="3">
+<article style="position: relative; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 22px; overflow: hidden;">
+<div style="padding: 16px 16px 12px; display: flex; flex-direction: column; gap: 6px;">
+<span style="align-self: flex-start; transform: rotate(-4deg); border: 2px solid {{r.color}}; color: {{r.color}}; border-radius: 5px; padding: 1px 8px; font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 700;">{{r.reason}}</span>
+<a href="AdminPostDetailMobile.dc.html" style="font-size: 15px; font-weight: 700; color: #0E1A17; text-decoration: none;">{{r.title}}</a>
+<span style="font-size: 12px; color: #5D6B67;">{{r.meta}}</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1.5px dashed #C9D3CF;">
+<button style="height: 50px; border: 0; border-right: 1.5px dashed #C9D3CF; background: transparent; color: #0E1A17; font-size: 14px; font-weight: 700;">Dismiss</button>
+<button style="height: 50px; border: 0; background: transparent; color: #B91C1C; font-size: 14px; font-weight: 700;">Take down</button>
+</div>
+</article>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+reports: [
+{ reason: 'SCAM', color: '#B91C1C', title: 'iPhone 15 for 500 somoni, today only', meta: '@user_8812 · 3 reports · today' },
+{ reason: 'SPAM', color: '#B45309', title: 'Cheap rooms!!! Call now!!!', meta: '@rooms_dush · 2 reports · yesterday' },
+{ reason: 'OTHER', color: '#475569', title: 'Physics tutor, all levels', meta: '@k.rahimov · 1 report · 25 Oct' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

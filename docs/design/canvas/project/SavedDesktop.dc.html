@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Saved slips</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="min-height: 100%; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif;">
+<dc-import name="NavPill" hint-size="100%,92px"></dc-import>
+<main style="max-width: 1280px; margin: 0 auto; padding: 36px 24px 64px; display: flex; flex-direction: column; gap: 28px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<p style="margin: 0; font-size: 14px; font-weight: 600; color: #44524E;">Only you can see this list</p>
+<h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 46px; font-weight: 700; letter-spacing: -1.5px;">Saved slips</h1>
+</div>
+<span style="height: 44px; padding: 0 18px; display: flex; align-items: center; gap: 8px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D9E1DD; font-size: 14px; font-weight: 700;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#DC2626" stroke="#B91C1C" stroke-width="2" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>4 saved</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); column-gap: 28px; row-gap: 40px; padding-top: 8px;">
+<sc-for list="{{slips}}" as="s" hint-placeholder-count="4">
+<dc-import name="Slip" item="{{s}}" hint-size="100%,300px"></dc-import>
+</sc-for>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+slips: [
+{ kind: 'tutor', cat: 'Tutoring', time: '5 h ago', title: 'English for IELTS, evening groups', price: '50 somoni / hour', district: 'Firdavsi', saved: true, tilt: '-0.5deg' },
+{ kind: 'rent', cat: 'Rentals', time: 'Yesterday', title: 'Room for a student, 10 minutes from campus', price: '800 somoni / month', district: 'University campus', photo: true, saved: true, tilt: '0.4deg' },
+{ kind: 'rent', cat: 'Rentals', time: '3 days ago', title: '2-room flat near Rudaki Avenue', price: '2,500 somoni / month', district: 'Shohmansur', saved: true, tilt: '-0.3deg' },
+{ kind: 'other', cat: 'Other', time: '4 days ago', title: 'Players wanted for Saturday football', price: 'Free', district: 'Sino', saved: true, status: 'Resolved', tilt: '0.5deg' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

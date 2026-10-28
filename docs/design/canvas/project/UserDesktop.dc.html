@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Public profile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+a{color:#0F766E}
+</style>
+</helmet>
+<div style="min-height: 100%; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif;">
+<dc-import name="NavPill" hint-size="100%,92px"></dc-import>
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; display: flex; flex-direction: column; gap: 28px;">
+<section style="border-radius: 28px; background: #FFFFFF; border: 1px solid #D9E1DD; padding: 30px 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px;">
+<span style="width: 96px; height: 96px; border-radius: 48px; background: #FEF3C7; color: #78350F; font-family: 'Unbounded', sans-serif; font-size: 32px; font-weight: 700; display: flex; align-items: center; justify-content: center;">FN</span>
+<div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 8px;">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;"><h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.8px;">Firuza N.</h1><span style="transform: rotate(-4deg); border: 2px solid #1D4ED8; color: #1D4ED8; border-radius: 6px; padding: 2px 8px; font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700;">STUDENT ✓</span></div>
+<p style="margin: 0; font-size: 15px; color: #44524E;">@firuza_n · on the board since March 2026 · 4 active slips</p>
+</div>
+<a href="MessagesDesktop.dc.html" style="height: 52px; padding: 0 24px; display: flex; align-items: center; gap: 10px; border-radius: 999px; background: #0F766E; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Send a message</a>
+</section>
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 22px; font-weight: 700;">Pinned by Firuza</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); column-gap: 28px; row-gap: 40px; padding-top: 8px;">
+<sc-for list="{{slips}}" as="s" hint-placeholder-count="4">
+<dc-import name="Slip" item="{{s}}" hint-size="100%,300px"></dc-import>
+</sc-for>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+slips: [
+{ kind: 'rent', cat: 'Rentals', time: 'Yesterday', title: 'Room for a student, 10 minutes from campus', price: '800 somoni / month', district: 'University campus', photo: true, tilt: '-0.4deg' },
+{ kind: 'tutor', cat: 'Tutoring', time: '3 days ago', title: 'Russian for beginners', price: '35 somoni / hour', district: 'Sino', tilt: '0.5deg' },
+{ kind: 'other', cat: 'Other', time: '6 days ago', title: 'Giving away old textbooks', price: 'Free', district: 'University campus', tilt: '-0.3deg' },
+{ kind: 'lost', cat: 'Lost and found', time: '1 week ago', title: 'Found: black headphones in the canteen', price: 'Found item', district: 'University campus', tilt: '0.4deg' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

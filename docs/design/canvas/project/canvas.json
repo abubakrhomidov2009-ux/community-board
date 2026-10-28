@@ -1,0 +1,661 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AboutDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1700,
+      "title": "Desktop · About (guests land here)",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "AboutMobile.dc.html": {
+      "h": 1800,
+      "title": "Phone · About",
+      "w": 390,
+      "x": 1520,
+      "y": 0
+    },
+    "AdminBar.dc.html": {
+      "h": 120,
+      "title": "Part · Phone admin bar",
+      "w": 390,
+      "x": 1990,
+      "y": 26984
+    },
+    "AdminDashboardDesktop.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Desktop · Admin dashboard",
+      "w": 1440,
+      "x": 0,
+      "y": 20120
+    },
+    "AdminDashboardMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Admin dashboard",
+      "w": 390,
+      "x": 1520,
+      "y": 20120
+    },
+    "AdminPostDetailDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1040,
+      "title": "Desktop · Admin post detail (View)",
+      "w": 1440,
+      "x": 1990,
+      "y": 22880
+    },
+    "AdminPostDetailMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Admin post detail",
+      "w": 390,
+      "x": 3510,
+      "y": 22880
+    },
+    "AdminPostsDesktop.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Desktop · Admin posts",
+      "w": 1440,
+      "x": 0,
+      "y": 22880
+    },
+    "AdminPostsMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Admin posts",
+      "w": 390,
+      "x": 1520,
+      "y": 22880
+    },
+    "AdminRail.dc.html": {
+      "h": 960,
+      "title": "Part · Admin sidebar",
+      "w": 260,
+      "x": 940,
+      "y": 27200
+    },
+    "AdminReportsDesktop.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Desktop · Admin reports",
+      "w": 1440,
+      "x": 0,
+      "y": 21500
+    },
+    "AdminReportsMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Admin reports",
+      "w": 390,
+      "x": 1520,
+      "y": 21500
+    },
+    "AdminUserDetailDesktop.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Desktop · Admin user detail",
+      "w": 1440,
+      "x": 1990,
+      "y": 24340
+    },
+    "AdminUserDetailMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Admin user detail",
+      "w": 390,
+      "x": 3510,
+      "y": 24340
+    },
+    "AdminUsersDesktop.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Desktop · Admin users",
+      "w": 1440,
+      "x": 0,
+      "y": 24340
+    },
+    "AdminUsersMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Admin users",
+      "w": 390,
+      "x": 1520,
+      "y": 24340
+    },
+    "AuthSlip.dc.html": {
+      "h": 700,
+      "title": "Part · Log in / sign up slip",
+      "w": 460,
+      "x": 400,
+      "y": 27200
+    },
+    "ChatMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Chat",
+      "w": 390,
+      "x": 1990,
+      "y": 17080
+    },
+    "CreateDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1150,
+      "title": "Desktop · Pin a post (create)",
+      "w": 1440,
+      "x": 0,
+      "y": 8260
+    },
+    "CreateMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Pin a post",
+      "w": 390,
+      "x": 1520,
+      "y": 8260
+    },
+    "DrawerMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Menu drawer",
+      "w": 390,
+      "x": 2460,
+      "y": 4860
+    },
+    "EditDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1150,
+      "title": "Desktop · Edit post",
+      "w": 1440,
+      "x": 0,
+      "y": 9830
+    },
+    "EditMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Edit post",
+      "w": 390,
+      "x": 1520,
+      "y": 9830
+    },
+    "FiltersMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Filters sheet",
+      "w": 390,
+      "x": 1990,
+      "y": 4860
+    },
+    "HomeMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Home: the board",
+      "w": 390,
+      "x": 1520,
+      "y": 4860
+    },
+    "LoginDesktop.dc.html": {
+      "h": 900,
+      "title": "Desktop · Log in slip (modal)",
+      "w": 1440,
+      "x": 0,
+      "y": 2220
+    },
+    "LoginMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Log in sheet",
+      "w": 390,
+      "x": 1520,
+      "y": 2220
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 1360,
+      "title": "Desktop · Home: the board",
+      "w": 1440,
+      "x": 0,
+      "y": 4860
+    },
+    "MessagesDesktop.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Desktop · Messages",
+      "w": 1440,
+      "x": 0,
+      "y": 17080
+    },
+    "MessagesMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Messages list",
+      "w": 390,
+      "x": 1520,
+      "y": 17080
+    },
+    "NavPill.dc.html": {
+      "h": 96,
+      "title": "Part · Floating navbar",
+      "w": 1440,
+      "x": 0,
+      "y": 26984
+    },
+    "NotFoundDesktop.dc.html": {
+      "expand": "fill",
+      "h": 700,
+      "title": "Desktop · 404 page not found",
+      "w": 1440,
+      "x": 1990,
+      "y": 25720
+    },
+    "NotFoundMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · 404 page not found",
+      "w": 390,
+      "x": 3510,
+      "y": 25720
+    },
+    "NotificationsDesktop.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Desktop · Notifications",
+      "w": 1440,
+      "x": 0,
+      "y": 15760
+    },
+    "NotificationsMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Notifications",
+      "w": 390,
+      "x": 1520,
+      "y": 15760
+    },
+    "OfflineDesktop.dc.html": {
+      "expand": "fill",
+      "h": 700,
+      "title": "Desktop · Offline page",
+      "w": 1440,
+      "x": 0,
+      "y": 25720
+    },
+    "OfflineMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Offline page",
+      "w": 390,
+      "x": 1520,
+      "y": 25720
+    },
+    "PostDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "title": "Desktop · Post detail",
+      "w": 1440,
+      "x": 0,
+      "y": 6640
+    },
+    "PostMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Post detail",
+      "w": 390,
+      "x": 1520,
+      "y": 6640
+    },
+    "ProfileDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "title": "Desktop · My profile",
+      "w": 1440,
+      "x": 0,
+      "y": 11400
+    },
+    "ProfileMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · My profile",
+      "w": 390,
+      "x": 1520,
+      "y": 11400
+    },
+    "RegisterDesktop.dc.html": {
+      "h": 900,
+      "title": "Desktop · Create account slip",
+      "w": 1440,
+      "x": 0,
+      "y": 3540
+    },
+    "RegisterMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Create account sheet",
+      "w": 390,
+      "x": 1520,
+      "y": 3540
+    },
+    "SavedDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "title": "Desktop · Saved posts",
+      "w": 1440,
+      "x": 0,
+      "y": 14340
+    },
+    "SavedMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Saved posts",
+      "w": 390,
+      "x": 1520,
+      "y": 14340
+    },
+    "SettingsDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "title": "Desktop · Settings",
+      "w": 1440,
+      "x": 0,
+      "y": 18400
+    },
+    "SettingsMobile.dc.html": {
+      "h": 1300,
+      "title": "Phone · Settings",
+      "w": 390,
+      "x": 1520,
+      "y": 18400
+    },
+    "Slip.dc.html": {
+      "h": 470,
+      "title": "Part · Notice slip (post card)",
+      "w": 320,
+      "x": 0,
+      "y": 27200
+    },
+    "Style.dc.html": {
+      "h": 900,
+      "title": "Style: type, color, slips, stamps",
+      "w": 1440,
+      "x": 0,
+      "y": 28580
+    },
+    "TabBar.dc.html": {
+      "h": 100,
+      "title": "Part · Phone floating tab bar",
+      "w": 390,
+      "x": 1520,
+      "y": 27200
+    },
+    "TopBar.dc.html": {
+      "h": 64,
+      "title": "Part · Phone top bar",
+      "w": 390,
+      "x": 1520,
+      "y": 26984
+    },
+    "UserDesktop.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "title": "Desktop · Public profile",
+      "w": 1440,
+      "x": 0,
+      "y": 12920
+    },
+    "UserMobile.dc.html": {
+      "h": 844,
+      "title": "Phone · Public profile",
+      "w": 390,
+      "x": 1520,
+      "y": 12920
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-28T14:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "noteOrder": [
+    "t-about",
+    "s-idea",
+    "s-handoff",
+    "t-login",
+    "t-register",
+    "t-home",
+    "t-post",
+    "t-create",
+    "t-edit",
+    "t-profile",
+    "t-user",
+    "t-saved",
+    "t-notif",
+    "t-msg",
+    "t-settings",
+    "t-adash",
+    "t-areports",
+    "t-aposts",
+    "t-ausers",
+    "t-offline",
+    "t-parts",
+    "t-style"
+  ],
+  "notes": {
+    "s-handoff": {
+      "fill": "blue",
+      "text": "For the AI building the app: copy every artboard exactly (layout, spacing, sizes, fonts, colors, radius, dashed tear lines, stamps, icons, text). The canvas shows light mode only: build dark mode from the dark tokens in the prompt, same layout. Sample posts, names, and numbers are demo data. Build both the desktop and the phone artboard of every page.",
+      "w": 420,
+      "x": 2000,
+      "y": 620
+    },
+    "s-idea": {
+      "fill": "green",
+      "text": "Direction v2: Notice Slips. The app looks like Dushanbe’s paper notice boards, made digital. Every post is a slip pinned to a dotted board, with tear-off contact tabs at the bottom (Write · Call · Save). Resolved and expired posts get a rubber stamp. Type: Unbounded for headings, Onest for text (both have Cyrillic). The first design stays in its own canvas for comparison.",
+      "w": 420,
+      "x": 2000,
+      "y": 0
+    },
+    "t-about": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "1 · About: the front door",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "t-adash": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "14 · Admin: dashboard",
+      "w": 240,
+      "x": 0,
+      "y": 19820
+    },
+    "t-aposts": {
+      "kind": "title1",
+      "maxW": 3900,
+      "text": "16 · Admin: posts and post detail",
+      "w": 240,
+      "x": 0,
+      "y": 22580
+    },
+    "t-areports": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "15 · Admin: reports",
+      "w": 240,
+      "x": 0,
+      "y": 21200
+    },
+    "t-ausers": {
+      "kind": "title1",
+      "maxW": 3900,
+      "text": "17 · Admin: users and user detail",
+      "w": 240,
+      "x": 0,
+      "y": 24040
+    },
+    "t-create": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "6 · Pin a post",
+      "w": 240,
+      "x": 0,
+      "y": 7960
+    },
+    "t-edit": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "7 · Edit post",
+      "w": 240,
+      "x": 0,
+      "y": 9530
+    },
+    "t-home": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "4 · Home: the board",
+      "w": 240,
+      "x": 0,
+      "y": 4560
+    },
+    "t-login": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "2 · Log in (a slip, not a page)",
+      "w": 240,
+      "x": 0,
+      "y": 1920
+    },
+    "t-msg": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "12 · Messages",
+      "w": 240,
+      "x": 0,
+      "y": 16780
+    },
+    "t-notif": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "11 · Notifications",
+      "w": 240,
+      "x": 0,
+      "y": 15460
+    },
+    "t-offline": {
+      "kind": "title1",
+      "maxW": 3900,
+      "text": "18 · Offline page and 404 page",
+      "w": 240,
+      "x": 0,
+      "y": 25420
+    },
+    "t-parts": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "Shared parts",
+      "w": 240,
+      "x": 0,
+      "y": 26684
+    },
+    "t-post": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "5 · Post detail",
+      "w": 240,
+      "x": 0,
+      "y": 6340
+    },
+    "t-profile": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "8 · My profile",
+      "w": 240,
+      "x": 0,
+      "y": 11100
+    },
+    "t-register": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "3 · Create account (same slip)",
+      "w": 240,
+      "x": 0,
+      "y": 3240
+    },
+    "t-saved": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "10 · Saved posts",
+      "w": 240,
+      "x": 0,
+      "y": 14040
+    },
+    "t-settings": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "13 · Settings",
+      "w": 240,
+      "x": 0,
+      "y": 18100
+    },
+    "t-style": {
+      "kind": "title1",
+      "maxW": 1440,
+      "text": "Style",
+      "w": 240,
+      "x": 0,
+      "y": 28280
+    },
+    "t-user": {
+      "kind": "title1",
+      "maxW": 2850,
+      "text": "9 · Public profile",
+      "w": 240,
+      "x": 0,
+      "y": 12620
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "AboutDesktop.dc.html",
+    "AboutMobile.dc.html",
+    "LoginDesktop.dc.html",
+    "LoginMobile.dc.html",
+    "RegisterDesktop.dc.html",
+    "RegisterMobile.dc.html",
+    "HomeMobile.dc.html",
+    "FiltersMobile.dc.html",
+    "DrawerMobile.dc.html",
+    "PostDesktop.dc.html",
+    "PostMobile.dc.html",
+    "CreateDesktop.dc.html",
+    "CreateMobile.dc.html",
+    "EditDesktop.dc.html",
+    "EditMobile.dc.html",
+    "ProfileDesktop.dc.html",
+    "ProfileMobile.dc.html",
+    "UserDesktop.dc.html",
+    "UserMobile.dc.html",
+    "SavedDesktop.dc.html",
+    "SavedMobile.dc.html",
+    "NotificationsDesktop.dc.html",
+    "NotificationsMobile.dc.html",
+    "MessagesDesktop.dc.html",
+    "MessagesMobile.dc.html",
+    "ChatMobile.dc.html",
+    "SettingsDesktop.dc.html",
+    "SettingsMobile.dc.html",
+    "AdminDashboardDesktop.dc.html",
+    "AdminDashboardMobile.dc.html",
+    "AdminReportsDesktop.dc.html",
+    "AdminReportsMobile.dc.html",
+    "AdminPostsDesktop.dc.html",
+    "AdminPostsMobile.dc.html",
+    "AdminPostDetailDesktop.dc.html",
+    "AdminPostDetailMobile.dc.html",
+    "AdminUsersDesktop.dc.html",
+    "AdminUsersMobile.dc.html",
+    "AdminUserDetailDesktop.dc.html",
+    "AdminUserDetailMobile.dc.html",
+    "OfflineDesktop.dc.html",
+    "OfflineMobile.dc.html",
+    "NotFoundDesktop.dc.html",
+    "NotFoundMobile.dc.html",
+    "NavPill.dc.html",
+    "Slip.dc.html",
+    "AuthSlip.dc.html",
+    "AdminRail.dc.html",
+    "TopBar.dc.html",
+    "TabBar.dc.html",
+    "AdminBar.dc.html",
+    "Style.dc.html"
+  ],
+  "pages": [],
+  "title": "Community Board Design v2 — Notice Slips"
+}

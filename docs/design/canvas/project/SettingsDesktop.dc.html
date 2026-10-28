@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 100%; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif;">
+<dc-import name="NavPill" hint-size="100%,92px"></dc-import>
+<main style="max-width: 820px; margin: 0 auto; padding: 36px 24px 64px; display: flex; flex-direction: column; gap: 18px;">
+<h1 style="margin: 0 0 6px; font-family: 'Unbounded', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -1.2px;">Settings</h1>
+<section style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 16px;">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700;">Account</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+<div style="display: flex; flex-direction: column; gap: 6px;"><label for="s-u" style="font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E;">Username</label><input id="s-u" value="aziz_h" style="height: 50px; padding: 0 16px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 16px; min-width: 0;"></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><label for="s-e" style="font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E;">Email</label><input id="s-e" type="email" value="aziz@example.com" style="height: 50px; padding: 0 16px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 16px; min-width: 0;"></div>
+</div>
+<button style="align-self: flex-start; height: 48px; padding: 0 22px; border: 0; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 15px; font-weight: 700;">Save changes</button>
+</section>
+<section style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 14px;">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700;">Appearance</h2>
+<div role="radiogroup" aria-label="Theme" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 6px; border-radius: 999px; background: #F1F5F3;">
+<button role="radio" aria-checked="false" style="height: 46px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 15px; font-weight: 600;">Light</button>
+<button role="radio" aria-checked="false" style="height: 46px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 15px; font-weight: 600;">Dark</button>
+<button role="radio" aria-checked="true" style="height: 46px; border: 0; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 15px; font-weight: 700;">System</button>
+</div>
+</section>
+<section style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 14px;">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700;">Language</h2>
+<div role="radiogroup" aria-label="Language" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 6px; border-radius: 999px; background: #F1F5F3;">
+<button role="radio" aria-checked="false" style="height: 46px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 15px; font-weight: 600;">Тоҷикӣ</button>
+<button role="radio" aria-checked="false" style="height: 46px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 15px; font-weight: 600;">Русский</button>
+<button role="radio" aria-checked="true" style="height: 46px; border: 0; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 15px; font-weight: 700;">English</button>
+</div>
+</section>
+<section style="position: relative; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 14px;">
+<span style="position: absolute; right: 26px; top: 22px; transform: rotate(-6deg); border: 2.5px solid #0F766E; color: #0F766E; border-radius: 6px; padding: 3px 10px; font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px;">VERIFIED</span>
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700;">University email</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2B3835;">Confirm your university email to get the Student ✓ badge.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+<label for="s-uni" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">University email</label>
+<input id="s-uni" type="email" value="a.hamidov@university.tj" style="flex: 1 1 280px; min-width: 0; height: 50px; padding: 0 16px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 16px;">
+<button style="height: 50px; padding: 0 20px; border: 1.5px solid #0E1A17; border-radius: 999px; background: #FFFFFF; color: #0E1A17; font-size: 15px; font-weight: 700;">Send link again</button>
+</div>
+<p style="margin: 0; font-size: 13px; color: #5D6B67;">No email? Check your spam folder.</p>
+</section>
+<section style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; padding: 22px 26px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700;">Log out</h2><p style="margin: 0; font-size: 14px; color: #44524E;">You’ll go back to the About page.</p></div>
+<a href="AboutDesktop.dc.html" style="height: 48px; padding: 0 22px; display: flex; align-items: center; border: 1.5px solid #B91C1C; border-radius: 999px; color: #B91C1C; font-size: 15px; font-weight: 700; text-decoration: none;">Log out</a>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1200}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

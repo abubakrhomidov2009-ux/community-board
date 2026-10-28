@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phone top bar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<header style="width: 100%; height: 64px; box-sizing: border-box; padding: 0 10px 0 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: 'Onest', system-ui, sans-serif; color: #0E1A17;">
+<sc-if value="{{hasTitle}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+<a href="{{backHref}}" aria-label="Back" style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; border: 1px solid #D9E1DD; display: flex; align-items: center; justify-content: center; color: #0E1A17;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7M19 12H5"></path></svg></a>
+<h1 style="margin: 0 0 0 6px; font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{title}}</h1>
+</div>
+</sc-if>
+<sc-if value="{{noTitle}}" hint-placeholder-val="{{true}}">
+<a href="{{homeHref}}" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #0E1A17;">
+<svg width="30" height="30" viewBox="0 0 100 100" role="img" aria-label="Community Board logo"><path d="M50 98 L33.5 72 A36 36 0 1 1 66.5 72 Z" fill="#0F766E"></path><polygon points="22,58 40,32 48,43 59,26 78,58" fill="#FFFFFF"></polygon><circle cx="33" cy="24" r="6" fill="#F59E0B"></circle></svg>
+<span style="font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: -0.3px;">community<span style="color: #0F766E;">board</span></span>
+</a>
+</sc-if>
+<sc-if value="{{loggedIn}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; gap: 6px;">
+<a href="#" aria-label="Notifications, 3 unread" style="width: 44px; height: 44px; position: relative; border-radius: 22px; background: #FFFFFF; border: 1px solid #D9E1DD; display: flex; align-items: center; justify-content: center; color: #0E1A17;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span style="position: absolute; top: 5px; right: 5px; width: 15px; height: 15px; border-radius: 8px; background: #F59E0B; color: #3B2203; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center;">3</span></a>
+<a href="#" aria-label="Open menu" style="width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; border: 1px solid #D9E1DD; display: flex; align-items: center; justify-content: center; color: #0E1A17;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h16"></path></svg></a>
+</div>
+</sc-if>
+<sc-if value="{{loggedOut}}" hint-placeholder-val="{{false}}">
+<a href="LoginMobile.dc.html" style="height: 44px; padding: 0 18px; display: flex; align-items: center; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 14px; font-weight: 700; text-decoration: none;">Log in</a>
+</sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title":{"editor":"text","default":""},"loggedIn":{"editor":"boolean","default":true},"backHref":{"editor":null},"$preview":{"width":390,"height":64}}'>
+class Component extends DCLogic {
+renderVals() {
+const title = this.props.title ?? '';
+const loggedIn = this.props.loggedIn ?? true;
+return { title, hasTitle: title !== '', noTitle: title === '', loggedIn, loggedOut: !loggedIn, backHref: this.props.backHref ?? 'HomeMobile.dc.html', homeHref: loggedIn ? 'HomeMobile.dc.html' : 'AboutMobile.dc.html' };
+}
+}
+</script>
+</body>
+</html>

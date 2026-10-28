@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Admin dashboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+a{color:#0F766E}
+</style>
+</helmet>
+<div style="min-height: 100%; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch;">
+<div style="flex: 1 1 220px; max-width: 260px;"><dc-import name="AdminRail" active="dashboard" hint-size="100%,960px"></dc-import></div>
+<main style="flex: 999 1 560px; min-width: 0; padding: 32px 32px 48px 16px; display: flex; flex-direction: column; gap: 22px;">
+<div style="display: flex; flex-direction: column; gap: 6px;"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #44524E;">This week on the board</p><h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -1.2px;">Overview</h1></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px;">
+<sc-for list="{{stats}}" as="s" hint-placeholder-count="4">
+<div style="padding: 20px 22px; border-radius: 24px; background: {{s.bg}}; color: {{s.fg}}; border: 1px solid #D9E1DD; display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 13px; font-weight: 600; opacity: 0.85;">{{s.label}}</span><span style="font-family: 'Unbounded', sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -1px;">{{s.value}}</span><span style="font-size: 13px; font-weight: 600; opacity: 0.85;">{{s.note}}</span></div>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 18px;">
+<section style="flex: 1 1 360px; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 17px; font-weight: 700;">Active slips by category</h2>
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px;"><span style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;"><span>{{c.name}}</span><span>{{c.n}}</span></span><span style="height: 14px; border-radius: 7px; background: #EEF2F0; overflow: hidden;"><span style="display: block; height: 14px; width: {{c.w}}; border-radius: 7px; background: {{c.color}};"></span></span></div>
+</sc-for>
+</section>
+<section style="flex: 1 1 360px; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 4px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;"><h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 17px; font-weight: 700;">Newest reports</h2><a href="AdminReportsDesktop.dc.html" style="font-size: 14px; font-weight: 700; text-decoration: none;">See all</a></div>
+<sc-for list="{{reports}}" as="r" hint-placeholder-count="3">
+<a href="AdminPostDetailDesktop.dc.html" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-top: 1.5px dashed #C9D3CF; text-decoration: none; color: #0E1A17;"><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{r.title}}</span><span style="font-size: 13px; color: #5D6B67;">{{r.when}}</span></span><span style="transform: rotate(-4deg); border: 2px solid {{r.color}}; color: {{r.color}}; border-radius: 5px; padding: 1px 7px; font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 700;">{{r.reason}}</span></a>
+</sc-for>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+renderVals() {
+const w = { bg: '#FFFFFF', fg: '#0E1A17' };
+return {
+stats: [
+Object.assign({ label: 'Users', value: '212', note: '+18 this week' }, w),
+Object.assign({ label: 'Active slips', value: '86', note: '+12 this week' }, w),
+{ label: 'Open reports', value: '4', note: 'needs review', bg: '#0E1A17', fg: '#FFFFFF' },
+Object.assign({ label: 'Blocked users', value: '2', note: 'no change' }, w)
+],
+cats: [
+{ name: 'Rentals', n: 31, w: '100%', color: '#22C55E' },
+{ name: 'Tutoring', n: 24, w: '77%', color: '#3B82F6' },
+{ name: 'Lost and found', n: 18, w: '58%', color: '#F97316' },
+{ name: 'Other', n: 13, w: '42%', color: '#94A3B8' }
+],
+reports: [
+{ title: 'iPhone 15 for 500 somoni, today only', when: 'Today, 09:12 · 3 users', reason: 'SCAM', color: '#B91C1C' },
+{ title: 'Cheap rooms!!! Call now!!!', when: 'Yesterday · 2 users', reason: 'SPAM', color: '#B45309' },
+{ title: 'Physics tutor, all levels', when: '25 Oct · 1 user', reason: 'OTHER', color: '#475569' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

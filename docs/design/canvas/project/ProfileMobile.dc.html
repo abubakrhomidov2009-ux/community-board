@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · My profile on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="TopBar" hint-size="390px,64px"></dc-import>
+<div style="padding: 4px 14px 0; display: flex; flex-direction: column; gap: 14px;">
+<section style="border-radius: 24px; background: #0E1A17; color: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center; gap: 14px;">
+<span style="width: 64px; height: 64px; border-radius: 32px; background: #FEF3C7; color: #78350F; font-family: 'Unbounded', sans-serif; font-size: 22px; font-weight: 700; display: flex; align-items: center; justify-content: center;">AH</span>
+<div style="display: flex; flex-direction: column; gap: 4px;"><h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 700;">Aziz Hamidov</h1><span style="font-size: 13px; color: #A7B8B3;">@aziz_h</span><span style="align-self: flex-start; transform: rotate(-3deg); border: 2px solid #5EEAD4; color: #5EEAD4; border-radius: 5px; padding: 1px 6px; font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 700;">STUDENT ✓</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+<a href="UserMobile.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1.5px solid #FFFFFF; color: #FFFFFF; font-size: 14px; font-weight: 700; text-decoration: none;">Public profile</a>
+<a href="SettingsMobile.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: #FFFFFF; color: #0E1A17; font-size: 14px; font-weight: 700; text-decoration: none;">Settings</a>
+</div>
+</section>
+<div role="tablist" aria-label="My slips" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D9E1DD;">
+<button role="tab" aria-selected="true" style="height: 40px; border: 0; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 13px; font-weight: 700;">Active 3</button>
+<button role="tab" aria-selected="false" style="height: 40px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 13px; font-weight: 600;">Resolved 1</button>
+<button role="tab" aria-selected="false" style="height: 40px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 13px; font-weight: 600;">Expired 1</button>
+</div>
+</div>
+<div style="flex: 1; min-height: 0; overflow: hidden; padding: 24px 18px 0; display: flex; flex-direction: column; gap: 30px;">
+<sc-for list="{{slips}}" as="s" hint-placeholder-count="2">
+<dc-import name="Slip" item="{{s}}" phone="{{yes}}" hint-size="100%,280px"></dc-import>
+</sc-for>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0;"><dc-import name="TabBar" active="profile" hint-size="390px,100px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+yes: true,
+slips: [
+{ kind: 'tutor', cat: 'Tutoring', time: 'Today', title: 'Math lessons for first-year students', price: '45 somoni / hour', district: 'University campus', tilt: '-0.5deg' },
+{ kind: 'other', cat: 'Other', time: '2 days ago', title: 'Chess club, Fridays at 17:00', price: 'Free', district: 'Sino', tilt: '0.4deg' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

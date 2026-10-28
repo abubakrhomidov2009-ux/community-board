@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Admin users on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="AdminBar" active="users" hint-size="390px,120px"></dc-import>
+<div style="padding: 16px 14px; display: flex; flex-direction: column; gap: 10px;">
+<label for="aum" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search users</label>
+<input id="aum" type="search" placeholder="Username, email, or ID" style="height: 50px; padding: 0 18px; border: 1.5px solid #0E1A17; border-radius: 999px; font-size: 16px; background: #FFFFFF;">
+<sc-for list="{{rows}}" as="u" hint-placeholder-count="4">
+<a href="AdminUserDetailMobile.dc.html" style="display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #D9E1DD; text-decoration: none; color: #0E1A17;">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; background: {{u.avBg}}; color: {{u.avFg}}; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{u.initials}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px;"><b style="font-size: 15px;">{{u.name}}</b><span style="display: flex; gap: 6px; align-items: center;"><span style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: {{u.roleBg}}; color: {{u.roleFg}};">{{u.role}}</span><span style="font-size: 12px; color: #5D6B67;">{{u.posts}} slips</span></span></span>
+<span style="border: 2px solid {{u.sColor}}; color: {{u.sColor}}; border-radius: 5px; padding: 1px 6px; font-family: 'Unbounded', sans-serif; font-size: 9px; font-weight: 700; transform: rotate(-3deg);">{{u.status}}</span>
+</a>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const roles = { User: ['#F1F5F3', '#2B3835'], Admin: ['#0E1A17', '#FFFFFF'], 'Super admin': ['#FEF3C7', '#78350F'] };
+const sc = { ACTIVE: '#0F766E', BLOCKED: '#B91C1C' };
+const rows = [
+{ initials: 'AH', name: '@aziz_h', role: 'Super admin', posts: 5, status: 'ACTIVE', avBg: '#FEF3C7', avFg: '#78350F' },
+{ initials: 'FN', name: '@firuza_n', role: 'Admin', posts: 4, status: 'ACTIVE', avBg: '#DBEAFE', avFg: '#1E40AF' },
+{ initials: 'U8', name: '@user_8812', role: 'User', posts: 7, status: 'ACTIVE', avBg: '#F1F5F3', avFg: '#2B3835' },
+{ initials: 'RD', name: '@rooms_dush', role: 'User', posts: 12, status: 'BLOCKED', avBg: '#FEE2E2', avFg: '#991B1B' }
+];
+return { rows: rows.map((u) => Object.assign({}, u, { roleBg: roles[u.role][0], roleFg: roles[u.role][1], sColor: sc[u.status] })) };
+}
+}
+</script>
+</body>
+</html>

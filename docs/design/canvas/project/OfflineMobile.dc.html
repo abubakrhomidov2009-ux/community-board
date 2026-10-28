@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Offline on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; align-items: center; justify-content: center; padding: 24px;">
+<article style="position: relative; width: 100%; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 8px 8px 22px 22px; transform: rotate(-1.5deg);">
+<span aria-hidden="true" style="position: absolute; top: -10px; left: 50%; margin-left: -10px; width: 20px; height: 20px; border-radius: 10px; background: #94A3B8; border: 4px solid #FFFFFF; box-shadow: 0 0 0 1px #D9E1DD; box-sizing: border-box;"></span>
+<div style="height: 7px; background: #94A3B8; border-radius: 7px 7px 0 0;"></div>
+<div style="padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; text-align: center; align-items: center;">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h.01M8.5 16.43a5 5 0 0 1 7 0M5 12.86a10 10 0 0 1 5.17-2.69M19 12.86a10 10 0 0 0-2.007-1.523M2 8.82a15 15 0 0 1 4.177-2.643M22 8.82a15 15 0 0 0-11.288-3.764M2 2l20 20"></path></svg>
+<h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 26px; font-weight: 700;">No signal</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #2B3835;">You’re offline. Slips you opened before may still be here.</p>
+</div>
+<button style="width: 100%; height: 60px; border: 0; border-top: 1.5px dashed #C9D3CF; background: transparent; color: #0F766E; font-size: 16px; font-weight: 700;">Try again</button>
+</article>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

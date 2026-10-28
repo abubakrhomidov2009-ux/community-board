@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · About on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+a{color:#0F766E}a:hover{color:#0B4F4A}
+</style>
+</helmet>
+<div style="width: 390px; height: 1800px; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="TopBar" logged-in="{{no}}" hint-size="390px,64px"></dc-import>
+<section style="padding: 20px 20px 28px; display: flex; flex-direction: column; gap: 16px;">
+<span style="align-self: flex-start; display: flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1.5px solid #0E1A17; font-size: 12px; font-weight: 700;"><span style="width: 7px; height: 7px; border-radius: 4px; background: #22C55E;"></span>Dushanbe · our university</span>
+<h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 36px; font-weight: 700; line-height: 1.05; letter-spacing: -1.4px;">The city’s notice board, <span style="color: #0F766E;">now in your pocket.</span></h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #2B3835;">Pin a slip for a lost wallet, a tutor, or a room near campus. People tear off a tab and write to you.</p>
+<a href="LoginMobile.dc.html" style="height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none;">Log in</a>
+<a href="LoginMobile.dc.html" style="height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1.5px solid #0E1A17; background: #FFFFFF; color: #0E1A17; font-size: 16px; font-weight: 700; text-decoration: none;">Create account</a>
+</section>
+<div aria-label="Example slips" style="margin: 0 16px; height: 400px; position: relative; border-radius: 28px; background-color: #0B4F4A; background-image: radial-gradient(rgba(255,255,255,0.16) 1.2px, transparent 1.5px); background-size: 18px 18px;">
+<div style="position: absolute; left: 18px; top: 30px; width: 210px;"><dc-import name="Slip" item="{{ex1}}" hint-size="210px,280px"></dc-import></div>
+<div style="position: absolute; right: 14px; bottom: 26px; width: 210px;"><dc-import name="Slip" item="{{ex2}}" hint-size="210px,280px"></dc-import></div>
+</div>
+<section style="margin-top: 24px; background: #0E1A17; color: #FFFFFF; padding: 18px 20px;">
+<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-family: 'Unbounded', sans-serif; font-size: 19px; font-weight: 700;"><span>Lost and found</span><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 5px; background: #F97316;"></span><span>Tutoring</span><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 5px; background: #3B82F6;"></span><span>Rentals</span><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 5px; background: #22C55E;"></span><span>Other</span></p>
+</section>
+<section style="padding: 28px 20px 8px; display: flex; flex-direction: column; gap: 12px;">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -0.6px;">How it works</h2>
+<div style="display: flex; gap: 14px; align-items: center; padding: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #D9E1DD;"><span style="font-family: 'Unbounded', sans-serif; font-size: 32px; font-weight: 700; color: #FFFFFF; -webkit-text-stroke: 1.2px #0E1A17;">01</span><span style="font-size: 15px; line-height: 1.5;"><b style="font-weight: 700;">Pin a slip.</b> Category, title, photos, price.</span></div>
+<div style="display: flex; gap: 14px; align-items: center; padding: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #D9E1DD;"><span style="font-family: 'Unbounded', sans-serif; font-size: 32px; font-weight: 700; color: #FFFFFF; -webkit-text-stroke: 1.2px #0E1A17;">02</span><span style="font-size: 15px; line-height: 1.5;"><b style="font-weight: 700;">People find it</b> by category and district.</span></div>
+<div style="display: flex; gap: 14px; align-items: center; padding: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #D9E1DD;"><span style="font-family: 'Unbounded', sans-serif; font-size: 32px; font-weight: 700; color: #FFFFFF; -webkit-text-stroke: 1.2px #0E1A17;">03</span><span style="font-size: 15px; line-height: 1.5;"><b style="font-weight: 700;">They tear off a tab</b> and write or call.</span></div>
+</section>
+<section style="margin: 20px 16px 0; position: relative; padding: 28px 22px 22px; border-radius: 8px 8px 22px 22px; background: #FFF8E6; border: 1px solid #EBDDB5;">
+<span aria-hidden="true" style="position: absolute; top: -9px; left: 50%; margin-left: -9px; width: 18px; height: 18px; border-radius: 9px; background: #DC2626; border: 4px solid #FFFFFF; box-shadow: 0 0 0 1px #EBDDB5; box-sizing: border-box;"></span>
+<h2 style="margin: 0 0 10px; font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 700;">House rules</h2>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.5; color: #2B2615;">
+<li>Be honest: real items, prices, photos.</li>
+<li>One slip per item or offer.</li>
+<li>Pick the right category and district.</li>
+<li>Nothing illegal or dangerous.</li>
+<li>Be kind in comments and messages.</li>
+<li>Stamp it resolved when it’s done.</li>
+</ol>
+</section>
+<section style="margin: 24px 16px 0; border-radius: 28px; background: #0F766E; color: #FFFFFF; padding: 28px 22px; display: flex; flex-direction: column; gap: 16px;">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.8px; line-height: 1.12;">Pin your first slip in a minute.</h2>
+<a href="LoginMobile.dc.html" style="height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: #FFFFFF; color: #0E1A17; font-size: 16px; font-weight: 700; text-decoration: none;">Create account</a>
+</section>
+<p aria-hidden="true" style="margin: 28px 16px 0; font-family: 'Unbounded', sans-serif; font-size: 44px; font-weight: 700; letter-spacing: -2px; line-height: 0.95; color: #D5DED9;">community<br>board</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1800}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+no: false,
+ex1: { kind: 'lost', cat: 'Lost and found', time: '2 h ago', title: 'Black wallet near the library', price: 'Reward offered', district: 'Campus', tilt: '-5deg' },
+ex2: { kind: 'tutor', cat: 'Tutoring', time: '5 h ago', title: 'English for IELTS', price: '50 somoni / hour', district: 'Sino', tilt: '4deg', status: 'Resolved' }
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Admin slips on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="AdminBar" active="posts" hint-size="390px,120px"></dc-import>
+<div style="padding: 16px 14px; display: flex; flex-direction: column; gap: 10px;">
+<label for="apm" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search slips</label>
+<input id="apm" type="search" placeholder="Title, author, or ID" style="height: 50px; padding: 0 18px; border: 1.5px solid #0E1A17; border-radius: 999px; font-size: 16px; background: #FFFFFF;">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+<a href="AdminPostDetailMobile.dc.html" style="display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #D9E1DD; text-decoration: none; color: #0E1A17;">
+<span style="width: 8px; align-self: stretch; border-radius: 4px; background: {{r.strip}};"></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 14px; font-weight: 700;">{{r.title}}</span><span style="font-size: 12px; color: #5D6B67;">{{r.id}} · {{r.author}} · {{r.date}}</span></span>
+<span style="border: 2px solid {{r.sColor}}; color: {{r.sColor}}; border-radius: 5px; padding: 1px 6px; font-family: 'Unbounded', sans-serif; font-size: 9px; font-weight: 700; transform: rotate(-3deg);">{{r.status}}</span>
+</a>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const st = { ACTIVE: '#0F766E', RESOLVED: '#1D4ED8', EXPIRED: '#64748B', REMOVED: '#B91C1C' };
+const rows = [
+{ title: 'Room for a student near campus', id: '#1048', strip: '#22C55E', author: '@firuza_n', status: 'ACTIVE', date: '27 Oct' },
+{ title: 'iPhone 15 for 500 somoni, today only', id: '#1042', strip: '#94A3B8', author: '@user_8812', status: 'ACTIVE', date: '28 Oct' },
+{ title: 'Found: student ID card', id: '#1037', strip: '#F97316', author: '@dilshod_s', status: 'RESOLVED', date: '26 Oct' },
+{ title: 'Selling old textbooks', id: '#1021', strip: '#94A3B8', author: '@madina_t', status: 'REMOVED', date: '24 Oct' }
+];
+return { rows: rows.map((r) => Object.assign({}, r, { sColor: st[r.status] })) };
+}
+}
+</script>
+</body>
+</html>

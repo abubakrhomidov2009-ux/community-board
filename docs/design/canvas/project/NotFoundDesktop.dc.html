@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Page not found</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="min-height: 700px; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="NavPill" hint-size="100%,92px"></dc-import>
+<main style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 24px;">
+<article style="position: relative; width: 100%; max-width: 500px; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 8px 8px 24px 24px; transform: rotate(1.2deg);">
+<span aria-hidden="true" style="position: absolute; top: -11px; left: 50%; margin-left: -11px; width: 22px; height: 22px; border-radius: 11px; background: #F59E0B; border: 4px solid #FFFFFF; box-shadow: 0 0 0 1px #D9E1DD; box-sizing: border-box;"></span>
+<div style="height: 8px; background: #0E1A17; border-radius: 7px 7px 0 0;"></div>
+<div style="position: relative; padding: 36px 32px 28px; display: flex; flex-direction: column; gap: 12px;">
+<span style="position: absolute; right: 24px; top: 22px; transform: rotate(-10deg); border: 3px solid #B91C1C; color: #B91C1C; border-radius: 8px; padding: 4px 12px; font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1px;">404</span>
+<h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 1.1; max-width: 340px;">This slip isn’t on the board</h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #2B3835;">The link may be old, or the slip was taken down or has expired.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1.5px dashed #C9D3CF;">
+<a href="Main.dc.html" style="height: 62px; display: flex; align-items: center; justify-content: center; background: #0E1A17; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; border-radius: 0 0 0 23px;">Go to the board</a>
+<a href="Main.dc.html" style="height: 62px; display: flex; align-items: center; justify-content: center; color: #0E1A17; font-size: 15px; font-weight: 700; text-decoration: none;">Search slips</a>
+</div>
+</article>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":700}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

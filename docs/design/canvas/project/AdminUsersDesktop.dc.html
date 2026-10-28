@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Admin users</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+a{color:#0F766E}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 100%; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch;">
+<div style="flex: 1 1 220px; max-width: 260px;"><dc-import name="AdminRail" active="users" hint-size="100%,960px"></dc-import></div>
+<main style="flex: 999 1 560px; min-width: 0; padding: 32px 32px 48px 16px; display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 6px;"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #44524E;">Blocked users can’t log in or pin slips</p><h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -1.2px;">Users</h1></div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+<label for="au-q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search users</label>
+<input id="au-q" type="search" placeholder="Search by username, email, or ID" style="flex: 1 1 280px; min-width: 0; height: 48px; padding: 0 20px; border: 1.5px solid #0E1A17; border-radius: 999px; font-size: 15px; background: #FFFFFF;">
+<div role="group" aria-label="Role" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D9E1DD;">
+<button aria-pressed="true" style="height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 14px; font-weight: 700;">All</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 14px; font-weight: 600;">Users</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 14px; font-weight: 600;">Admins</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 14px; font-weight: 600;">Blocked</button>
+</div>
+</div>
+<section style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; overflow-x: auto;">
+<div style="min-width: 760px;">
+<div style="display: grid; grid-template-columns: 2.2fr 1fr 0.6fr 0.9fr 0.9fr 1fr; gap: 12px; padding: 14px 22px; font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E; border-bottom: 1.5px dashed #C9D3CF;"><span>User</span><span>Role</span><span>Slips</span><span>Status</span><span>Joined ↓</span><span style="text-align: right;">Action</span></div>
+<sc-for list="{{rows}}" as="u" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: 2.2fr 1fr 0.6fr 0.9fr 0.9fr 1fr; gap: 12px; align-items: center; padding: 14px 22px; border-bottom: 1.5px dashed #E1E8E4;">
+<span style="display: flex; align-items: center; gap: 10px; min-width: 0;"><span style="width: 38px; height: 38px; flex-shrink: 0; border-radius: 19px; background: {{u.avBg}}; color: {{u.avFg}}; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{u.initials}}</span><span style="display: flex; flex-direction: column; min-width: 0;"><a href="AdminUserDetailDesktop.dc.html" style="font-size: 15px; font-weight: 700; color: #0E1A17; text-decoration: none;">{{u.name}}</a><span style="font-size: 12px; color: #5D6B67; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{u.id}} · {{u.email}}</span></span></span>
+<span style="justify-self: start; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: {{u.roleBg}}; color: {{u.roleFg}};">{{u.role}}</span>
+<span style="font-size: 14px; font-weight: 600;">{{u.posts}}</span>
+<span style="justify-self: start; border: 2px solid {{u.sColor}}; color: {{u.sColor}}; border-radius: 5px; padding: 1px 7px; font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 700; transform: rotate(-3deg);">{{u.status}}</span>
+<span style="font-size: 14px; color: #44524E;">{{u.joined}}</span>
+<span style="display: flex; justify-content: flex-end;"><sc-if value="{{u.hasAction}}" hint-placeholder-val="{{true}}"><button style="height: 38px; padding: 0 14px; border: 1.5px solid {{u.btnColor}}; border-radius: 999px; background: #FFFFFF; color: {{u.btnColor}}; font-size: 13px; font-weight: 700;">{{u.action}}</button></sc-if><sc-if value="{{u.isMe}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; font-weight: 700; color: #5D6B67;">You</span></sc-if></span>
+</div>
+</sc-for>
+</div>
+</section>
+<p style="margin: 0; font-size: 14px; color: #44524E;">Showing 1–5 of 212 users</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+renderVals() {
+const roles = { User: ['#F1F5F3', '#2B3835'], Admin: ['#0E1A17', '#FFFFFF'], 'Super admin': ['#FEF3C7', '#78350F'] };
+const sc = { ACTIVE: '#0F766E', BLOCKED: '#B91C1C' };
+const rows = [
+{ initials: 'AH', name: '@aziz_h', id: '#001', email: 'aziz@example.com', role: 'Super admin', posts: 5, status: 'ACTIVE', joined: 'Sep 2026', action: '', isMe: true, avBg: '#FEF3C7', avFg: '#78350F' },
+{ initials: 'FN', name: '@firuza_n', id: '#214', email: 'firuza@example.com', role: 'Admin', posts: 4, status: 'ACTIVE', joined: 'Mar 2026', action: 'Remove admin', avBg: '#DBEAFE', avFg: '#1E40AF' },
+{ initials: 'U8', name: '@user_8812', id: '#577', email: 'user8812@example.com', role: 'User', posts: 7, status: 'ACTIVE', joined: 'Oct 2026', action: 'Block', avBg: '#F1F5F3', avFg: '#2B3835' },
+{ initials: 'DS', name: '@dilshod_s', id: '#331', email: 'dilshod@example.com', role: 'User', posts: 2, status: 'ACTIVE', joined: 'Jun 2026', action: 'Block', avBg: '#DCFCE7', avFg: '#166534' },
+{ initials: 'RD', name: '@rooms_dush', id: '#590', email: 'rooms@example.com', role: 'User', posts: 12, status: 'BLOCKED', joined: 'Oct 2026', action: 'Unblock', avBg: '#FEE2E2', avFg: '#991B1B' }
+];
+return { rows: rows.map((u) => Object.assign({}, u, { roleBg: roles[u.role][0], roleFg: roles[u.role][1], sColor: sc[u.status], hasAction: !u.isMe, btnColor: u.action === 'Block' || u.action === 'Remove admin' ? '#B91C1C' : '#0E1A17' })) };
+}
+}
+</script>
+</body>
+</html>

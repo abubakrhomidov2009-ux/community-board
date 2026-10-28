@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Floating navbar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 100%; box-sizing: border-box; padding: 16px 24px 0; font-family: 'Onest', system-ui, sans-serif; color: #0E1A17;">
+<header style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 999px; padding: 8px 8px 8px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+<a href="{{home}}" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0E1A17;">
+<svg width="32" height="32" viewBox="0 0 100 100" role="img" aria-label="Community Board logo"><path d="M50 98 L33.5 72 A36 36 0 1 1 66.5 72 Z" fill="#0F766E"></path><polygon points="22,58 40,32 48,43 59,26 78,58" fill="#FFFFFF"></polygon><circle cx="33" cy="24" r="6" fill="#F59E0B"></circle></svg>
+<span style="font-family: 'Unbounded', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -0.3px;">community<span style="color: #0F766E;">board</span></span>
+</a>
+<sc-if value="{{loggedIn}}" hint-placeholder-val="{{true}}">
+<nav aria-label="Main" style="flex: 1 1 auto; display: flex; justify-content: center; gap: 4px;">
+<a href="Main.dc.html" aria-current="page" style="height: 44px; padding: 0 18px; display: flex; align-items: center; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none;">Board</a>
+<a href="#" style="height: 44px; padding: 0 18px; display: flex; align-items: center; border-radius: 999px; color: #2B3835; font-size: 14px; font-weight: 600; text-decoration: none;">Saved</a>
+<a href="#" style="height: 44px; padding: 0 18px; display: flex; align-items: center; gap: 6px; border-radius: 999px; color: #2B3835; font-size: 14px; font-weight: 600; text-decoration: none;">Messages<span style="width: 7px; height: 7px; border-radius: 4px; background: #0F766E;" aria-label="new"></span></a>
+</nav>
+<div style="display: flex; align-items: center; gap: 4px;">
+<button aria-label="Language: English" style="height: 44px; padding: 0 12px; border: 0; background: transparent; color: #2B3835; font-size: 13px; font-weight: 700; font-family: inherit;">EN</button>
+<button aria-label="Notifications, 3 unread" style="width: 44px; height: 44px; position: relative; border: 0; border-radius: 22px; background: #F1F5F3; color: #0E1A17; display: flex; align-items: center; justify-content: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span style="position: absolute; top: 6px; right: 6px; width: 16px; height: 16px; border-radius: 8px; background: #F59E0B; color: #3B2203; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;">3</span></button>
+<a href="CreateDesktop.dc.html" style="height: 44px; padding: 0 18px; margin-left: 4px; display: flex; align-items: center; gap: 8px; border-radius: 999px; background: #0F766E; color: #FFFFFF; font-size: 14px; font-weight: 700; text-decoration: none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Pin a post</a>
+<a href="ProfileDesktop.dc.html" aria-label="My profile" style="width: 44px; height: 44px; border-radius: 22px; background: #FEF3C7; color: #78350F; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;">AH</a>
+</div>
+</sc-if>
+<sc-if value="{{loggedOut}}" hint-placeholder-val="{{false}}">
+<nav aria-label="About" style="flex: 1 1 auto; display: flex; justify-content: center; gap: 4px;">
+<a href="#how" style="height: 44px; padding: 0 16px; display: flex; align-items: center; color: #2B3835; font-size: 14px; font-weight: 600; text-decoration: none;">How it works</a>
+<a href="#kinds" style="height: 44px; padding: 0 16px; display: flex; align-items: center; color: #2B3835; font-size: 14px; font-weight: 600; text-decoration: none;">Categories</a>
+<a href="#rules" style="height: 44px; padding: 0 16px; display: flex; align-items: center; color: #2B3835; font-size: 14px; font-weight: 600; text-decoration: none;">Rules</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 4px;">
+<button aria-label="Language: English" style="height: 44px; padding: 0 12px; border: 0; background: transparent; color: #2B3835; font-size: 13px; font-weight: 700; font-family: inherit;">Тҷ · Ру · <span style="color: #0F766E;">En</span></button>
+<a href="LoginDesktop.dc.html" style="height: 44px; padding: 0 22px; display: flex; align-items: center; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 14px; font-weight: 700; text-decoration: none;">Log in</a>
+</div>
+</sc-if>
+</header>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"loggedIn":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":96}}'>
+class Component extends DCLogic {
+renderVals() {
+const loggedIn = this.props.loggedIn ?? true;
+return { loggedIn, loggedOut: !loggedIn, home: loggedIn ? 'Main.dc.html' : 'AboutDesktop.dc.html' };
+}
+}
+</script>
+</body>
+</html>

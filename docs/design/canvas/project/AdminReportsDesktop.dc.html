@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Admin reports</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+a{color:#0F766E}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 100%; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch;">
+<div style="flex: 1 1 220px; max-width: 260px;"><dc-import name="AdminRail" active="reports" hint-size="100%,960px"></dc-import></div>
+<main style="flex: 999 1 560px; min-width: 0; padding: 32px 32px 48px 16px; display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 6px;"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #44524E;">Slips people reported</p><h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -1.2px;">Reports</h1></div>
+<div role="group" aria-label="Status" style="display: flex; gap: 4px; padding: 5px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D9E1DD;">
+<button aria-pressed="true" style="height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 14px; font-weight: 700;">Open · 4</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 14px; font-weight: 600;">Resolved</button>
+<button aria-pressed="false" style="height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #2B3835; font-size: 14px; font-weight: 600;">Dismissed</button>
+</div>
+</div>
+<section style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px; overflow: hidden;" aria-label="Open reports">
+<sc-for list="{{reports}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 18px 22px; border-bottom: 1.5px dashed #C9D3CF;">
+<span style="width: 92px; transform: rotate(-5deg); border: 2.5px solid {{r.color}}; color: {{r.color}}; border-radius: 6px; padding: 3px 0; text-align: center; font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.8px;">{{r.reason}}</span>
+<span style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 3px;"><a href="AdminPostDetailDesktop.dc.html" style="font-size: 16px; font-weight: 700; color: #0E1A17; text-decoration: none;">{{r.title}}</a><span style="font-size: 13px; color: #5D6B67;">{{r.cat}} · by <a href="AdminUserDetailDesktop.dc.html" style="font-weight: 700; text-decoration: none;">{{r.author}}</a> · {{r.count}} · {{r.when}}</span></span>
+<button style="height: 42px; padding: 0 16px; border: 1.5px solid #C9D3CF; border-radius: 999px; background: #FFFFFF; color: #0E1A17; font-size: 13px; font-weight: 700;">Dismiss</button>
+<button style="height: 42px; padding: 0 16px; border: 0; border-radius: 999px; background: #B91C1C; color: #FFFFFF; font-size: 13px; font-weight: 700;">Take down</button>
+</div>
+</sc-for>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+reports: [
+{ reason: 'SCAM', color: '#B91C1C', title: 'iPhone 15 for 500 somoni, today only', cat: 'Other', author: '@user_8812', count: '3 reports', when: 'Today, 09:12' },
+{ reason: 'SPAM', color: '#B45309', title: 'Cheap rooms!!! Call now!!!', cat: 'Rentals', author: '@rooms_dush', count: '2 reports', when: 'Yesterday' },
+{ reason: 'OTHER', color: '#475569', title: 'Physics tutor, all levels', cat: 'Tutoring', author: '@k.rahimov', count: '1 report', when: '25 Oct' },
+{ reason: 'OFFENSIVE', color: '#7C3AED', title: 'Selling old textbooks', cat: 'Other', author: '@madina_t', count: '1 report', when: '24 Oct' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

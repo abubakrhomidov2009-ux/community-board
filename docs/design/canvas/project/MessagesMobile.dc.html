@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Messages on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="TopBar" title="Messages" hint-size="390px,64px"></dc-import>
+<div style="flex: 1; min-height: 0; overflow: hidden; padding: 6px 14px 0; display: flex; flex-direction: column; gap: 10px;">
+<sc-for list="{{convos}}" as="c" hint-placeholder-count="4">
+<a href="ChatMobile.dc.html" style="display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 20px; background: #FFFFFF; border: {{c.border}}; text-decoration: none; color: #0E1A17;">
+<span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 24px; background: {{c.avBg}}; color: {{c.avFg}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{c.initials}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;"><span style="display: flex; justify-content: space-between; gap: 8px;"><b style="font-size: 15px;">{{c.name}}</b><span style="font-size: 12px; color: #5D6B67;">{{c.time}}</span></span><span style="font-size: 13px; color: #44524E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{c.last}}</span></span>
+</a>
+</sc-for>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0;"><dc-import name="TabBar" active="none" hint-size="390px,100px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const u = '2px solid #0E1A17', r = '1px solid #D9E1DD';
+return {
+convos: [
+{ initials: 'FN', name: 'Firuza N.', time: '10:42', last: 'Yes, Saturday after 12:00 works.', border: u, avBg: '#FEF3C7', avFg: '#78350F' },
+{ initials: 'DS', name: 'Dilshod S.', time: 'Yesterday', last: 'Thanks! I found it.', border: r, avBg: '#DBEAFE', avFg: '#1E40AF' },
+{ initials: 'MT', name: 'Madina T.', time: 'Mon', last: 'How many students in a group?', border: r, avBg: '#DCFCE7', avFg: '#166534' },
+{ initials: 'KR', name: 'Karim R.', time: '20 Oct', last: 'Is the price final?', border: r, avBg: '#E2E8F0', avFg: '#334155' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

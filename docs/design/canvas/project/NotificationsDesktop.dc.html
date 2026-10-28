@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Notifications</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif;background:#ECF1EE}
+*{box-sizing:border-box}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 100%; background-color: #ECF1EE; background-image: radial-gradient(rgba(14,26,23,0.10) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif;">
+<dc-import name="NavPill" hint-size="100%,92px"></dc-import>
+<main style="max-width: 820px; margin: 0 auto; padding: 36px 24px 64px; display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 6px;"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #44524E;">3 new</p><h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -1.2px;">Notifications</h1></div>
+<button style="height: 44px; padding: 0 18px; border: 1.5px solid #0E1A17; border-radius: 999px; background: #FFFFFF; color: #0E1A17; font-size: 14px; font-weight: 700;">Mark all as read</button>
+</div>
+<p style="margin: 8px 0 0; font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #44524E;">TODAY</p>
+<sc-for list="{{today}}" as="n" hint-placeholder-count="3">
+<a href="{{n.href}}" style="display: flex; gap: 16px; align-items: center; padding: 16px 20px; border-radius: 20px; background: #FFFFFF; border: {{n.border}}; text-decoration: none; color: #0E1A17;">
+<span style="width: 46px; height: 46px; flex-shrink: 0; border-radius: 23px; background: {{n.iconBg}}; color: {{n.iconFg}}; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.icon}}"></path></svg></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 15px; line-height: 1.5; font-weight: {{n.weight}};">{{n.text}}</span><span style="font-size: 13px; color: #5D6B67;">{{n.time}}</span></span>
+<sc-if value="{{n.unread}}" hint-placeholder-val="{{false}}"><span style="width: 12px; height: 12px; border-radius: 6px; background: #0F766E;" aria-label="Unread"></span></sc-if>
+</a>
+</sc-for>
+<p style="margin: 8px 0 0; font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #44524E;">EARLIER</p>
+<sc-for list="{{earlier}}" as="n" hint-placeholder-count="2">
+<a href="{{n.href}}" style="display: flex; gap: 16px; align-items: center; padding: 16px 20px; border-radius: 20px; background: #FFFFFF; border: {{n.border}}; text-decoration: none; color: #0E1A17;">
+<span style="width: 46px; height: 46px; flex-shrink: 0; border-radius: 23px; background: {{n.iconBg}}; color: {{n.iconFg}}; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.icon}}"></path></svg></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 15px; line-height: 1.5; font-weight: {{n.weight}};">{{n.text}}</span><span style="font-size: 13px; color: #5D6B67;">{{n.time}}</span></span>
+</a>
+</sc-for>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+renderVals() {
+const ic = {
+comment: { icon: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z', iconBg: '#DBEAFE', iconFg: '#1E40AF' },
+expiring: { icon: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20M12 6v6l4 2', iconBg: '#FEF3C7', iconFg: '#92400E' },
+removed: { icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10', iconBg: '#FEE2E2', iconFg: '#991B1B' },
+message: { icon: 'm22 2-7 20-4-9-9-4ZM22 2 11 13', iconBg: '#E6F4F1', iconFg: '#0B4F4A' }
+};
+const mk = (r) => Object.assign({}, r, ic[r.t], { border: r.unread ? '2px solid #0E1A17' : '1px solid #D9E1DD', weight: r.unread ? 600 : 400 });
+return {
+today: [
+{ t: 'comment', unread: true, text: 'Dilshod S. left a note on your slip “Math lessons for first-year students”.', time: '10 minutes ago', href: 'PostDesktop.dc.html' },
+{ t: 'message', unread: true, text: 'New message from Firuza N.', time: '1 hour ago', href: 'MessagesDesktop.dc.html' },
+{ t: 'expiring', unread: true, text: 'Your slip “Chess club, Fridays at 17:00” comes down in 3 days. Renew it to keep it up.', time: '09:00', href: 'EditDesktop.dc.html' }
+].map(mk),
+earlier: [
+{ t: 'removed', unread: false, text: 'An admin took down your slip “Selling old textbooks”. It broke the house rules.', time: 'Yesterday', href: 'AboutDesktop.dc.html' },
+{ t: 'comment', unread: false, text: 'Madina T. left a note on “Looking for a roommate near campus”.', time: '3 days ago', href: 'PostDesktop.dc.html' }
+].map(mk)
+};
+}
+}
+</script>
+</body>
+</html>

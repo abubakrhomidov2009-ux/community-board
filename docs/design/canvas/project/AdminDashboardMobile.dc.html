@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Admin overview on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="AdminBar" active="dashboard" hint-size="390px,120px"></dc-import>
+<div style="padding: 16px 14px; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+<sc-for list="{{stats}}" as="s" hint-placeholder-count="4">
+<div style="padding: 16px; border-radius: 20px; background: {{s.bg}}; color: {{s.fg}}; border: 1px solid #D9E1DD; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 12px; font-weight: 600; opacity: 0.85;">{{s.label}}</span><span style="font-family: 'Unbounded', sans-serif; font-size: 28px; font-weight: 700;">{{s.value}}</span></div>
+</sc-for>
+</div>
+<section style="background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+<h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-size: 15px; font-weight: 700;">Active slips by category</h2>
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 5px;"><span style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;"><span>{{c.name}}</span><span>{{c.n}}</span></span><span style="height: 12px; border-radius: 6px; background: #EEF2F0; overflow: hidden;"><span style="display: block; height: 12px; width: {{c.w}}; border-radius: 6px; background: {{c.color}};"></span></span></div>
+</sc-for>
+</section>
+<a href="AdminReportsMobile.dc.html" style="height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: #0F766E; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none;">Review 4 open reports</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const w = { bg: '#FFFFFF', fg: '#0E1A17' };
+return {
+stats: [Object.assign({ label: 'Users', value: '212' }, w), Object.assign({ label: 'Active slips', value: '86' }, w), { label: 'Open reports', value: '4', bg: '#0E1A17', fg: '#FFFFFF' }, Object.assign({ label: 'Blocked', value: '2' }, w)],
+cats: [
+{ name: 'Rentals', n: 31, w: '100%', color: '#22C55E' },
+{ name: 'Tutoring', n: 24, w: '77%', color: '#3B82F6' },
+{ name: 'Lost and found', n: 18, w: '58%', color: '#F97316' },
+{ name: 'Other', n: 13, w: '42%', color: '#94A3B8' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

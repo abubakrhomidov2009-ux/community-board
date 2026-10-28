@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Pin or edit on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input,select,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #ECF1EE; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<dc-import name="TopBar" title="{{heading}}" back-href="{{backHref}}" hint-size="390px,64px"></dc-import>
+<form style="flex: 1; min-height: 0; overflow: hidden; margin: 0 12px; padding: 18px 16px; background: #FFFFFF; border: 1px solid #D9E1DD; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; gap: 16px;">
+<sc-if value="{{edit}}" hint-placeholder-val="{{false}}"><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 8px 8px 14px; border-radius: 999px; background: #FFF8E6; border: 1px solid #EBDDB5; font-size: 13px; color: #5B4210;">Down in 3 days<button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: #0E1A17; color: #FFFFFF; font-size: 13px; font-weight: 700;">Renew</button></div></sc-if>
+<fieldset style="border: 0; margin: 0; padding: 0;"><legend style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E; margin-bottom: 8px;">What is it?</legend>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+<label style="height: 48px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 4px; background: #F97316;"></span><input type="radio" name="mc" style="accent-color: #0F766E;"> Lost</label>
+<label style="height: 48px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 4px; background: #3B82F6;"></span><input type="radio" name="mc" style="accent-color: #0F766E;"> Tutoring</label>
+<label style="height: 48px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 2px solid #0E1A17; border-radius: 14px; background: #F1F5F3; font-size: 14px; font-weight: 700;"><span style="width: 8px; height: 8px; border-radius: 4px; background: #22C55E;"></span><input type="radio" name="mc" checked style="accent-color: #0F766E;"> Rentals</label>
+<label style="height: 48px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 4px; background: #94A3B8;"></span><input type="radio" name="mc" style="accent-color: #0F766E;"> Other</label>
+</div></fieldset>
+<div style="display: flex; flex-direction: column; gap: 6px;"><label for="m-t" style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E;">Title</label><input id="m-t" value="{{v.title}}" placeholder="Room for a student near campus" style="height: 50px; padding: 0 16px; border: 1.5px solid #0E1A17; border-radius: 14px; font-size: 16px;"></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><label for="m-d" style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E;">Details</label><textarea id="m-d" rows="3" placeholder="What, where, and when" style="padding: 12px 16px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 16px; resize: none;">{{v.desc}}</textarea></div>
+<div style="display: flex; gap: 8px;">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px;"><label for="m-p" style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E;">Price</label><input id="m-p" inputmode="numeric" value="{{v.price}}" placeholder="800" style="height: 50px; padding: 0 14px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 16px; min-width: 0;"></div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px;"><label for="m-w" style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E;">Where</label><select id="m-w" style="height: 50px; padding: 0 12px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 16px; background: #FFFFFF;"><option>Campus</option><option>Sino</option><option>Firdavsi</option></select></div>
+</div>
+<div style="display: flex; gap: 8px;">
+<button type="button" style="width: 76px; height: 76px; border: 2px dashed #0E1A17; border-radius: 16px; background: #F1F5F3; color: #0E1A17; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 11px; font-weight: 700;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>Photo</button>
+<span aria-label="Photo 1" style="width: 76px; height: 76px; border-radius: 16px; background: #D8F0E1; transform: rotate(-2deg);"></span>
+<span aria-label="Photo 2" style="width: 76px; height: 76px; border-radius: 16px; background: #CBE9D6; transform: rotate(2deg);"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><label for="m-tg" style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #44524E;">Telegram</label><input id="m-tg" value="{{v.tg}}" placeholder="@username" style="height: 50px; padding: 0 16px; border: 1.5px solid #C9D3CF; border-radius: 14px; font-size: 16px;"></div>
+</form>
+<div style="flex-shrink: 0; margin: 0 12px; padding: 12px 16px 26px; background: #FFFFFF; border: 1px solid #D9E1DD; border-top: 1.5px dashed #C9D3CF; border-radius: 0 0 24px 24px; display: flex; gap: 8px;">
+<sc-if value="{{edit}}" hint-placeholder-val="{{false}}"><button type="button" style="height: 54px; padding: 0 16px; border: 1.5px solid #B91C1C; border-radius: 999px; background: #FFFFFF; color: #B91C1C; font-size: 14px; font-weight: 700;">Take down</button></sc-if>
+<a href="PostMobile.dc.html" style="flex: 1; height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: #0F766E; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none;">{{submit}}</a>
+</div>
+<div style="height: 12px; flex-shrink: 0;"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"edit":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const edit = this.props.edit ?? false;
+return {
+edit,
+heading: edit ? 'Edit your slip' : 'Pin a new slip',
+submit: edit ? 'Save changes' : 'Pin it to the board',
+backHref: edit ? 'PostMobile.dc.html' : 'HomeMobile.dc.html',
+v: edit ? { title: 'Room for a student, 10 min from campus', desc: 'A bright room, 10 minutes from campus. Furnished, Wi-Fi included.', price: '800', tg: '@firuza_n' } : { title: '', desc: '', price: '', tg: '' }
+};
+}
+}
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 7 (the backend gate). Built on day 7 before the gate: the 2026-10-28 plan update in the backend (login-only access, profile editing, refresh token, roles + super admin, admin post/user pages), all with unit + e2e tests. The owner asked me to run the checks myself, so I run them and report results. Next: finish the Swagger review, owner's SUPER_ADMIN_EMAIL / SUPER_ADMIN_PASSWORD in server/.env, spec sync, owner's big check, tag api-v1.0.0. Then Stage B (needs docs/design/logo.png and the design canvas/export first).**
+**Current day: 7 (the backend gate). Everything on the gate is done and checked by me (plan update in the backend, Swagger review, error codes, spec sync, 230 unit + 105 e2e tests). Waiting for: the owner's big check in Swagger, then `git tag api-v1.0.0`. Stage B (frontend) starts only when the owner says so. The logo is saved at `docs/design/logo.png` and the design canvas files at `docs/design/canvas/`.**
 
 ## Plan update (2026-10-28), applies everywhere
 
@@ -159,12 +159,12 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 
 ## "Backend done" gate (all must be checked before ANY frontend work)
 
-- [ ] Every endpoint in docs/02-SPEC.md exists, works and is documented in Swagger with examples and every response code
-- [ ] Every error code in docs/02-SPEC.md is returned by the backend where expected
-- [ ] All backend unit and e2e tests pass
-- [ ] `npm run db:seed` (in `server/`) loads the seed data
-- [ ] docs/02-SPEC.md matches the real API
-- [ ] Login-only access verified (guests get 401 everywhere except health and auth); roles matrix + super admin from server/.env verified
+- [x] Every endpoint in docs/02-SPEC.md exists, works and is documented in Swagger with examples and every response code (56 = 56, checked by an audit script and a test)
+- [x] Every error code in docs/02-SPEC.md is returned by the backend where expected (44 codes; a test keeps the spec table equal to the code)
+- [x] All backend unit and e2e tests pass (230 unit, 105 e2e)
+- [x] `npm run db:seed` (in `server/`) loads the seed data
+- [x] docs/02-SPEC.md matches the real API
+- [x] Login-only access verified (guests get 401 everywhere except health and auth); roles matrix + super admin from server/.env verified
 - [ ] Owner did the day-7 big check in Swagger and all bugs are fixed
 - [ ] `git tag api-v1.0.0`
 

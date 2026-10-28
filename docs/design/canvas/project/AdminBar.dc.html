@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phone admin bar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<header style="width: 100%; box-sizing: border-box; background: #0E1A17; color: #FFFFFF; padding: 10px 12px 12px; border-radius: 0 0 26px 26px; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<a href="HomeMobile.dc.html" aria-label="Back to the board" style="width: 44px; height: 44px; border-radius: 22px; border: 1.5px solid #3A4A46; display: flex; align-items: center; justify-content: center; color: #FFFFFF;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7M19 12H5"></path></svg></a>
+<span style="font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 700;">Admin</span>
+<span style="font-size: 10px; font-weight: 700; color: #FBBF24; letter-spacing: 0.6px;">SUPER ADMIN</span>
+</div>
+<nav aria-label="Admin sections" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 999px; background: #1C2B27;">
+<a href="AdminDashboardMobile.dc.html" style="height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: {{n.dashboard.bg}}; color: {{n.dashboard.fg}}; font-size: 12px; font-weight: 700; text-decoration: none;">Overview</a>
+<a href="AdminReportsMobile.dc.html" style="height: 40px; display: flex; align-items: center; justify-content: center; gap: 4px; border-radius: 999px; background: {{n.reports.bg}}; color: {{n.reports.fg}}; font-size: 12px; font-weight: 700; text-decoration: none;">Reports<span style="width: 16px; height: 16px; border-radius: 8px; background: #F59E0B; color: #3B2203; font-size: 10px; display: flex; align-items: center; justify-content: center;">4</span></a>
+<a href="AdminPostsMobile.dc.html" style="height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: {{n.posts.bg}}; color: {{n.posts.fg}}; font-size: 12px; font-weight: 700; text-decoration: none;">Slips</a>
+<a href="AdminUsersMobile.dc.html" style="height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: {{n.users.bg}}; color: {{n.users.fg}}; font-size: 12px; font-weight: 700; text-decoration: none;">Users</a>
+</nav>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["dashboard","reports","posts","users"],"default":"dashboard"},"$preview":{"width":390,"height":120}}'>
+class Component extends DCLogic {
+renderVals() {
+const a = this.props.active ?? 'dashboard';
+const n = {};
+['dashboard', 'reports', 'posts', 'users'].forEach((k) => { n[k] = a === k ? { bg: '#FFFFFF', fg: '#0E1A17' } : { bg: 'transparent', fg: '#C9D6D2' }; });
+return { n };
+}
+}
+</script>
+</body>
+</html>

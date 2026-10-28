@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community Board · Chat on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background-color: #F6F9F7; background-image: radial-gradient(rgba(14,26,23,0.07) 1px, transparent 1.3px); background-size: 18px 18px; color: #0E1A17; font-family: 'Onest', system-ui, sans-serif; display: flex; flex-direction: column;">
+<header style="flex-shrink: 0; height: 68px; padding: 0 12px; display: flex; align-items: center; gap: 10px; background: #FFFFFF; border-bottom: 1.5px dashed #C9D3CF;">
+<a href="MessagesMobile.dc.html" aria-label="Back" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid #D9E1DD; display: flex; align-items: center; justify-content: center; color: #0E1A17;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7M19 12H5"></path></svg></a>
+<span style="width: 40px; height: 40px; border-radius: 20px; background: #FEF3C7; color: #78350F; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center;">FN</span>
+<a href="UserMobile.dc.html" style="font-size: 16px; font-weight: 700; color: #0E1A17; text-decoration: none;">Firuza N.</a>
+</header>
+<a href="PostMobile.dc.html" style="flex-shrink: 0; margin: 12px; display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D9E1DD; text-decoration: none; color: #0E1A17;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #E6F7EC; border-top: 4px solid #22C55E;"></span><span style="font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Room near campus · 800 somoni / month</span></a>
+<div style="flex: 1; min-height: 0; overflow: hidden; padding: 6px 14px; display: flex; flex-direction: column; gap: 10px;">
+<span style="align-self: center; font-size: 12px; font-weight: 700; color: #44524E; padding: 4px 12px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D9E1DD;">Today</span>
+<sc-for list="{{msgs}}" as="m" hint-placeholder-count="4">
+<div style="align-self: {{m.side}}; max-width: 80%; display: flex; flex-direction: column; gap: 3px;">
+<span style="padding: 11px 15px; border-radius: {{m.radius}}; background: {{m.bg}}; color: {{m.fg}}; border: 1px solid {{m.border}}; font-size: 15px; line-height: 1.45;">{{m.text}}</span>
+<span style="align-self: {{m.side}}; font-size: 11px; color: #5D6B67;">{{m.time}}</span>
+</div>
+</sc-for>
+</div>
+<form style="flex-shrink: 0; padding: 10px 12px 26px; display: flex; gap: 8px; background: #FFFFFF; border-top: 1.5px dashed #C9D3CF;">
+<label for="cm" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Message</label>
+<input id="cm" placeholder="Write a message" style="flex: 1; min-width: 0; height: 50px; padding: 0 18px; border: 1.5px solid #0E1A17; border-radius: 999px; font-size: 16px;">
+<button type="button" aria-label="Send" style="width: 50px; height: 50px; border: 0; border-radius: 25px; background: #0F766E; color: #FFFFFF; display: flex; align-items: center; justify-content: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button>
+</form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const me = { side: 'flex-end', bg: '#0E1A17', fg: '#FFFFFF', border: '#0E1A17', radius: '20px 20px 4px 20px' }, them = { side: 'flex-start', bg: '#FFFFFF', fg: '#0E1A17', border: '#D9E1DD', radius: '20px 20px 20px 4px' };
+return {
+msgs: [
+Object.assign({ text: 'Hello! Is the room still free?', time: '10:30' }, me),
+Object.assign({ text: 'Hi! Yes, it’s free from 1 November.', time: '10:35' }, them),
+Object.assign({ text: 'Can I come to see it on Saturday?', time: '10:38' }, me),
+Object.assign({ text: 'Yes, Saturday after 12:00 works.', time: '10:42' }, them)
+]
+};
+}
+}
+</script>
+</body>
+</html>
