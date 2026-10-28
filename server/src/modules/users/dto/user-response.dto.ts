@@ -36,6 +36,14 @@ export class UserResponseDto {
   })
   preferredLocale: Locale;
 
+  @ApiProperty({
+    example: null,
+    nullable: true,
+    type: String,
+    description: 'My profile picture, or null when I have none',
+  })
+  avatarUrl: string | null;
+
   @ApiProperty({ example: '2026-03-01T10:00:00.000Z' })
   createdAt: Date;
 
@@ -48,6 +56,7 @@ export class UserResponseDto {
       isStudentVerified: user.isStudentVerified,
       universityEmail: user.universityEmail,
       preferredLocale: user.preferredLocale,
+      avatarUrl: user.avatarUrl,
       createdAt: user.createdAt,
     };
   }

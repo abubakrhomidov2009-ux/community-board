@@ -9,6 +9,7 @@ describe('TasksService', () => {
   const prisma = {
     post: { findMany: jest.fn(), updateMany: jest.fn() },
     notification: { createMany: jest.fn() },
+    refreshToken: { deleteMany: jest.fn() },
     $transaction: jest.fn(),
   };
   const posts = { expireOverdue: jest.fn() };
@@ -84,9 +85,31 @@ describe('TasksService', () => {
     it('expires overdue posts (forced) and sends the warnings', async () => {
       posts.expireOverdue.mockResolvedValue(3);
       prisma.post.findMany.mockResolvedValue([]);
+      prisma.refreshToken.deleteMany.mockResolvedValue({ count: 2 });
       await service.runDaily();
       expect(posts.expireOverdue).toHaveBeenCalledWith(true);
       expect(prisma.post.findMany).toHaveBeenCalled();
+      expect(prisma.refreshToken.deleteMany).toHaveBeenCalled();
+    });
+  });
+
+  describe('deleteOldRefreshTokens', () => {
+    it('deletes expired tokens and tokens revoked more than a day ago', async () => {
+      prisma.refreshToken.deleteMany.mockResolvedValue({ count: 5 });
+      const now = new Date('2026-03-10T03:00:00Z');
+      await expect(service.deleteOldRefreshTokens(now)).resolves.toBe(5);
+      const args = (
+        prisma.refreshToken.deleteMany.mock.calls[0] as unknown[]
+      )[0] as {
+        where: { OR: Array<Record<string, { lt: Date }>> };
+      };
+      expect(args.where.OR[0].expiresAt.lt).toEqual(now);
+      expect(args.where.OR[1].revokedAt.lt).toEqual(
+        new Date('2026-03-09T03:00:00Z'),
+      );
+      expect(args.where.OR[2].rotatedAt.lt).toEqual(
+        new Date('2026-03-09T03:00:00Z'),
+      );
     });
   });
 });

@@ -20,9 +20,24 @@ export class TasksService {
   async runDaily(): Promise<void> {
     const expired = await this.posts.expireOverdue(true);
     const warned = await this.sendExpiryWarnings();
+    const cleaned = await this.deleteOldRefreshTokens();
     this.logger.log(
-      `Daily job: ${expired} post(s) expired, ${warned} expiry warning(s) sent`,
+      `Daily job: ${expired} post(s) expired, ${warned} expiry warning(s) sent, ${cleaned} old login session(s) deleted`,
     );
+  }
+
+  /** Deletes refresh tokens that are expired, or were revoked or replaced more than a day ago. */
+  async deleteOldRefreshTokens(now = new Date()): Promise<number> {
+    const { count } = await this.prisma.refreshToken.deleteMany({
+      where: {
+        OR: [
+          { expiresAt: { lt: now } },
+          { revokedAt: { lt: new Date(now.getTime() - DAY_MS) } },
+          { rotatedAt: { lt: new Date(now.getTime() - DAY_MS) } },
+        ],
+      },
+    });
+    return count;
   }
 
   /** Tells the author of each ACTIVE post that expires within 3 days (once per post). */

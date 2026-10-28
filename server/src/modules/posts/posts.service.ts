@@ -1,9 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { Category, Prisma, PostStatus, PriceUnit, Role } from '@prisma/client';
+import { Category, Prisma, PostStatus, PriceUnit } from '@prisma/client';
 import { AppException } from '../../common/app.exception';
 import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { pageArgs, paginate } from '../../common/utils/pagination';
+import { isAdminRole } from '../../common/utils/roles';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CloudinaryService } from '../uploads/cloudinary.service';
@@ -166,7 +167,7 @@ export class PostsService {
     }
     // Removed posts are only visible to their author and to admins.
     const canSeeRemoved =
-      viewer && (viewer.id === post.authorId || viewer.role === Role.ADMIN);
+      viewer && (viewer.id === post.authorId || isAdminRole(viewer.role));
     if (post.status === PostStatus.REMOVED && !canSeeRemoved) {
       throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
@@ -256,7 +257,7 @@ export class PostsService {
     if (!post) {
       throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
-    if (post.authorId !== user.id && user.role !== Role.ADMIN) {
+    if (post.authorId !== user.id && !isAdminRole(user.role)) {
       throw new AppException(ErrorCode.POST_NOT_OWNER, HttpStatus.FORBIDDEN);
     }
     await this.prisma.post.delete({ where: { id } });

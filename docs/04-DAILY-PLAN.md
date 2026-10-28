@@ -4,6 +4,8 @@ Every day ends with a `🔍 DAILY CHECK` for the owner. The next day starts only
 
 **Definition of done (every day):** Swagger works for every new endpoint (all status codes documented) · pages work at 360px and 1280px · no hardcoded text · translation keys present in en/tg/ru · tests pass · `npm run lint` passes · progress log and CLAUDE.md checkboxes updated · committed.
 
+**Plan update (2026-10-28).** (1) The site is login-only: About is the only public page, login/sign-up are a modal. (2) Profile editing (username, password, picture) and refresh tokens are in the backend. (3) Roles USER / ADMIN / SUPER_ADMIN, admin post and user pages. (4) New design "Notice Slips" with Unbounded + Onest fonts, the round logo and a light/dark token set (docs/11). The backend parts were built on Day 7 before the gate; the frontend parts are in days 8–11 below.
+
 ---
 
 ## Day 1: Setup (Step 1 + Step 2)
@@ -30,7 +32,7 @@ Every day ends with a `🔍 DAILY CHECK` for the owner. The next day starts only
   - [ ] `npx prisma migrate dev --name init`
   - [ ] `PrismaService`, `ConfigModule` with env validation
   - [ ] `common/`: `ErrorCode`, `AppException`, `AllExceptionsFilter`, `ErrorResponseDto`, `PaginationQueryDto`
-  - [ ] Auth module: register, login, logout, me; `JwtAuthGuard`, `OptionalJwtAuthGuard`, `RolesGuard`, `@CurrentUser()`, `@Roles()`
+  - [ ] Auth module: register, login, logout, me; `JwtAuthGuard`, `RolesGuard`, `@CurrentUser()`, `@Roles()`
   - [ ] Swagger: `addCookieAuth('access_token')`, `@nestjs/swagger` CLI plugin in `nest-cli.json`
   - [ ] Seed script skeleton: admin + demo users
   - [ ] Unit tests: `AuthService`
@@ -98,43 +100,47 @@ Every day ends with a `🔍 DAILY CHECK` for the owner. The next day starts only
 ## Day 7: Backend gate (all)
 
 - **Tasks**
+  - [x] Plan update in the backend: login-only access, profile editing (username, password, picture), refresh token, roles + super admin (`SUPER_ADMIN_EMAIL`), admin post/user pages, promote/demote, admin actions as PATCH
   - [ ] Review every endpoint in Swagger (summary, examples, all response codes, admin marked)
   - [ ] Check every error code is returned where expected
   - [ ] Sync docs/02-SPEC.md with the real API
   - [ ] Fix issues; `git tag api-v1.0.0`
-- **Needs from owner:** the **big check** of the whole backend (docs/08 Part A)
-- **Commits:** `docs: sync API spec`, tag `api-v1.0.0`
+- **Needs from owner:** your email and a strong password for the super admin in `server/.env` (`SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`); then the **big check** of the whole backend (docs/08 Part A)
+- **Commits:** `feat(auth): add refresh tokens, change password and login-only access`, `feat(users): edit username and profile picture`, `feat(admin): add roles, super admin and admin detail pages`, `docs: sync API spec`, tag `api-v1.0.0`
 
-## Day 8: Frontend shell + auth (features 1, 12)
+## Day 8: Frontend shell, About page + auth modal (features 1, 12, 13)
 
 - **Tasks**
+  - [ ] **Design:** read the "Community Board Design v2 — Notice Slips" canvas (or the exported files in `docs/design/`) and the logo `docs/design/logo.png`. If they are missing, ask the owner (🙋 format).
   - [ ] `npm run api:types` (openapi-typescript from `/api/docs-json` → `src/lib/api/schema.d.ts`)
   - [ ] next-intl + `[locale]` routing + `middleware.ts`; en/tg/ru.json skeleton; `npm run i18n:check`
   - [ ] eslint-plugin-i18next `no-literal-string`
-  - [ ] Design tokens in `globals.css`, fonts (Inter with Cyrillic), logo SVG, favicon
-  - [ ] Axios instance, QueryProvider, next-themes, MotionConfig
-  - [ ] Layout shell: Navbar, MobileTopBar, BottomTabBar, MobileDrawer, theme + language switchers
-  - [ ] Login and register pages; protected routes
+  - [ ] Design tokens (light + dark, docs/11) in `globals.css`, fonts Unbounded + Onest (check ғ ӣ қ ӯ ҳ ҷ), logo files and icons made from `docs/design/logo.png`
+  - [ ] Axios instance with the refresh-on-401 interceptor, QueryProvider, next-themes (Light / Dark / System), MotionConfig
+  - [ ] Layout shell: Navbar (floating pill), MobileTopBar, BottomTabBar (floating dark), MobileDrawer, theme + language switchers
+  - [ ] **About page** (`/[locale]` and `/about`) = the front door; **AuthModal** (Log in / Create account tabs, bottom sheet on phones); route guard: guests on any other link see About with the modal open, then return to that link after login; no `/login` or `/register` pages
+  - [ ] 404 page (`not-found.tsx`, locale and root), offline page
   - [ ] Dev server reachable on Wi-Fi (`http://<ip>:3000`)
-- **Needs from owner:** phone on the same Wi-Fi
-- **DAILY CHECK:** register/login on laptop and phone; switch theme and language; bottom tab bar on phone
-- **Commits:** `feat(client): add i18n, design tokens and layout shell`, `feat(auth): add login and register pages`
+- **Needs from owner:** phone on the same Wi-Fi; `docs/design/logo.png`; the design export if Claude cannot read the canvas
+- **READY TO CHECK:** names the artboards to compare with (AboutDesktop/AboutMobile, LoginDesktop/Mobile, RegisterDesktop/Mobile, NotFoundDesktop/Mobile, OfflineDesktop/Mobile, Style)
+- **DAILY CHECK:** open About as a guest on laptop and phone; open a post link as a guest (About + modal appear); create account; log in; log out; switch theme (Light/Dark/System) and language; bottom tab bar on phone
+- **Commits:** `feat(client): add i18n, design tokens and layout shell`, `feat(auth): add About page and auth modal`
 
 ## Day 9: Browse + posts (features 2–11, 14, 15)
 
-- **Tasks:** browse page (filter panel/sheet, search, sort, pagination, counts), PostCard, post detail (gallery, contacts, comments, resolve), create/edit form with image upload and compression, delete confirmation, server prefetch with HydrationBoundary
+- **Tasks:** browse page (filter panel/sheet, search, sort, pagination, counts), PostSlip, post detail (gallery, contacts, comments, resolve), create/edit form with image upload and compression, delete confirmation, server prefetch with HydrationBoundary
 - **DAILY CHECK:** create a post with a photo from the phone; filter, search, sort; comment; resolve
 - **Commits:** `feat(posts): add browse page`, `feat(posts): add post detail`, `feat(posts): add create and edit forms`
 
 ## Day 10: Profiles, saved, report, share, notifications (features 7, 13, 17–21, 23)
 
-- **Tasks:** My profile, public profile, Saved page + heart (optimistic), report dialog, share button, renew, About page, notifications page + bell with polling
+- **Tasks:** My profile with **edit username, change password, change picture and Log out button**, public profile, Saved page + heart (optimistic), report dialog, share button, renew, notifications page + bell with polling
 - **DAILY CHECK:** save/unsave, report, share (copy, Telegram, phone share sheet), renew an expired post, receive a comment notification
 - **Commits:** `feat(profile): add profile pages`, `feat(favorites): add saved page`, `feat(notifications): add notifications`
 
 ## Day 11: Admin, messages, map, student verification, PWA, translations (features 16, 22, 24–26)
 
-- **Tasks:** admin panel (TanStack Table + cards), messages, map picker and map view, settings page with university email, PWA (manifest, Serwist, offline page, install hint), fill Tajik and Russian translations, motion polish, reduced-motion check
+- **Tasks:** admin panel (TanStack Table + cards) **including the admin post page and admin user page, role filter, Make admin / Remove admin for the super admin and role badges**, messages, map picker and map view, settings page with university email, PWA (manifest, Serwist, offline page, install hint), fill Tajik and Russian translations, motion polish, reduced-motion check
 - **Needs from owner:** phone on the same Wi-Fi
 - **Big check:** the whole frontend on laptop and phone, all 3 languages (docs/08 Part B)
 - **Commits:** `feat(admin): add admin panel`, `feat(messages): add chat`, `feat(map): add map`, `feat(pwa): add manifest and service worker`, `feat(i18n): add Tajik and Russian translations`

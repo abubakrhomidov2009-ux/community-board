@@ -1,5 +1,6 @@
 // Demo data for local development. Run: npm run db:seed (in server/).
 // Demo accounts only: do NOT seed these passwords on a database with real users.
+import 'dotenv/config';
 import {
   Category,
   District,
@@ -13,6 +14,7 @@ import {
   Role,
 } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { ensureSuperAdmin } from '../src/modules/admin/super-admin';
 
 const prisma = new PrismaClient();
 
@@ -72,6 +74,22 @@ async function main() {
       update: { ...data, passwordHash },
       create: { ...data, passwordHash },
     });
+  }
+
+  // The owner's account, from server/.env. Not a demo account: it keeps the password you chose.
+  const superEmail = process.env.SUPER_ADMIN_EMAIL;
+  const superPassword = process.env.SUPER_ADMIN_PASSWORD;
+  if (superEmail && superPassword) {
+    const result = await ensureSuperAdmin(prisma, {
+      email: superEmail,
+      password: superPassword,
+      resetPassword: true,
+    });
+    console.log(`Super admin account ${result} (${superEmail}).`);
+  } else {
+    console.log(
+      'No SUPER_ADMIN_EMAIL / SUPER_ADMIN_PASSWORD in server/.env: no super admin created.',
+    );
   }
   console.log(`Seeded ${users.length} users.`);
 

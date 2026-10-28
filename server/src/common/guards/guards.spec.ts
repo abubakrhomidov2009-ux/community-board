@@ -8,7 +8,6 @@ import { ErrorCode } from '../error-code';
 import type { AuthenticatedRequest } from '../types/authenticated-request';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { NotBlockedGuard } from './not-blocked.guard';
-import { OptionalJwtAuthGuard } from './optional-jwt-auth.guard';
 import { RolesGuard } from './roles.guard';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AppThrottlerGuard } from './app-throttler.guard';
@@ -21,6 +20,8 @@ const dbUser = {
   role: Role.USER,
   isBlocked: false,
   universityEmail: null,
+  avatarUrl: null,
+  avatarPublicId: null,
   isStudentVerified: false,
   preferredLocale: Locale.EN,
   createdAt: new Date('2026-01-01T00:00:00Z'),
@@ -129,51 +130,6 @@ describe('JwtAuthGuard', () => {
   });
 });
 
-describe('OptionalJwtAuthGuard', () => {
-  const jwt = { verifyAsync: jest.fn() };
-  const prisma = { user: { findUnique: jest.fn() } };
-  let guard: OptionalJwtAuthGuard;
-
-  beforeEach(() => {
-    jest.resetAllMocks();
-    guard = new OptionalJwtAuthGuard(
-      jwt as unknown as JwtService,
-      prisma as unknown as PrismaService,
-    );
-  });
-
-  it('never refuses: guests, bad tokens and blocked users simply are not logged in', async () => {
-    const guest = {} as AuthenticatedRequest;
-    await expect(guard.canActivate(contextFor(guest))).resolves.toBe(true);
-    expect(guest.user).toBeUndefined();
-
-    jwt.verifyAsync.mockRejectedValue(new Error('bad'));
-    const bad = {
-      cookies: { access_token: 'x' },
-    } as unknown as AuthenticatedRequest;
-    await expect(guard.canActivate(contextFor(bad))).resolves.toBe(true);
-    expect(bad.user).toBeUndefined();
-
-    jwt.verifyAsync.mockResolvedValue({ sub: 'u1' });
-    prisma.user.findUnique.mockResolvedValue({ ...dbUser, isBlocked: true });
-    const blocked = {
-      cookies: { access_token: 'x' },
-    } as unknown as AuthenticatedRequest;
-    await expect(guard.canActivate(contextFor(blocked))).resolves.toBe(true);
-    expect(blocked.user).toBeUndefined();
-  });
-
-  it('sets the user for a valid login', async () => {
-    jwt.verifyAsync.mockResolvedValue({ sub: 'u1' });
-    prisma.user.findUnique.mockResolvedValue(dbUser);
-    const request = {
-      cookies: { access_token: 'x' },
-    } as unknown as AuthenticatedRequest;
-    await guard.canActivate(contextFor(request));
-    expect(request.user?.id).toBe('u1');
-  });
-});
-
 describe('RolesGuard', () => {
   const reflector = { getAllAndOverride: jest.fn() };
   let guard: RolesGuard;
@@ -197,6 +153,25 @@ describe('RolesGuard', () => {
     expect((reflector.getAllAndOverride.mock.calls[0] as unknown[])[0]).toBe(
       ROLES_KEY,
     );
+  });
+
+  it('lets the super admin into admin endpoints, and into super-admin-only endpoints', () => {
+    const superAdmin = { ...safe, role: Role.SUPER_ADMIN };
+    reflector.getAllAndOverride.mockReturnValue([Role.ADMIN]);
+    expect(guard.canActivate(contextFor({ user: superAdmin }))).toBe(true);
+    reflector.getAllAndOverride.mockReturnValue([Role.SUPER_ADMIN]);
+    expect(guard.canActivate(contextFor({ user: superAdmin }))).toBe(true);
+  });
+
+  it('keeps super-admin-only endpoints away from admins and users (FORBIDDEN_ROLE)', async () => {
+    reflector.getAllAndOverride.mockReturnValue([Role.SUPER_ADMIN]);
+    for (const role of [Role.ADMIN, Role.USER]) {
+      await expectError(
+        () => guard.canActivate(contextFor({ user: { ...safe, role } })),
+        ErrorCode.FORBIDDEN_ROLE,
+        HttpStatus.FORBIDDEN,
+      );
+    }
   });
 
   it('refuses a normal user with ADMIN_ONLY and a guest with UNAUTHORIZED', async () => {

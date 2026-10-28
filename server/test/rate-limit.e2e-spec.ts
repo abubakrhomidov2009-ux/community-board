@@ -71,7 +71,7 @@ describe('Rate limiting (e2e)', () => {
   });
 
   it('other endpoints keep working while login is limited (each route has its own counter)', async () => {
-    await guestClient(ctx.app).get('/api/posts').expect(200);
+    await guestClient(ctx.app).get('/api/posts').expect(401); // refused for being a guest, not for the rate limit
     await guestClient(ctx.app).get('/api/health').expect(200);
   });
 

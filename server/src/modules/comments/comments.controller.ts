@@ -36,6 +36,8 @@ import {
 } from './dto/comment.dto';
 
 @ApiTags('Comments')
+@ApiCookieAuth()
+@UseGuards(JwtAuthGuard)
 @Controller()
 export class CommentsController {
   constructor(private readonly comments: CommentsService) {}
@@ -48,11 +50,13 @@ export class CommentsController {
   })
   @ApiOperation({
     summary: 'List comments of a post (oldest first)',
-    description: 'Public.',
+    description: 'Login needed.',
   })
   @ApiOkResponse({ type: PaginatedCommentsResponseDto })
   @ApiErrors({
     400: [ErrorCode.VALIDATION_FAILED],
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
     404: [ErrorCode.POST_NOT_FOUND],
   })
   list(
@@ -64,8 +68,7 @@ export class CommentsController {
 
   @Post('posts/:postId/comments')
   @Throttle(THROTTLE.createComment)
-  @UseGuards(JwtAuthGuard, NotBlockedGuard)
-  @ApiCookieAuth()
+  @UseGuards(NotBlockedGuard)
   @ApiParam({
     name: 'postId',
     description: 'Post id',
@@ -95,8 +98,6 @@ export class CommentsController {
 
   @Delete('comments/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(JwtAuthGuard)
-  @ApiCookieAuth()
   @ApiParam({
     name: 'id',
     description: 'Comment id',

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -8,9 +9,14 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
+  ApiBody,
+  ApiConsumes,
   ApiCookieAuth,
   ApiNoContentResponse,
   ApiOkResponse,
@@ -22,7 +28,6 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { ErrorCode } from '../../common/error-code';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
-import { OptionalJwtAuthGuard } from '../../common/guards/optional-jwt-auth.guard';
 import { ApiErrors } from '../../common/swagger/api-errors.decorator';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { PaginatedPostsResponseDto } from '../posts/dto/post-response.dto';
@@ -34,6 +39,7 @@ import {
 } from './dto/university-email.dto';
 import { Throttle } from '@nestjs/throttler';
 import { THROTTLE } from '../../common/throttle';
+import { MAX_IMAGE_BYTES } from '../uploads/uploads.service';
 import { UsersService } from './users.service';
 
 const USERNAME = {
@@ -43,19 +49,24 @@ const USERNAME = {
 };
 
 @ApiTags('Users')
+@ApiCookieAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly users: UsersService) {}
 
   @Patch('me')
-  @UseGuards(JwtAuthGuard)
-  @ApiCookieAuth()
-  @ApiOperation({ summary: 'Save my preferred language in my profile' })
+  @ApiOperation({
+    summary: 'Edit my profile: username and/or language',
+    description:
+      'Send only the fields to change. Usernames are unique and saved in lowercase. The role cannot be changed here.',
+  })
   @ApiOkResponse({ type: UserResponseDto })
   @ApiErrors({
     400: [ErrorCode.VALIDATION_FAILED],
     401: [ErrorCode.UNAUTHORIZED],
     403: [ErrorCode.USER_BLOCKED],
+    409: [ErrorCode.USERNAME_TAKEN],
   })
   updateMe(
     @CurrentUser() user: AuthUser,
@@ -64,11 +75,63 @@ export class UsersController {
     return this.users.updateMe(user, dto);
   }
 
+  @Post('me/avatar')
+  @HttpCode(HttpStatus.OK)
+  @Throttle(THROTTLE.avatar)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: { fileSize: MAX_IMAGE_BYTES, files: 1 },
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['file'],
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'jpg, png or webp. Max 5 MB.',
+        },
+      },
+    },
+  })
+  @ApiOperation({
+    summary: 'Set my profile picture',
+    description:
+      'Replaces the old picture. It is cropped to a square around the face.',
+  })
+  @ApiOkResponse({ type: UserResponseDto })
+  @ApiErrors({
+    400: [ErrorCode.VALIDATION_FAILED, ErrorCode.IMAGE_TYPE_INVALID],
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
+    413: [ErrorCode.IMAGE_TOO_LARGE],
+    429: [ErrorCode.TOO_MANY_REQUESTS],
+    502: [ErrorCode.UPLOAD_FAILED],
+  })
+  setAvatar(
+    @CurrentUser() user: AuthUser,
+    @UploadedFile() file: Express.Multer.File | undefined,
+  ): Promise<UserResponseDto> {
+    return this.users.setAvatar(user, file);
+  }
+
+  @Delete('me/avatar')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remove my profile picture' })
+  @ApiNoContentResponse({
+    description: 'Removed. Also fine when I had no picture.',
+  })
+  @ApiErrors({ 401: [ErrorCode.UNAUTHORIZED], 403: [ErrorCode.USER_BLOCKED] })
+  removeAvatar(@CurrentUser() user: AuthUser): Promise<void> {
+    return this.users.removeAvatar(user);
+  }
+
   @Post('me/university-email')
   @HttpCode(HttpStatus.NO_CONTENT)
   @Throttle(THROTTLE.universityEmail)
-  @UseGuards(JwtAuthGuard)
-  @ApiCookieAuth()
   @ApiOperation({
     summary: 'Send a verification link to my university email',
     description:
@@ -92,8 +155,6 @@ export class UsersController {
 
   @Post('me/university-email/verify')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
-  @ApiCookieAuth()
   @ApiOperation({
     summary: 'Confirm my university email with the token from the link',
     description:
@@ -120,32 +181,37 @@ export class UsersController {
   @Get(':username')
   @ApiParam(USERNAME)
   @ApiOperation({
-    summary: 'Public profile',
+    summary: 'Public profile of a user (login needed)',
     description:
-      'Public. Shows username, join date, student badge and the number of active posts. Never the email.',
+      'Shows username, picture, join date, student badge and the number of active posts. Never the email.',
   })
   @ApiOkResponse({ type: PublicUserResponseDto })
-  @ApiErrors({ 404: [ErrorCode.USER_NOT_FOUND] })
+  @ApiErrors({
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
+    404: [ErrorCode.USER_NOT_FOUND],
+  })
   getOne(@Param('username') username: string): Promise<PublicUserResponseDto> {
     return this.users.getPublic(username);
   }
 
   @Get(':username/posts')
-  @UseGuards(OptionalJwtAuthGuard)
   @ApiParam(USERNAME)
   @ApiOperation({
     summary: "A user's active posts (newest first)",
-    description: 'Public. Only ACTIVE, not expired posts.',
+    description: 'Only ACTIVE, not expired posts. Login needed.',
   })
   @ApiOkResponse({ type: PaginatedPostsResponseDto })
   @ApiErrors({
     400: [ErrorCode.VALIDATION_FAILED],
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
     404: [ErrorCode.USER_NOT_FOUND],
   })
   listPosts(
     @Param('username') username: string,
     @Query() query: PaginationQueryDto,
-    @CurrentUser() viewer?: AuthUser,
+    @CurrentUser() viewer: AuthUser,
   ): Promise<PaginatedPostsResponseDto> {
     return this.users.listPosts(username, query, viewer);
   }

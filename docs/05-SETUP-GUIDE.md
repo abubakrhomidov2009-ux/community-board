@@ -119,7 +119,7 @@ On Windows the watch mode (`npm run start:dev`) can stop with "The process … n
 | `PORT`                                                                 | `4000` (Render sets its own)                                                 |
 | `DATABASE_URL`                                                         | PostgreSQL connection string                                                 |
 | `JWT_SECRET`                                                           | long random string (generated for you)                                       |
-| `JWT_EXPIRES_IN`                                                       | `7d`                                                                         |
+| `JWT_EXPIRES_IN`                                                       | `15m` (login token; the refresh token lasts `REFRESH_EXPIRES_IN=30d`)        |
 | `CLIENT_URL`                                                           | frontend origin for CORS, `http://localhost:3000`                            |
 | `SITE_URL`                                                             | public site URL used in email links (add on day 5)                           |
 | `COOKIE_SAMESITE`                                                      | `lax` (default, proxy setup) or `none` (cross-domain fallback)               |

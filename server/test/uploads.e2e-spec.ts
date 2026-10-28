@@ -115,11 +115,11 @@ describe('Image uploads (e2e, real multipart handling, fake Cloudinary)', () => 
     expect(more[0].position).toBe(3);
 
     const detail = bodyOf<Post>(
-      await guestClient(ctx.app).get(`/api/posts/${post.id}`).expect(200),
+      await azizaClient.get(`/api/posts/${post.id}`).expect(200),
     );
     expect(detail.images.map((i) => i.position)).toEqual([0, 1, 2, 3]);
     const list = bodyOf<{ items: Post[] }>(
-      await guestClient(ctx.app).get('/api/posts').expect(200),
+      await azizaClient.get('/api/posts').expect(200),
     );
     expect(list.items[0].images[0].position).toBe(0);
   });
@@ -214,9 +214,8 @@ describe('Image uploads (e2e, real multipart handling, fake Cloudinary)', () => 
       .expect(204);
     expect(cloudinary.destroyMany).toHaveBeenCalledWith(['test/photo-1']);
     expect(
-      bodyOf<Post>(
-        await guestClient(ctx.app).get(`/api/posts/${post.id}`).expect(200),
-      ).images,
+      bodyOf<Post>(await azizaClient.get(`/api/posts/${post.id}`).expect(200))
+        .images,
     ).toEqual([]);
     await azizaClient
       .delete(`/api/posts/${post.id}/images/${image.id}`)

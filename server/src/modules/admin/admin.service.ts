@@ -8,11 +8,13 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { NotificationsService } from '../notifications/notifications.service';
 import { statusWhere } from '../posts/post-status-filter';
 import {
+  AdminPostDetailResponseDto,
   AdminPostResponseDto,
   AdminPostsQueryDto,
   AdminReportResponseDto,
   AdminReportsQueryDto,
   AdminStatsResponseDto,
+  AdminUserDetailResponseDto,
   AdminUserResponseDto,
   AdminUsersQueryDto,
   PaginatedAdminPostsResponseDto,
@@ -28,14 +30,14 @@ const REPORT_INCLUDE = {
       id: true,
       title: true,
       status: true,
-      author: { select: { username: true } },
+      author: { select: { id: true, username: true } },
     },
   },
-  reporter: { select: { username: true } },
+  reporter: { select: { id: true, username: true } },
 } satisfies Prisma.ReportInclude;
 
 const POST_INCLUDE = {
-  author: { select: { username: true } },
+  author: { select: { id: true, username: true } },
   _count: { select: { reports: { where: { status: ReportStatus.OPEN } } } },
 } satisfies Prisma.PostInclude;
 
@@ -50,6 +52,35 @@ const USER_SELECT = {
   _count: { select: { posts: true } },
 } satisfies Prisma.UserSelect;
 
+const POST_DETAIL_INCLUDE = {
+  images: {
+    orderBy: { position: 'asc' },
+    select: { id: true, url: true, position: true },
+  },
+  reports: {
+    orderBy: { createdAt: 'desc' },
+    include: { reporter: { select: { id: true, username: true } } },
+  },
+  author: {
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      role: true,
+      isBlocked: true,
+      isStudentVerified: true,
+      createdAt: true,
+      _count: { select: { posts: true } },
+    },
+  },
+} satisfies Prisma.PostInclude;
+
+/** How many posts an admin sees on the user page. */
+const USER_PAGE_POSTS = 50;
+
+type PostDetailRow = Prisma.PostGetPayload<{
+  include: typeof POST_DETAIL_INCLUDE;
+}>;
 type ReportRow = Prisma.ReportGetPayload<{ include: typeof REPORT_INCLUDE }>;
 type PostRow = Prisma.PostGetPayload<{ include: typeof POST_INCLUDE }>;
 type UserRow = Prisma.UserGetPayload<{ select: typeof USER_SELECT }>;
@@ -140,16 +171,23 @@ export class AdminService {
 
   /** Removes a post from public view, closes its open reports and tells the author. */
   async removePost(
+    admin: AuthUser,
     id: string,
     dto: RemovePostDto,
   ): Promise<AdminPostResponseDto> {
     const post = await this.prisma.post.findUnique({
       where: { id },
-      select: { id: true, authorId: true, status: true },
+      select: {
+        id: true,
+        authorId: true,
+        status: true,
+        author: { select: { role: true } },
+      },
     });
     if (!post) {
       throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
+    this.assertCanTouchPostOf(admin, post.author.role);
     if (post.status === PostStatus.REMOVED) {
       return toPost(await this.loadPost(id));
     }
@@ -170,14 +208,23 @@ export class AdminService {
   }
 
   /** Brings a removed post back. A post that is past its date comes back as EXPIRED (its author can renew it). */
-  async restorePost(id: string): Promise<AdminPostResponseDto> {
+  async restorePost(
+    admin: AuthUser,
+    id: string,
+  ): Promise<AdminPostResponseDto> {
     const post = await this.prisma.post.findUnique({
       where: { id },
-      select: { id: true, status: true, expiresAt: true },
+      select: {
+        id: true,
+        status: true,
+        expiresAt: true,
+        author: { select: { role: true } },
+      },
     });
     if (!post) {
       throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
+    this.assertCanTouchPostOf(admin, post.author.role);
     if (post.status !== PostStatus.REMOVED) {
       throw new AppException(ErrorCode.POST_NOT_ACTIVE, HttpStatus.CONFLICT);
     }
@@ -192,6 +239,41 @@ export class AdminService {
     return toPost(await this.loadPost(id));
   }
 
+  /** The admin post page: the post, every report on it and a summary of its author. */
+  async getPostDetail(id: string): Promise<AdminPostDetailResponseDto> {
+    const post = await this.prisma.post.findUnique({
+      where: { id },
+      include: POST_DETAIL_INCLUDE,
+    });
+    if (!post) {
+      throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+    const reportsOnPostsCount = await this.prisma.report.count({
+      where: { post: { authorId: post.authorId } },
+    });
+    return toPostDetail(post, reportsOnPostsCount);
+  }
+
+  /** Marks every OPEN report on a post as DISMISSED (the post stays). */
+  async dismissReports(
+    admin: AuthUser,
+    id: string,
+  ): Promise<AdminPostDetailResponseDto> {
+    const post = await this.prisma.post.findUnique({
+      where: { id },
+      select: { id: true, author: { select: { role: true } } },
+    });
+    if (!post) {
+      throw new AppException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+    this.assertCanTouchPostOf(admin, post.author.role);
+    await this.prisma.report.updateMany({
+      where: { postId: id, status: ReportStatus.OPEN },
+      data: { status: ReportStatus.DISMISSED, resolvedAt: new Date() },
+    });
+    return this.getPostDetail(id);
+  }
+
   // ---------- users ----------
 
   async listUsers(
@@ -199,6 +281,10 @@ export class AdminService {
   ): Promise<PaginatedAdminUsersResponseDto> {
     const where: Prisma.UserWhereInput = {
       ...(query.isBlocked !== undefined ? { isBlocked: query.isBlocked } : {}),
+      ...(query.role === 'USER' ? { role: Role.USER } : {}),
+      ...(query.role === 'ADMIN'
+        ? { role: { in: [Role.ADMIN, Role.SUPER_ADMIN] } }
+        : {}),
       ...(query.q
         ? {
             OR: [
@@ -222,13 +308,7 @@ export class AdminService {
 
   async blockUser(admin: AuthUser, id: string): Promise<AdminUserResponseDto> {
     const target = await this.findUser(id);
-    // Admins cannot lock each other (or themselves) out.
-    if (target.role === Role.ADMIN || target.id === admin.id) {
-      throw new AppException(
-        ErrorCode.CANNOT_BLOCK_ADMIN,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    this.assertCanManageUser(admin, target);
     return toUser(
       await this.prisma.user.update({
         where: { id },
@@ -238,8 +318,11 @@ export class AdminService {
     );
   }
 
-  async unblockUser(id: string): Promise<AdminUserResponseDto> {
-    await this.findUser(id);
+  async unblockUser(
+    admin: AuthUser,
+    id: string,
+  ): Promise<AdminUserResponseDto> {
+    this.assertCanManageUser(admin, await this.findUser(id));
     return toUser(
       await this.prisma.user.update({
         where: { id },
@@ -249,7 +332,126 @@ export class AdminService {
     );
   }
 
+  async promoteUser(id: string): Promise<AdminUserResponseDto> {
+    const target = await this.findUser(id);
+    if (target.role === Role.SUPER_ADMIN) {
+      throw new AppException(
+        ErrorCode.CANNOT_CHANGE_SUPER_ADMIN,
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    if (target.role === Role.ADMIN) {
+      throw new AppException(ErrorCode.USER_ALREADY_ADMIN, HttpStatus.CONFLICT);
+    }
+    return toUser(
+      await this.prisma.user.update({
+        where: { id },
+        data: { role: Role.ADMIN },
+        select: USER_SELECT,
+      }),
+    );
+  }
+
+  async demoteUser(id: string): Promise<AdminUserResponseDto> {
+    const target = await this.findUser(id);
+    if (target.role === Role.SUPER_ADMIN) {
+      throw new AppException(
+        ErrorCode.CANNOT_CHANGE_SUPER_ADMIN,
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    if (target.role === Role.USER) {
+      throw new AppException(ErrorCode.USER_NOT_ADMIN, HttpStatus.CONFLICT);
+    }
+    return toUser(
+      await this.prisma.user.update({
+        where: { id },
+        data: { role: Role.USER },
+        select: USER_SELECT,
+      }),
+    );
+  }
+
+  /** The admin user page: the user, some counts and their posts. */
+  async getUserDetail(id: string): Promise<AdminUserDetailResponseDto> {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: USER_SELECT,
+    });
+    if (!user) {
+      throw new AppException(ErrorCode.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+    const [posts, reportsOnPosts, comments, removedPosts] = await Promise.all([
+      this.prisma.post.findMany({
+        where: { authorId: id },
+        orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
+        take: USER_PAGE_POSTS,
+        select: {
+          id: true,
+          title: true,
+          category: true,
+          status: true,
+          createdAt: true,
+          _count: {
+            select: { reports: { where: { status: ReportStatus.OPEN } } },
+          },
+        },
+      }),
+      this.prisma.report.count({ where: { post: { authorId: id } } }),
+      this.prisma.comment.count({ where: { authorId: id } }),
+      this.prisma.post.count({
+        where: { authorId: id, status: PostStatus.REMOVED },
+      }),
+    ]);
+    return {
+      ...toUser(user),
+      counts: {
+        posts: user._count.posts,
+        reportsOnPosts,
+        comments,
+        removedPosts,
+      },
+      posts: posts.map((post) => ({
+        id: post.id,
+        title: post.title,
+        category: post.category,
+        status: post.status,
+        createdAt: post.createdAt,
+        openReportsCount: post._count.reports,
+      })),
+    };
+  }
+
   // ---------- helpers ----------
+
+  /**
+   * Who may block/unblock whom: nobody may touch the super admin; only the super admin may touch an admin.
+   */
+  private assertCanManageUser(actor: AuthUser, target: { role: Role }): void {
+    if (target.role === Role.SUPER_ADMIN) {
+      throw new AppException(
+        ErrorCode.CANNOT_CHANGE_SUPER_ADMIN,
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    if (target.role === Role.ADMIN && actor.role !== Role.SUPER_ADMIN) {
+      throw new AppException(ErrorCode.FORBIDDEN_ROLE, HttpStatus.FORBIDDEN);
+    }
+  }
+
+  /** Same rule for the posts of an admin: only the super admin may remove, restore or dismiss them. */
+  private assertCanTouchPostOf(actor: AuthUser, authorRole: Role): void {
+    if (actor.role === Role.SUPER_ADMIN) return;
+    if (authorRole === Role.SUPER_ADMIN) {
+      throw new AppException(
+        ErrorCode.CANNOT_CHANGE_SUPER_ADMIN,
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    if (authorRole === Role.ADMIN) {
+      throw new AppException(ErrorCode.FORBIDDEN_ROLE, HttpStatus.FORBIDDEN);
+    }
+  }
 
   private async findUser(id: string) {
     const user = await this.prisma.user.findUnique({
@@ -282,9 +484,9 @@ function toReport(row: ReportRow): AdminReportResponseDto {
       id: row.post.id,
       title: row.post.title,
       status: row.post.status,
-      author: { username: row.post.author.username },
+      author: { id: row.post.author.id, username: row.post.author.username },
     },
-    reporter: { username: row.reporter.username },
+    reporter: { id: row.reporter.id, username: row.reporter.username },
   };
 }
 
@@ -298,7 +500,7 @@ function toPost(row: PostRow): AdminPostResponseDto {
     removedReason: row.removedReason,
     createdAt: row.createdAt,
     expiresAt: row.expiresAt,
-    author: { username: row.author.username },
+    author: { id: row.author.id, username: row.author.username },
     openReportsCount: row._count.reports,
   };
 }
@@ -313,5 +515,47 @@ function toUser(row: UserRow): AdminUserResponseDto {
     isStudentVerified: row.isStudentVerified,
     createdAt: row.createdAt,
     postsCount: row._count.posts,
+  };
+}
+
+function toPostDetail(
+  row: PostDetailRow,
+  reportsOnPostsCount: number,
+): AdminPostDetailResponseDto {
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    category: row.category,
+    district: row.district,
+    status: row.status,
+    price: row.price,
+    priceUnit: row.priceUnit,
+    contactTelegram: row.contactTelegram,
+    contactPhone: row.contactPhone,
+    removedReason: row.removedReason,
+    createdAt: row.createdAt,
+    expiresAt: row.expiresAt,
+    images: row.images,
+    reports: row.reports.map((report) => ({
+      id: report.id,
+      reason: report.reason,
+      details: report.details,
+      status: report.status,
+      createdAt: report.createdAt,
+      resolvedAt: report.resolvedAt,
+      reporter: { id: report.reporter.id, username: report.reporter.username },
+    })),
+    author: {
+      id: row.author.id,
+      username: row.author.username,
+      email: row.author.email,
+      role: row.author.role,
+      isBlocked: row.author.isBlocked,
+      isStudentVerified: row.author.isStudentVerified,
+      createdAt: row.author.createdAt,
+      postsCount: row.author._count.posts,
+      reportsOnPostsCount,
+    },
   };
 }

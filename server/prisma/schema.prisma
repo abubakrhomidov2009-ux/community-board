@@ -12,6 +12,7 @@ datasource db {
 enum Role {
   USER
   ADMIN
+  SUPER_ADMIN // exactly one account: the email in SUPER_ADMIN_EMAIL (server/.env)
 }
 
 enum Category {
@@ -79,6 +80,8 @@ model User {
   universityEmail   String?  @unique
   isStudentVerified Boolean  @default(false)
   preferredLocale   Locale   @default(EN)
+  avatarUrl         String?
+  avatarPublicId    String? // Cloudinary id, needed to delete the old picture
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
@@ -90,6 +93,7 @@ model User {
   conversations           ConversationParticipant[]
   messages                Message[]
   emailVerificationTokens EmailVerificationToken[]
+  refreshTokens           RefreshToken[]
 }
 
 model Post {
@@ -237,4 +241,18 @@ model EmailVerificationToken {
   createdAt       DateTime  @default(now())
 
   @@index([userId])
+}
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique // only a hash of the token is stored
+  expiresAt DateTime
+  rotatedAt DateTime? // replaced by a newer token (refresh). Still accepted for a few seconds.
+  revokedAt DateTime? // closed for good: logout, password change, blocked user, stolen token
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
 }

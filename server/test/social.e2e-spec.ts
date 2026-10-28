@@ -84,11 +84,8 @@ describe('Favorites, profiles, language and student badge (e2e)', () => {
           .expect(200),
       ).isFavorite,
     ).toBe(false);
-    expect(
-      bodyOf<Post>(
-        await guestClient(ctx.app).get(`/api/posts/${post.id}`).expect(200),
-      ).isFavorite,
-    ).toBe(false);
+    // guests are not allowed to read posts at all
+    await guestClient(ctx.app).get(`/api/posts/${post.id}`).expect(401);
 
     // Saved page
     const saved = bodyOf<Page<Post>>(
@@ -144,9 +141,7 @@ describe('Favorites, profiles, language and student badge (e2e)', () => {
     );
     await client.post(`/api/posts/${resolved.id}/resolve`).expect(200);
 
-    const profile = await guestClient(ctx.app)
-      .get('/api/users/AZIZA')
-      .expect(200);
+    const profile = await client.get('/api/users/AZIZA').expect(200);
     expect(bodyOf(profile)).toMatchObject({
       username: 'aziza',
       isStudentVerified: true,
@@ -154,21 +149,23 @@ describe('Favorites, profiles, language and student badge (e2e)', () => {
     });
     expect(Object.keys(bodyOf(profile)).sort()).toEqual([
       'activePostsCount',
+      'avatarUrl',
       'createdAt',
       'isStudentVerified',
       'username',
     ]);
 
     const posts = bodyOf<Page<Post>>(
-      await guestClient(ctx.app).get('/api/users/aziza/posts').expect(200),
+      await client.get('/api/users/aziza/posts').expect(200),
     );
     expect(posts.items.map((p) => p.id)).toEqual([active.id]);
 
-    const unknown = await guestClient(ctx.app)
-      .get('/api/users/nobody')
-      .expect(404);
+    const unknown = await client.get('/api/users/nobody').expect(404);
     expect(bodyOf(unknown)).toMatchObject({ errorCode: 'USER_NOT_FOUND' });
-    await guestClient(ctx.app).get('/api/users/nobody/posts').expect(404);
+    await client.get('/api/users/nobody/posts').expect(404);
+    // the profile pages need a login too
+    await guestClient(ctx.app).get('/api/users/aziza').expect(401);
+    await guestClient(ctx.app).get('/api/users/aziza/posts').expect(401);
   });
 
   it('the preferred language is saved in the profile', async () => {
@@ -194,7 +191,7 @@ describe('Favorites, profiles, language and student badge (e2e)', () => {
       .expect(400);
     await client
       .patch('/api/users/me')
-      .send({ preferredLocale: 'RU', role: 'ADMIN' })
+      .send({ preferredLocale: 'RU', role: 'SUPER_ADMIN' })
       .expect(400);
     await guestClient(ctx.app)
       .patch('/api/users/me')
@@ -276,7 +273,7 @@ describe('Favorites, profiles, language and student badge (e2e)', () => {
 
       // the badge shows up on the profile and on her posts
       expect(
-        bodyOf(await guestClient(ctx.app).get('/api/users/madina').expect(200)),
+        bodyOf(await client.get('/api/users/madina').expect(200)),
       ).toMatchObject({ isStudentVerified: true });
       const post = bodyOf<{ author: { isStudentVerified: boolean } }>(
         await client.post('/api/posts').send(validPost).expect(201),

@@ -1,10 +1,11 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { PostStatus, Role } from '@prisma/client';
+import { PostStatus } from '@prisma/client';
 import { AppException } from '../../common/app.exception';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { pageArgs, paginate } from '../../common/utils/pagination';
+import { isAdminRole } from '../../common/utils/roles';
 import { PrismaService } from '../../prisma/prisma.service';
 import { NotificationsService } from '../notifications/notifications.service';
 import {
@@ -68,7 +69,7 @@ export class CommentsService {
     if (!comment) {
       throw new AppException(ErrorCode.COMMENT_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
-    if (comment.authorId !== user.id && user.role !== Role.ADMIN) {
+    if (comment.authorId !== user.id && !isAdminRole(user.role)) {
       throw new AppException(ErrorCode.COMMENT_NOT_OWNER, HttpStatus.FORBIDDEN);
     }
     await this.prisma.comment.delete({ where: { id } });

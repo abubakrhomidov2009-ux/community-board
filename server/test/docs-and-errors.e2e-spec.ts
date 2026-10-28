@@ -25,9 +25,13 @@ const EXPECTED_ENDPOINTS = [
   'GET /api/health',
   'POST /api/auth/register',
   'POST /api/auth/login',
+  'POST /api/auth/refresh',
   'POST /api/auth/logout',
+  'POST /api/auth/change-password',
   'GET /api/auth/me',
   'PATCH /api/users/me',
+  'POST /api/users/me/avatar',
+  'DELETE /api/users/me/avatar',
   'GET /api/users/{username}',
   'GET /api/users/{username}/posts',
   'POST /api/users/me/university-email',
@@ -64,11 +68,25 @@ const EXPECTED_ENDPOINTS = [
   'GET /api/admin/reports',
   'PATCH /api/admin/reports/{id}',
   'GET /api/admin/posts',
-  'POST /api/admin/posts/{id}/remove',
-  'POST /api/admin/posts/{id}/restore',
+  'GET /api/admin/posts/{id}',
+  'PATCH /api/admin/posts/{id}/remove',
+  'PATCH /api/admin/posts/{id}/restore',
+  'PATCH /api/admin/posts/{id}/reports/dismiss',
   'GET /api/admin/users',
-  'POST /api/admin/users/{id}/block',
-  'POST /api/admin/users/{id}/unblock',
+  'GET /api/admin/users/{id}',
+  'PATCH /api/admin/users/{id}/block',
+  'PATCH /api/admin/users/{id}/unblock',
+  'PATCH /api/admin/users/{id}/promote',
+  'PATCH /api/admin/users/{id}/demote',
+];
+
+/** The only endpoints a guest may call. Everything else needs a login. */
+const PUBLIC_ENDPOINTS = [
+  'GET /api/health',
+  'POST /api/auth/register',
+  'POST /api/auth/login',
+  'POST /api/auth/refresh',
+  'POST /api/auth/logout',
 ];
 
 describe('Health, error format and API documentation (e2e)', () => {
@@ -162,7 +180,7 @@ describe('Health, error format and API documentation (e2e)', () => {
       ).toBe(true);
     });
 
-    it('unknown body fields are refused (nobody can send role: ADMIN)', async () => {
+    it('unknown body fields are refused (nobody can send a role)', async () => {
       const response = await guestClient(ctx.app)
         .post('/api/auth/register')
         .send({
@@ -236,6 +254,14 @@ describe('Health, error format and API documentation (e2e)', () => {
       expect(problems.map((problem) => problem.key)).toEqual([]);
     });
 
+    it('login-only access: only health and the auth endpoints are public', () => {
+      const open = operations
+        .filter(({ op }) => !op.security?.length)
+        .map(({ key }) => key)
+        .sort();
+      expect(open).toEqual([...PUBLIC_ENDPOINTS].sort());
+    });
+
     it('every endpoint that needs a login documents 401', () => {
       const problems = operations.filter(
         ({ op }) => op.security?.length && !op.responses?.['401'],
@@ -285,9 +311,12 @@ describe('Health, error format and API documentation (e2e)', () => {
 
     it('admin endpoints are marked as admin in their summary and need a login', () => {
       const admin = operations.filter(({ key }) => key.includes('/api/admin/'));
-      expect(admin).toHaveLength(9);
+      expect(admin).toHaveLength(14);
       for (const { key, op } of admin) {
-        expect({ key, marked: op.summary?.startsWith('(Admin)') }).toEqual({
+        expect({
+          key,
+          marked: /^\((Super admin|Admin)\)/.test(op.summary ?? ''),
+        }).toEqual({
           key,
           marked: true,
         });

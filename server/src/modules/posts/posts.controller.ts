@@ -26,7 +26,6 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ErrorCode } from '../../common/error-code';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { NotBlockedGuard } from '../../common/guards/not-blocked.guard';
-import { OptionalJwtAuthGuard } from '../../common/guards/optional-jwt-auth.guard';
 import { ApiErrors } from '../../common/swagger/api-errors.decorator';
 import type { AuthUser } from '../../common/types/authenticated-request';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -52,22 +51,27 @@ const POST_ID = {
 };
 
 @ApiTags('Posts')
+@ApiCookieAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('posts')
 export class PostsController {
   constructor(private readonly posts: PostsService) {}
 
   @Get()
-  @UseGuards(OptionalJwtAuthGuard)
   @ApiOperation({
     summary: 'Browse posts: filter, search, sort, paginate',
     description:
-      'Public. Shows ACTIVE and RESOLVED posts that have not expired. Log in first to get a real `isFavorite`.',
+      'Login needed. Shows ACTIVE and RESOLVED posts that have not expired.',
   })
   @ApiOkResponse({ type: PaginatedPostsResponseDto })
-  @ApiErrors({ 400: [ErrorCode.VALIDATION_FAILED] })
+  @ApiErrors({
+    400: [ErrorCode.VALIDATION_FAILED],
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
+  })
   list(
     @Query() query: ListPostsQueryDto,
-    @CurrentUser() user?: AuthUser,
+    @CurrentUser() user: AuthUser,
   ): Promise<PaginatedPostsResponseDto> {
     return this.posts.list(query, user);
   }
@@ -79,7 +83,11 @@ export class PostsController {
       'Follows the same filters as the list (search, district, price), without category and sort.',
   })
   @ApiOkResponse({ type: PostCountsResponseDto })
-  @ApiErrors({ 400: [ErrorCode.VALIDATION_FAILED] })
+  @ApiErrors({
+    400: [ErrorCode.VALIDATION_FAILED],
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
+  })
   counts(@Query() query: PostCountsQueryDto): Promise<PostCountsResponseDto> {
     return this.posts.counts(query);
   }
@@ -90,14 +98,16 @@ export class PostsController {
     description: 'Same filters as the list, without sort and paging.',
   })
   @ApiOkResponse({ type: [MapPinResponseDto] })
-  @ApiErrors({ 400: [ErrorCode.VALIDATION_FAILED] })
+  @ApiErrors({
+    400: [ErrorCode.VALIDATION_FAILED],
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
+  })
   map(@Query() query: PostMapQueryDto): Promise<MapPinResponseDto[]> {
     return this.posts.mapPins(query);
   }
 
   @Get('mine')
-  @UseGuards(JwtAuthGuard)
-  @ApiCookieAuth()
   @ApiOperation({ summary: 'My posts (all statuses, newest first)' })
   @ApiOkResponse({ type: PaginatedPostsResponseDto })
   @ApiErrors({
@@ -113,26 +123,28 @@ export class PostsController {
   }
 
   @Get(':id')
-  @UseGuards(OptionalJwtAuthGuard)
   @ApiParam(POST_ID)
   @ApiOperation({
     summary: 'Get one post',
     description:
-      'Public. Removed posts are only visible to their author and to admins (others get 404).',
+      'Login needed. Removed posts are only visible to their author and to admins (others get 404).',
   })
   @ApiOkResponse({ type: PostResponseDto })
-  @ApiErrors({ 404: [ErrorCode.POST_NOT_FOUND] })
+  @ApiErrors({
+    401: [ErrorCode.UNAUTHORIZED],
+    403: [ErrorCode.USER_BLOCKED],
+    404: [ErrorCode.POST_NOT_FOUND],
+  })
   getOne(
     @Param('id') id: string,
-    @CurrentUser() user?: AuthUser,
+    @CurrentUser() user: AuthUser,
   ): Promise<PostResponseDto> {
     return this.posts.getById(id, user);
   }
 
   @Post()
   @Throttle(THROTTLE.createPost)
-  @UseGuards(JwtAuthGuard, NotBlockedGuard)
-  @ApiCookieAuth()
+  @UseGuards(NotBlockedGuard)
   @ApiOperation({
     summary: 'Create a post',
     description:
@@ -159,8 +171,7 @@ export class PostsController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard, NotBlockedGuard)
-  @ApiCookieAuth()
+  @UseGuards(NotBlockedGuard)
   @ApiParam(POST_ID)
   @ApiOperation({
     summary: 'Edit my post',
@@ -190,8 +201,6 @@ export class PostsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(JwtAuthGuard)
-  @ApiCookieAuth()
   @ApiParam(POST_ID)
   @ApiOperation({ summary: 'Delete a post (the author, or an admin)' })
   @ApiNoContentResponse({ description: 'Deleted' })
@@ -209,8 +218,7 @@ export class PostsController {
 
   @Post(':id/resolve')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard, NotBlockedGuard)
-  @ApiCookieAuth()
+  @UseGuards(NotBlockedGuard)
   @ApiParam(POST_ID)
   @ApiOperation({
     summary: 'Mark my post as resolved',
@@ -232,8 +240,7 @@ export class PostsController {
 
   @Post(':id/renew')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard, NotBlockedGuard)
-  @ApiCookieAuth()
+  @UseGuards(NotBlockedGuard)
   @ApiParam(POST_ID)
   @ApiOperation({
     summary: 'Renew my post for another 30 days',

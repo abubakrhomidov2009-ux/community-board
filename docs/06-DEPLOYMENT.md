@@ -43,7 +43,9 @@ Note: Neon free databases sleep when unused; the first request wakes them (a sec
    - `NODE_ENV=production`
    - `DATABASE_URL=` the Neon string
    - `JWT_SECRET=` a new long random string (Claude generates it; you paste it)
-   - `JWT_EXPIRES_IN=7d`
+   - `JWT_EXPIRES_IN=15m`
+   - `REFRESH_EXPIRES_IN=30d`
+   - `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` (the owner's account; the server creates or upgrades it at start, so Neon needs no seed)
    - `CLIENT_URL=` your Vercel URL (add after step 4)
    - `SITE_URL=` your Vercel URL
    - `COOKIE_SAMESITE=lax`

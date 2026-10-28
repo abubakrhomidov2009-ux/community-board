@@ -141,11 +141,24 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 ## Day 7: Backend gate (big check)
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished (part 1, 2026-10-28: the plan update, backend side)**
+
+- **Login-only access:** every posts, comments and users endpoint now needs a login (401 for guests). Only `GET /api/health` and the auth endpoints are public. A test checks the whole Swagger document. `OptionalJwtAuthGuard` was removed.
+- **Profile editing:** `PATCH /users/me` (username, unique, saved lowercase; language), `POST /auth/change-password` (needs the current password; other devices are logged out), `POST` / `DELETE /users/me/avatar` (Cloudinary, square crop). Logout already existed for the profile page.
+- **Refresh token:** login token now lasts 15 minutes; `refresh_token` cookie (30 days, only sent to `/api/auth`) with rotation and stolen-token protection; `POST /auth/refresh`; old tokens cleaned by the daily job.
+- **Roles:** `SUPER_ADMIN` added. Exactly one, from `SUPER_ADMIN_EMAIL` / `SUPER_ADMIN_PASSWORD` in `server/.env` (created or upgraded when the server starts and by the seed). Admin actions are now `PATCH`. New: `GET /admin/posts/:id`, `GET /admin/users/:id`, `PATCH /admin/posts/:id/reports/dismiss`, `PATCH /admin/users/:id/promote|demote`, role filter on the users list, ids on names in admin lists. New error codes: `FORBIDDEN_ROLE`, `CANNOT_CHANGE_SUPER_ADMIN`, `USER_ALREADY_ADMIN`, `USER_NOT_ADMIN`, `REFRESH_TOKEN_INVALID`, `CURRENT_PASSWORD_INCORRECT` (`CANNOT_BLOCK_ADMIN` was replaced).
+- Two migrations: `roles_avatar_refresh_tokens`, `refresh_token_rotated_at`.
+- Docs updated to the plan: 01-TZ, 02-SPEC, 04-DAILY-PLAN, 05, 06, 08, 11 (design v2 "Notice Slips", Unbounded + Onest, new tokens, round logo, artboard map), CLAUDE.md.
+- Tests: **230 unit tests (16 files), 100 e2e tests (10 files)**, lint and type check clean. Live check on the real server: guests 401, login sets both cookies, refresh works, username change, role in body refused, user cannot open admin, logout kills the refresh token. Swagger lists 56 operations.
+
+**Problems and fixes**
+
+- **Security bug found by the new e2e tests (before it shipped):** my 10-second "two tabs" grace window also applied to logged-out tokens, so a refresh token could work for 10 seconds after logout. Fixed by separating `rotatedAt` (replaced, grace allowed) from `revokedAt` (closed for good, never works again), with a regression test.
+
+**Owner check and result:** not yet.
+**Bugs found and fixed:** see above.
+**Open:** the owner must add `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` to `server/.env`; `docs/design/logo.png` and the design canvas export are needed before Day 8; the Swagger review and spec sync (part 2), the owner's big check and the tag `api-v1.0.0`; client IP for rate limits (day 12/13).
+**Next:** Day 7 part 2 (Swagger review, spec sync, big check, tag).
 
 ## Day 8: Frontend shell + auth
 

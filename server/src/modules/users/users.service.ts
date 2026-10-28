@@ -1,11 +1,12 @@
-import { createHash, randomBytes } from 'node:crypto';
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { randomBytes } from 'node:crypto';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Prisma, PostStatus } from '@prisma/client';
 import { AppException } from '../../common/app.exception';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { ErrorCode } from '../../common/error-code';
 import type { AuthUser } from '../../common/types/authenticated-request';
+import { hashToken } from '../../common/utils/hash-token';
 import {
   getUniversityDomains,
   isUniversityEmail,
@@ -14,6 +15,12 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
 import { PaginatedPostsResponseDto } from '../posts/dto/post-response.dto';
 import { PostsService } from '../posts/posts.service';
+import {
+  CloudinaryService,
+  UploadedImage,
+} from '../uploads/cloudinary.service';
+import { isAllowedImage } from '../uploads/image-signature';
+import { MAX_IMAGE_BYTES } from '../uploads/uploads.service';
 import { PublicUserResponseDto, UpdateMeDto } from './dto/user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import {
@@ -23,17 +30,16 @@ import {
 
 const VERIFICATION_TTL_MS = 24 * 60 * 60 * 1000;
 
-/** Only a hash of the token is stored, so a copy of the database cannot be used to verify emails. */
-const hashToken = (token: string) =>
-  createHash('sha256').update(token).digest('hex');
-
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly posts: PostsService,
     private readonly mail: MailService,
     private readonly config: ConfigService,
+    private readonly cloudinary: CloudinaryService,
   ) {}
 
   async getPublic(username: string): Promise<PublicUserResponseDto> {
@@ -47,6 +53,7 @@ export class UsersService {
     });
     return {
       username: user.username,
+      avatarUrl: user.avatarUrl,
       createdAt: user.createdAt,
       isStudentVerified: user.isStudentVerified,
       activePostsCount,
@@ -62,13 +69,98 @@ export class UsersService {
     return this.posts.listByAuthor(user.id, query, viewer);
   }
 
+  /** Changes my username and/or language. Only the fields that are sent change. */
   async updateMe(user: AuthUser, dto: UpdateMeDto): Promise<UserResponseDto> {
-    const { passwordHash: _passwordHash, ...updated } =
-      await this.prisma.user.update({
-        where: { id: user.id },
-        data: { preferredLocale: dto.preferredLocale },
+    const username =
+      dto.username && dto.username !== user.username ? dto.username : undefined;
+    if (username) {
+      const taken = await this.prisma.user.findUnique({
+        where: { username },
+        select: { id: true },
       });
-    return UserResponseDto.from(updated);
+      if (taken) {
+        throw new AppException(ErrorCode.USERNAME_TAKEN, HttpStatus.CONFLICT);
+      }
+    }
+    try {
+      const { passwordHash: _passwordHash, ...updated } =
+        await this.prisma.user.update({
+          where: { id: user.id },
+          data: { username, preferredLocale: dto.preferredLocale },
+        });
+      return UserResponseDto.from(updated);
+    } catch (error) {
+      // Someone took the name at the same moment.
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new AppException(ErrorCode.USERNAME_TAKEN, HttpStatus.CONFLICT);
+      }
+      throw error;
+    }
+  }
+
+  /** Replaces my profile picture. The old picture is deleted from Cloudinary afterwards. */
+  async setAvatar(
+    user: AuthUser,
+    file: Express.Multer.File | undefined,
+  ): Promise<UserResponseDto> {
+    if (!file) {
+      throw new AppException(
+        ErrorCode.VALIDATION_FAILED,
+        HttpStatus.BAD_REQUEST,
+        'No file was sent',
+        [{ field: 'file', code: 'isNotEmpty' }],
+      );
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      throw new AppException(
+        ErrorCode.IMAGE_TOO_LARGE,
+        HttpStatus.PAYLOAD_TOO_LARGE,
+      );
+    }
+    if (!isAllowedImage(file.mimetype, file.buffer)) {
+      throw new AppException(
+        ErrorCode.IMAGE_TYPE_INVALID,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    let uploaded: UploadedImage;
+    try {
+      uploaded = await this.cloudinary.upload(file.buffer, 'avatar');
+    } catch (error) {
+      this.logger.error(`Avatar upload failed: ${String(error)}`);
+      throw new AppException(ErrorCode.UPLOAD_FAILED, HttpStatus.BAD_GATEWAY);
+    }
+
+    try {
+      const { passwordHash: _passwordHash, ...updated } =
+        await this.prisma.user.update({
+          where: { id: user.id },
+          data: { avatarUrl: uploaded.url, avatarPublicId: uploaded.publicId },
+        });
+      if (user.avatarPublicId) {
+        await this.cloudinary.destroyMany([user.avatarPublicId]);
+      }
+      return UserResponseDto.from(updated);
+    } catch (error) {
+      await this.cloudinary.destroyMany([uploaded.publicId]);
+      throw error;
+    }
+  }
+
+  /** Removes my profile picture (fine to call when I have none). */
+  async removeAvatar(user: AuthUser): Promise<void> {
+    if (!user.avatarPublicId && !user.avatarUrl) return;
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { avatarUrl: null, avatarPublicId: null },
+    });
+    if (user.avatarPublicId) {
+      await this.cloudinary.destroyMany([user.avatarPublicId]);
+    }
   }
 
   /** Sends a verification link to a university email. Nothing is saved on the user until the link is used. */
@@ -197,6 +289,7 @@ export class UsersService {
       select: {
         id: true,
         username: true,
+        avatarUrl: true,
         createdAt: true,
         isStudentVerified: true,
         isBlocked: true,

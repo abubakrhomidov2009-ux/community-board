@@ -125,7 +125,7 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
 
     // the admin removes the post
     const removed = await adminClient
-      .post(`/api/admin/posts/${post.id}/remove`)
+      .patch(`/api/admin/posts/${post.id}/remove`)
       .send({ reason: 'Spam' })
       .expect(200);
     expect(bodyOf(removed)).toMatchObject({
@@ -135,16 +135,15 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
 
     // it disappears for everybody except its author and admins
     expect(
-      bodyOf<Page<Post>>(
-        await guestClient(ctx.app).get('/api/posts').expect(200),
-      ).total,
+      bodyOf<Page<Post>>(await reporterClient.get('/api/posts').expect(200))
+        .total,
     ).toBe(0);
     expect(
       bodyOf<{ ALL: number }>(
-        await guestClient(ctx.app).get('/api/posts/counts').expect(200),
+        await reporterClient.get('/api/posts/counts').expect(200),
       ).ALL,
     ).toBe(0);
-    await guestClient(ctx.app).get(`/api/posts/${post.id}`).expect(404);
+    await guestClient(ctx.app).get(`/api/posts/${post.id}`).expect(401);
     await reporterClient.get(`/api/posts/${post.id}`).expect(404);
     expect(
       bodyOf<Post>(await authorClient.get(`/api/posts/${post.id}`).expect(200))
@@ -189,7 +188,7 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
 
     // removing again is harmless and sends no second notification
     await adminClient
-      .post(`/api/admin/posts/${post.id}/remove`)
+      .patch(`/api/admin/posts/${post.id}/remove`)
       .send({})
       .expect(200);
     expect(
@@ -200,18 +199,17 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
 
     // restore brings it back
     const restored = await adminClient
-      .post(`/api/admin/posts/${post.id}/restore`)
+      .patch(`/api/admin/posts/${post.id}/restore`)
       .expect(200);
     expect(bodyOf(restored)).toMatchObject({
       status: 'ACTIVE',
       removedReason: null,
     });
     expect(
-      bodyOf<Page<Post>>(
-        await guestClient(ctx.app).get('/api/posts').expect(200),
-      ).total,
+      bodyOf<Page<Post>>(await reporterClient.get('/api/posts').expect(200))
+        .total,
     ).toBe(1);
-    await adminClient.post(`/api/admin/posts/${post.id}/restore`).expect(409);
+    await adminClient.patch(`/api/admin/posts/${post.id}/restore`).expect(409);
   });
 
   it('admin can resolve or dismiss reports and manage posts and users lists', async () => {
@@ -275,10 +273,10 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
       await guestClient(ctx.app).get(path).expect(401);
     }
     await userClient
-      .post(`/api/admin/posts/${post.id}/remove`)
+      .patch(`/api/admin/posts/${post.id}/remove`)
       .send({})
       .expect(403);
-    await userClient.post(`/api/admin/users/${author.id}/block`).expect(403);
+    await userClient.patch(`/api/admin/users/${author.id}/block`).expect(403);
   });
 
   it('blocked users cannot log in, use an old session, or create anything', async () => {
@@ -299,7 +297,7 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
 
     // admin blocks him
     const blocked = await adminClient
-      .post(`/api/admin/users/${victim.id}/block`)
+      .patch(`/api/admin/users/${victim.id}/block`)
       .expect(200);
     expect(bodyOf(blocked)).toMatchObject({
       isBlocked: true,
@@ -338,23 +336,26 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
     await rustam.get('/api/notifications').expect(403);
 
     // others cannot find him: no public profile, cannot message him
-    await guestClient(ctx.app).get('/api/users/rustam').expect(404);
-    await clientWithToken(ctx.app, aziza.id)
+    const azizaClient = clientWithToken(ctx.app, aziza.id);
+    await azizaClient.get('/api/users/rustam').expect(404);
+    await azizaClient
       .post('/api/conversations')
       .send({ recipientUsername: 'rustam', body: 'Hi' })
       .expect(404);
 
     // unblocking gives everything back
-    await adminClient.post(`/api/admin/users/${victim.id}/unblock`).expect(200);
+    await adminClient
+      .patch(`/api/admin/users/${victim.id}/unblock`)
+      .expect(200);
     await guestClient(ctx.app)
       .post('/api/auth/login')
       .send({ emailOrUsername: 'rustam', password: 'Test12345' })
       .expect(200);
     await rustam.get('/api/auth/me').expect(200);
-    await guestClient(ctx.app).get('/api/users/rustam').expect(200);
+    await azizaClient.get('/api/users/rustam').expect(200);
   });
 
-  it('an admin cannot be blocked, and unknown users give 404', async () => {
+  it('an admin cannot block another admin or themselves, and unknown ids give 404', async () => {
     const admin = await createUser(ctx.prisma, {
       username: 'admin',
       role: Role.ADMIN,
@@ -366,14 +367,14 @@ describe('Moderation: reports, admin and blocked users (e2e)', () => {
     const adminClient = clientWithToken(ctx.app, admin.id);
 
     const other = await adminClient
-      .post(`/api/admin/users/${second.id}/block`)
-      .expect(400);
-    expect(bodyOf(other)).toMatchObject({ errorCode: 'CANNOT_BLOCK_ADMIN' });
-    await adminClient.post(`/api/admin/users/${admin.id}/block`).expect(400);
-    await adminClient.post('/api/admin/users/unknown/block').expect(404);
-    await adminClient.post('/api/admin/users/unknown/unblock').expect(404);
+      .patch(`/api/admin/users/${second.id}/block`)
+      .expect(403);
+    expect(bodyOf(other)).toMatchObject({ errorCode: 'FORBIDDEN_ROLE' });
+    await adminClient.patch(`/api/admin/users/${admin.id}/block`).expect(403);
+    await adminClient.patch('/api/admin/users/unknown/block').expect(404);
+    await adminClient.patch('/api/admin/users/unknown/unblock').expect(404);
     await adminClient
-      .post('/api/admin/posts/unknown/remove')
+      .patch('/api/admin/posts/unknown/remove')
       .send({})
       .expect(404);
   });

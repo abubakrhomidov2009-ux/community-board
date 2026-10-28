@@ -12,4 +12,7 @@ export const THROTTLE = {
   report: { default: { limit: 10, ttl: HOUR } },
   message: { default: { limit: 30, ttl: MINUTE } },
   universityEmail: { default: { limit: 3, ttl: HOUR } },
+  refresh: { default: { limit: 30, ttl: MINUTE } },
+  changePassword: { default: { limit: 5, ttl: 10 * MINUTE } },
+  avatar: { default: { limit: 10, ttl: HOUR } },
 };

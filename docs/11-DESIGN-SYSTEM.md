@@ -2,6 +2,90 @@
 
 Follow this file on every page. Goal: a calm, scannable, real-looking classifieds product, not a generic template.
 
+> **Plan update (2026-10-28): the design is now "Community Board Design v2 — Notice Slips".** Where this file disagrees with the sections 0 below (tokens, fonts, logo, slips, login modal, About as front door), **section 0 wins**. Build every page exactly like the design canvas (layout, spacing, sizes, fonts, colors, radius, borders, icons, button styles, copy). The sample posts, names and numbers in the canvas are only demo data. The older sections stay as the baseline for things the canvas does not show (states, motion, breakpoints). The canvas export or screenshots go in `docs/design/` (and the logo in `docs/design/logo.png`).
+
+## 0. Design v2 — Notice Slips (source of truth)
+
+**Idea.** The app looks like Dushanbe's paper notice boards, made digital. Every post is a **slip** pinned to a **dotted board**: an amber **pin** dot on top, a coloured **category strip**, a tilt of under 1°, and **tear-off contact tabs** at the bottom (Write · Call · Save) separated by a **dashed tear line**. Resolved, expired and reported posts get rubber **stamps**. Buttons are pills. Desktop has a **floating pill navbar**; phones have a **floating dark tab bar**.
+
+### 0.1 Pages and artboards
+
+Each page has a desktop artboard and a phone artboard in the canvas. Build both. At every "✅ READY TO CHECK" name the artboards to compare with.
+
+| Route                                      | Desktop artboard       | Phone artboard                          |
+| ------------------------------------------ | ---------------------- | --------------------------------------- |
+| `/[locale]` and `/[locale]/about` (guests) | AboutDesktop           | AboutMobile                             |
+| Log in modal (on About)                    | LoginDesktop           | LoginMobile                             |
+| Create account modal (on About)            | RegisterDesktop        | RegisterMobile                          |
+| `/[locale]/posts` (Home)                   | Main                   | HomeMobile, FiltersMobile, DrawerMobile |
+| `/[locale]/posts/[id]`                     | PostDesktop            | PostMobile                              |
+| `/[locale]/posts/new`                      | CreateDesktop          | CreateMobile                            |
+| `/[locale]/posts/[id]/edit`                | EditDesktop            | EditMobile                              |
+| `/[locale]/profile`                        | ProfileDesktop         | ProfileMobile                           |
+| `/[locale]/users/[username]`               | UserDesktop            | UserMobile                              |
+| `/[locale]/saved`                          | SavedDesktop           | SavedMobile                             |
+| `/[locale]/notifications`                  | NotificationsDesktop   | NotificationsMobile                     |
+| `/[locale]/messages`                       | MessagesDesktop        | MessagesMobile, ChatMobile              |
+| `/[locale]/settings`                       | SettingsDesktop        | SettingsMobile                          |
+| `/[locale]/admin`                          | AdminDashboardDesktop  | AdminDashboardMobile                    |
+| `/[locale]/admin/reports`                  | AdminReportsDesktop    | AdminReportsMobile                      |
+| `/[locale]/admin/posts`                    | AdminPostsDesktop      | AdminPostsMobile                        |
+| `/[locale]/admin/posts/[id]`               | AdminPostDetailDesktop | AdminPostDetailMobile                   |
+| `/[locale]/admin/users`                    | AdminUsersDesktop      | AdminUsersMobile                        |
+| `/[locale]/admin/users/[id]`               | AdminUserDetailDesktop | AdminUserDetailMobile                   |
+| Offline page (PWA)                         | OfflineDesktop         | OfflineMobile                           |
+| 404 page (any unknown address)             | NotFoundDesktop        | NotFoundMobile                          |
+
+The **Style** artboard is the source for colors, type, stamps and buttons. The logo does **not** come from the canvas (see 0.4).
+
+Shared parts → React components (build once, reuse): NavPill → `Navbar`, TopBar → `MobileTopBar`, TabBar → `BottomTabBar`, Slip → `PostSlip` (desktop and phone; props for photo, saved, status stamp, tilt), AuthSlip → `AuthModal`, AdminRail → `AdminSidebar`, AdminBar → `AdminMobileBar`.
+
+### 0.2 Access and auth UI
+
+- A guest only sees About (`/[locale]/about`, also shown at `/[locale]`). Any other link shows About with the **Log in modal open**; after login the user is sent to the page they wanted.
+- **No `/login` or `/register` pages.** The Log in button sits top right of the About navbar (desktop) and top bar (phone). It opens one modal with two tabs: **Log in** (email or username + password) and **Create account** (username, email, password, agree to the posting rules). On phones the modal is a bottom sheet. After success: close the modal, go to Home. Log out goes back to About.
+- 404 page (`client/src/app/[locale]/not-found.tsx` plus a root `client/src/app/not-found.tsx`): shown for unknown addresses and when the API returns 404 for a post or user (`notFound()`). Logged-in users get "Go to Home" and "Search posts"; guests get "Go to the About page" and "Log in".
+
+### 0.3 Color tokens v2 (define once in `client/src/app/globals.css`, light and dark; Light / Dark / System, default System, saved on the device; no flash on load; every page in both themes, same layout, only colors change)
+
+| Token                                              | Light                                                  | Dark                                          |
+| -------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------- |
+| board (page background)                            | `#ECF1EE` + dots `rgba(14,26,23,0.10)`, 1px every 18px | `#0B1412` + dots `rgba(255,255,255,0.06)`     |
+| paper (slips, cards, bars)                         | `#FFFFFF`                                              | `#13201D`                                     |
+| border                                             | `#D9E1DD`                                              | `#22332F`                                     |
+| input border / dashed tear line                    | `#C9D3CF`                                              | `#2C403B`                                     |
+| soft fill (segmented controls, chips)              | `#F1F5F3`                                              | `#182724`                                     |
+| ink (text, dark pill buttons)                      | `#0E1A17`                                              | `#E6EFEC`                                     |
+| text on ink                                        | `#FFFFFF`                                              | `#0B1412`                                     |
+| text secondary                                     | `#2B3835` / `#44524E`                                  | `#B4C4BF`                                     |
+| text muted                                         | `#5D6B67`                                              | `#97AAA4`                                     |
+| primary green (main buttons, links, price)         | `#0F766E`                                              | `#2DD4BF`                                     |
+| primary hover                                      | `#0B4F4A`                                              | `#5EEAD4`                                     |
+| text on primary                                    | `#FFFFFF`                                              | `#042F2C`                                     |
+| primary soft (selected filter)                     | `#E6F4F1` / text `#0B4F4A`                             | `#123B36` / text `#99F6E4`                    |
+| pin (dot on top of every slip, notification badge) | `#F59E0B`                                              | `#F59E0B`                                     |
+| note paper (house rules, author notes)             | `#FFF8E6`, border `#EBDDB5`                            | `#2A2412`, border `#4A3F1E`                   |
+| danger                                             | `#B91C1C`                                              | `#F87171`                                     |
+| category strip / label: Lost and found             | `#F97316` / `#C2410C`                                  | `#F97316` / `#FDBA74`                         |
+| category strip / label: Tutoring                   | `#3B82F6` / `#1D4ED8`                                  | `#3B82F6` / `#93C5FD`                         |
+| category strip / label: Rentals                    | `#22C55E` / `#15803D`                                  | `#22C55E` / `#86EFAC`                         |
+| category strip / label: Other                      | `#94A3B8` / `#475569`                                  | `#94A3B8` / `#CBD5E1`                         |
+| stamp: RESOLVED / EXPIRED / STUDENT ✓ / SCAM       | `#0F766E` / `#64748B` / `#1D4ED8` / `#B91C1C`          | `#2DD4BF` / `#94A3B8` / `#93C5FD` / `#F87171` |
+
+All text must pass 4.5:1 contrast in both themes (check on every big check). Images and the logo stay readable in both themes.
+
+### 0.4 Fonts and logo
+
+- **Unbounded** (500, 700) for headings, titles, stamps and the wordmark; **Onest** (400–700) for all other text. Load both with `next/font/google`. Both support Cyrillic and the Tajik letters ғ ӣ қ ӯ ҳ ҷ — check them; if a letter is missing, fall back to Inter for that text.
+- **Logo** = the picture file `docs/design/logo.png` (the owner puts it there): a round badge, green gradient (dark teal `#0F766E` bottom left → fresh green `#6FBF8F` top right), three white person shapes (the middle one bigger and higher) in front of rolling white and green hills. Use it as given: never redraw, recolor, stretch or add effects. The gradient is allowed only inside the logo; the rest of the UI stays flat. Make: `client/public/logo.png` (original), `client/public/logo.svg` (faithful trace, or use the PNG everywhere if a trace is not possible), `client/src/app/favicon.ico` and `icon.png` (32 and 48 px), `client/src/app/apple-icon.png` (180 px), PWA icons in `client/public/icons/` (192, 512 and a maskable 512 with the badge at ~80% on a `#0F766E` square). Wherever the canvas shows the old pin logo (navbar, phone top bar, admin sidebar, About, 404) use this round logo at the same size. Wordmark next to it: "community" in ink + "board" in green, Unbounded 700. The amber pin dot on slips is **not** the logo.
+
+### 0.5 Profile and admin additions
+
+- **Profile page** (ProfileDesktop/Mobile): my posts, plus edit username, change password, change profile picture, and a **Log out** button.
+- **Admin post page** `/admin/posts/[id]` ("View" in Admin posts and Admin reports opens this, not the public page): photos, title, description; post ID, status, category, district, price, contact, created and expiry dates; every report (who, reason, note, date); the author (username, user ID, email, join date, Student ✓, number of posts, number of reports on their posts, link to the admin user page); buttons Remove post / Restore post, Dismiss reports, Block author, link to the public post.
+- **Admin user page** `/admin/users/[id]` (clicking an author or reporter name anywhere in admin): username, user ID, email, role, status (Active / Blocked), join date, Student ✓, counts (posts, reports on their posts, comments, removed posts), their posts (each opens the admin post page), buttons Block / Unblock user, link to the public profile. Badges: "Super admin" on the owner, "Admin" on admins. Admin → Users has a role filter (Users, Admins). The super admin also sees Make admin / Remove admin; normal admins do not.
+- Settings → Appearance holds the theme choice (also in the desktop avatar menu and the phone drawer).
+
 ## 1. Principles
 
 - Content first: the post list is the product. Chrome is quiet.
@@ -14,10 +98,9 @@ Follow this file on every page. Goal: a calm, scannable, real-looking classified
 
 ## 2. Brand
 
-- **Logo "Mountain pin":** a location pin (primary green `#0F766E`) with white mountains and a small amber sun (`#F59E0B`) inside. Source: `client/public/logo.svg`. Favicon and PWA icons (192, 512, maskable 512 with safe padding) are exported from it.
-- Wordmark "Community Board" in the text font, semi-bold.
+(Replaced by section 0.4: the logo is the round badge from `docs/design/logo.png`; the old "Mountain pin" is no longer used.) Wordmark: "community" in ink + "board" in green, Unbounded 700.
 
-## 3. Color tokens (defined once in `client/src/app/globals.css` with Tailwind v4 `@theme`)
+## 3. Color tokens (baseline — superseded by section 0.3 where they differ)
 
 | Token                        | Light     | Dark      | Use                                     |
 | ---------------------------- | --------- | --------- | --------------------------------------- |
@@ -50,7 +133,7 @@ All text/background pairs must reach contrast 4.5:1 (3:1 for large text and icon
 
 ## 4. Typography
 
-- Font: **Inter** via `next/font/google` with subsets `latin`, `latin-ext`, `cyrillic`, `cyrillic-ext` (supports Tajik ғ ӣ қ ӯ ҳ ҷ). Check these letters visually on the big checks.
+- Font (baseline — superseded by section 0.4: Unbounded + Onest, Inter only as a fallback for missing letters): **Inter** via `next/font/google` with subsets `latin`, `latin-ext`, `cyrillic`, `cyrillic-ext` (supports Tajik ғ ӣ қ ӯ ҳ ҷ). Check these letters visually on the big checks.
 - Scale (px / line height / weight): `12/16/500` caption · `14/20/400` small · `16/24/400` body · `20/28/600` h3 · `24/32/600` h2 · `32/40/700` h1 (desktop; mobile h1 = 24).
 - Inputs always 16px on mobile (prevents iPhone zoom). Left-aligned text by default. Max line length ~70 characters for descriptions.
 
@@ -158,13 +241,13 @@ Author actions (Edit, Delete, Mark as resolved, Renew) appear in an actions row 
 
 Single column everywhere (max-width 640px on desktop, centered form but left-aligned labels): photos (grid of up to 5, "Add photo" opens camera/gallery) → title → category (segmented control) → price + unit (shown only for Tutoring/Rentals) → district → description → contacts (Telegram, phone) → optional location (map, tap to pin) → [Publish]. Mobile: sticky bottom Publish button.
 
-### Login / Register
+### Log in / Create account (modal, no pages)
 
-Centered card (max 400px) on desktop; full-width on mobile. Fields stacked; link to the other page; language and theme switchers in the header.
+See section 0.2. One modal (`AuthModal`) with two tabs, opened from the About page; a bottom sheet on phones. Fields stacked; errors from `errors.<CODE>`.
 
 ### My profile (`/profile`)
 
-Header (initials avatar, username, Student ✓, join date, "Settings" link) → tabs: Active · Resolved · Expired · Removed → my post list with action menu (Edit, Delete, Renew, Resolve).
+Header (profile picture or initials, username, Student ✓, join date, "Settings" link, Edit profile, Log out) → tabs: Active · Resolved · Expired · Removed → my post list with action menu (Edit, Delete, Renew, Resolve). Edit profile: username, password (current + new), picture (upload / remove).
 
 ### Saved (`/saved`)
 
@@ -182,9 +265,9 @@ Desktop: two panes (conversation list left, chat right). Mobile: list page, then
 
 Sections: Language (3 choices), Theme (light/dark/system), University email (input → "Check your inbox (and spam)" state → Student ✓), Logout.
 
-### About (`/about`)
+### About (`/about`) — the front door
 
-Text page, max-width 720px: what the site is, how to use it (3 short steps), rules for posting (list).
+What Community Board is, the 4 categories, how it works, safety, posting rules (see the AboutDesktop / AboutMobile artboards). The only page a guest can open. Log in button top right.
 
 ### Public profile (`/users/[username]`)
 
@@ -272,7 +355,8 @@ The app is wrapped in `<MotionConfig reducedMotion="user">`. Tailwind `motion-sa
 - [ ] One radius for controls (8px), one for cards (12px)
 - [ ] Borders instead of heavy shadows
 - [ ] Only lucide icons; no emoji as icons
-- [ ] Brand green + small amber accent only; no gradients
+- [ ] Brand green + small amber accent only; no gradients (except inside the logo)
+- [ ] Dark mode checked on laptop and phone; each page compared with its canvas artboard
 - [ ] Every screen has loading, empty, error and success states
 - [ ] Dark mode checked on every page
 - [ ] Contrast ≥ 4.5:1 for text; visible focus ring everywhere

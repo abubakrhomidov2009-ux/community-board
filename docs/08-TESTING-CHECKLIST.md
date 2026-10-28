@@ -3,7 +3,7 @@
 Written for the owner (no coding needed). Tick the boxes. Report problems like this:
 **Bug: <page> / I did: <...> / I expected: <...> / I got: <...>** (a screenshot helps).
 
-Demo logins are in docs/05-SETUP-GUIDE.md (admin, aziza, rustam, madina, blocked).
+Demo logins are in docs/05-SETUP-GUIDE.md (admin, aziza, rustam, madina, blocked). The super admin is the account you put in `server/.env` (`SUPER_ADMIN_EMAIL` / `SUPER_ADMIN_PASSWORD`, then `npm run db:seed` or restart the server).
 
 ---
 
@@ -11,18 +11,25 @@ Demo logins are in docs/05-SETUP-GUIDE.md (admin, aziza, rustam, madina, blocked
 
 Open http://localhost:4000/api/docs. **To log in:** open `POST /api/auth/login` → **Try it out** → type `{"emailOrUsername":"aziza","password":"Demo12345"}` → **Execute**. You should get 200. The browser keeps the cookie, so protected endpoints now work with "Try it out". For admin endpoints log in as `admin`.
 
+**The site is login-only:** except `/health` and the `/auth/...` endpoints, every endpoint answers **401 `UNAUTHORIZED`** when you are logged out.
+
 ### Auth
 
-| ☐   | Endpoint            | Type                                              | Expect                     |
-| --- | ------------------- | ------------------------------------------------- | -------------------------- |
-| ☐   | POST /auth/register | new email, username `test1`, password `Test12345` | 201, user without password |
-| ☐   | POST /auth/register | same email again                                  | 409 `EMAIL_TAKEN`          |
-| ☐   | POST /auth/register | same username                                     | 409 `USERNAME_TAKEN`       |
-| ☐   | POST /auth/register | password `123`                                    | 400 `VALIDATION_FAILED`    |
-| ☐   | POST /auth/login    | wrong password                                    | 401 `INVALID_CREDENTIALS`  |
-| ☐   | POST /auth/login    | `blocked` user                                    | 403 `USER_BLOCKED`         |
-| ☐   | GET /auth/me        | logged in / logged out                            | 200 / 401 `UNAUTHORIZED`   |
-| ☐   | POST /auth/logout   | –                                                 | 204; then /auth/me is 401  |
+| ☐   | Endpoint                   | Type                                              | Expect                                                         |
+| --- | -------------------------- | ------------------------------------------------- | -------------------------------------------------------------- |
+| ☐   | POST /auth/register        | new email, username `test1`, password `Test12345` | 201, user without password                                     |
+| ☐   | POST /auth/register        | same email again                                  | 409 `EMAIL_TAKEN`                                              |
+| ☐   | POST /auth/register        | same username                                     | 409 `USERNAME_TAKEN`                                           |
+| ☐   | POST /auth/register        | password `123`                                    | 400 `VALIDATION_FAILED`                                        |
+| ☐   | POST /auth/login           | wrong password                                    | 401 `INVALID_CREDENTIALS`                                      |
+| ☐   | POST /auth/login           | `blocked` user                                    | 403 `USER_BLOCKED`                                             |
+| ☐   | GET /auth/me               | logged in / logged out                            | 200 / 401 `UNAUTHORIZED`                                       |
+| ☐   | POST /auth/logout          | –                                                 | 204; then /auth/me is 401                                      |
+| ☐   | POST /auth/refresh         | log in, then execute it                           | 200; new cookies; the old refresh cookie no longer works       |
+| ☐   | POST /auth/refresh         | logged out (no cookie)                            | 401 `REFRESH_TOKEN_INVALID`                                    |
+| ☐   | POST /auth/change-password | wrong `currentPassword`                           | 400 `CURRENT_PASSWORD_INCORRECT`                               |
+| ☐   | POST /auth/change-password | right current, new `NewPass6789`                  | 200; log in with the new password works; the old one gives 401 |
+| ☐   | POST /auth/register        | add `"role":"SUPER_ADMIN"` to the body            | 400 `VALIDATION_FAILED` (nobody picks a role)                  |
 
 ### Posts
 
@@ -33,6 +40,7 @@ Open http://localhost:4000/api/docs. **To log in:** open `POST /api/auth/login` 
 | ☐   | POST /posts              | LOST_FOUND with price                                 | 400 `PRICE_NOT_ALLOWED`                            |
 | ☐   | POST /posts              | price without unit                                    | 400 `PRICE_UNIT_REQUIRED`                          |
 | ☐   | POST /posts              | logged out                                            | 401                                                |
+| ☐   | GET /posts               | logged out                                            | 401 `UNAUTHORIZED`                                 |
 | ☐   | GET /posts               | `category=TUTORING`                                   | only tutoring                                      |
 | ☐   | GET /posts               | `district=SINO`, `q=math`                             | filtered                                           |
 | ☐   | GET /posts               | `sort=price_asc` / `price_desc` / `oldest` / `newest` | correct order                                      |
@@ -79,6 +87,11 @@ Open http://localhost:4000/api/docs. **To log in:** open `POST /api/auth/login` 
 | ☐   | GET /users/nobody                               | –                                            | 404 `USER_NOT_FOUND`                  |
 | ☐   | GET /users/aziza/posts                          | –                                            | ACTIVE posts only                     |
 | ☐   | PATCH /users/me                                 | `{"preferredLocale":"TG"}`                   | 200                                   |
+| ☐   | PATCH /users/me                                 | `{"username":"aziza_new"}`                   | 200; /auth/me shows the new name      |
+| ☐   | PATCH /users/me                                 | a name another user has                      | 409 `USERNAME_TAKEN`                  |
+| ☐   | PATCH /users/me                                 | `{"role":"ADMIN"}`                           | 400 (a role can never be set)         |
+| ☐   | POST /users/me/avatar                           | choose a jpg or png                          | 200, `avatarUrl` opens the picture    |
+| ☐   | DELETE /users/me/avatar                         | –                                            | 204; `avatarUrl` is null again        |
 | ☐   | POST /users/me/university-email                 | your own university-style email              | 204 and an email arrives (check spam) |
 | ☐   | POST /users/me/university-email                 | `a@gmail.com`                                | 400 `UNIVERSITY_DOMAIN_NOT_ALLOWED`   |
 | ☐   | POST /users/me/university-email/verify          | token from the email                         | 200 `isStudentVerified: true`         |
@@ -90,17 +103,33 @@ Open http://localhost:4000/api/docs. **To log in:** open `POST /api/auth/login` 
 
 ### Admin (log in as `admin`)
 
-| ☐   | Endpoint                                       | Type                     | Expect                                                                                        |
-| --- | ---------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------- |
-| ☐   | GET /admin/stats                               | –                        | numbers                                                                                       |
-| ☐   | GET /admin/reports, /admin/posts, /admin/users | –                        | paginated lists                                                                               |
-| ☐   | PATCH /admin/reports/{id}                      | `{"status":"DISMISSED"}` | 200                                                                                           |
-| ☐   | POST /admin/posts/{id}/remove                  | –                        | 200 REMOVED; the author gets a POST_REMOVED notification; the post disappears from GET /posts |
-| ☐   | POST /admin/posts/{id}/restore                 | –                        | 200 ACTIVE                                                                                    |
-| ☐   | POST /admin/users/{id}/block                   | a normal user            | 200; that user cannot log in                                                                  |
-| ☐   | POST /admin/users/{id}/unblock                 | –                        | 200                                                                                           |
-| ☐   | any /admin/* as a normal user                  | –                        | 403 `ADMIN_ONLY`                                                                              |
-| ☐   | any /admin/* logged out                        | –                        | 401                                                                                           |
+| ☐   | Endpoint                                       | Type                       | Expect                                                                                        |
+| --- | ---------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------- |
+| ☐   | GET /admin/stats                               | –                          | numbers                                                                                       |
+| ☐   | GET /admin/reports, /admin/posts, /admin/users | –                          | paginated lists (names come with an `id`)                                                     |
+| ☐   | GET /admin/users                               | `role=ADMIN` / `role=USER` | admins (and the super admin) / normal users                                                   |
+| ☐   | PATCH /admin/reports/{id}                      | `{"status":"DISMISSED"}`   | 200                                                                                           |
+| ☐   | GET /admin/posts/{id}                          | a reported post            | the post, every report with who reported, and the author (email, counts)                      |
+| ☐   | PATCH /admin/posts/{id}/reports/dismiss        | –                          | 200; all reports on it are DISMISSED; the post stays                                          |
+| ☐   | PATCH /admin/posts/{id}/remove                 | –                          | 200 REMOVED; the author gets a POST_REMOVED notification; the post disappears from GET /posts |
+| ☐   | PATCH /admin/posts/{id}/restore                | –                          | 200 ACTIVE                                                                                    |
+| ☐   | GET /admin/users/{id}                          | a user                     | counts (posts, reports on their posts, comments, removed posts) and their posts               |
+| ☐   | PATCH /admin/users/{id}/block                  | a normal user              | 200; that user cannot log in                                                                  |
+| ☐   | PATCH /admin/users/{id}/unblock                | –                          | 200                                                                                           |
+| ☐   | PATCH /admin/users/{id}/block                  | another admin              | 403 `FORBIDDEN_ROLE`                                                                          |
+| ☐   | PATCH /admin/users/{id}/promote                | as admin                   | 403 `FORBIDDEN_ROLE`                                                                          |
+| ☐   | any /admin/* as a normal user                  | –                          | 403 `ADMIN_ONLY`                                                                              |
+| ☐   | any /admin/* logged out                        | –                          | 401                                                                                           |
+
+### Super admin (log in with your own account from `server/.env`)
+
+| ☐   | Endpoint                                | Type          | Expect                                                                |
+| --- | --------------------------------------- | ------------- | --------------------------------------------------------------------- |
+| ☐   | GET /auth/me                            | –             | `role: "SUPER_ADMIN"`                                                 |
+| ☐   | PATCH /admin/users/{id}/promote         | a normal user | 200 `role: "ADMIN"`; promoting again gives 409 `USER_ALREADY_ADMIN`   |
+| ☐   | PATCH /admin/users/{id}/demote          | that admin    | 200 `role: "USER"`; demoting a normal user gives 409 `USER_NOT_ADMIN` |
+| ☐   | PATCH /admin/users/{id}/block, /unblock | an admin      | 200 (only the super admin can)                                        |
+| ☐   | PATCH /admin/users/{id}/block           | your own id   | 403 `CANNOT_CHANGE_SUPER_ADMIN` (nobody can change the super admin)   |
 
 ### Rate limits
 
@@ -115,6 +144,8 @@ Open http://localhost:4000/api/docs. **To log in:** open `POST /api/auth/login` 
 - [ ] All unit and e2e tests pass (`npm test`, `npm run test:e2e` in `server/`)
 - [ ] `npm run db:seed` loads demo data
 - [ ] docs/02-SPEC.md matches the real API
+- [ ] Login-only access: a logged-out call to any posts, comments or users endpoint gives 401 (a test checks the whole Swagger document)
+- [ ] Roles: the role matrix of docs/02 §4.3 is covered by tests, and the super admin can be created from `server/.env`
 - [ ] Day 7 big check done in Swagger, all bugs fixed
 - [ ] `git tag api-v1.0.0`
 
@@ -124,50 +155,56 @@ Open http://localhost:4000/api/docs. **To log in:** open `POST /api/auth/login` 
 
 Columns: **M** = mobile (360px or real phone), **D** = desktop (1280px). Tick both. Also test in **EN / RU / TG** and **light / dark**.
 
-| #   | Feature          | Steps                                                    | Expected                                                                                       | M   | D   |
-| --- | ---------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | --- | --- |
-| 1   | Auth             | Register; log out; log in; wrong password                | Logged in with username in the menu; clear translated error                                    | ☐   | ☐   |
-| 2   | Post CRUD        | Create, edit, delete (confirm)                           | Appears in list; edit saved; delete asks for confirmation                                      | ☐   | ☐   |
-| 3   | Categories       | Create one in each category                              | Coloured badge, translated name                                                                | ☐   | ☐   |
-| 4   | Browse           | Filter, search, paginate                                 | Correct results; URL keeps filters; skeletons while loading                                    | ☐   | ☐   |
-| 5   | Comments         | Add, delete own                                          | New comment slides in; delete closes the gap                                                   | ☐   | ☐   |
-| 6   | Detail + resolve | Open a post, press Mark as resolved                      | Badge changes with a short animation                                                           | ☐   | ☐   |
-| 7   | My profile       | Open Profile                                             | My posts with status                                                                           | ☐   | ☐   |
-| 8   | Price            | Tutoring 300 per month                                   | "300 сомонӣ / моҳ" style, per language                                                         | ☐   | ☐   |
-| 9   | District         | Filter by district                                       | Only that district                                                                             | ☐   | ☐   |
-| 10  | Contact          | Tap Telegram and Call                                    | Telegram opens `t.me/...`; phone opens the dialer                                              | ☐   | ☐   |
-| 11  | Sort             | All four options                                         | Correct order                                                                                  | ☐   | ☐   |
-| 12  | Dark mode        | Light / dark / system, reload                            | Saved; no white flash                                                                          | ☐   | ☐   |
-| 13  | About            | Open About                                               | Translated text                                                                                | ☐   | ☐   |
-| 14  | Counts           | Look at category filter                                  | "Tutoring (24)" style; changes with other filters                                              | ☐   | ☐   |
-| 15  | Images           | Add 5 images (camera/gallery on phone); add a 6th        | Compressed, uploaded, swipeable gallery; sixth refused with message                            | ☐   | ☐   |
-| 16  | Languages        | Switch EN/RU/TG on every page                            | No English left over, no missing text                                                          | ☐   | ☐   |
-| 17  | Favorites        | Tap the heart; open Saved                                | Heart pops instantly; post listed on Saved                                                     | ☐   | ☐   |
-| 18  | Public profile   | Click an author name                                     | Join date and active posts, no email                                                           | ☐   | ☐   |
-| 19  | Expiry/renew     | Use an expired demo post; press Renew                    | Becomes active again                                                                           | ☐   | ☐   |
-| 20  | Report           | Report a post; report again                              | Success toast; second time shows "already reported"                                            | ☐   | ☐   |
-| 21  | Share            | Copy link; Telegram; phone share sheet                   | Works                                                                                          | ☐   | ☐   |
-| 22  | Admin            | Log in as admin; reports, remove post, block user, stats | Tables on desktop, cards on mobile; non-admin sees no admin link and gets a "not allowed" page | ☐   | ☐   |
-| 23  | Notifications    | Another user comments; open bell                         | Badge shakes and counts up; mark as read                                                       | ☐   | ☐   |
-| 24  | Student badge    | Add university email; click link                         | "Student ✓" badge                                                                              | ☐   | ☐   |
-| 25  | Map              | Pin a location; open map view                            | Pin saved; pins on the browse map; "© OpenStreetMap contributors" visible                      | ☐   | ☐   |
-| 26  | Messages         | Send a message between two accounts                      | Appears within ~5 s; unread badge                                                              | ☐   | ☐   |
-| 27  | Limits/blocked   | Blocked user logs in; spam the login                     | Blocked message; "too many attempts" message                                                   | ☐   | ☐   |
+| #   | Feature          | Steps                                                                                                                                                    | Expected                                                                                                                                                                                                                                  | M   | D   |
+| --- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
+| 1   | Auth             | As a guest open About; press Log in → Create account tab; register; log out (profile page); log in; wrong password; leave the site open 20 min and click | Modal (bottom sheet on phone); lands on Home; logout returns to About; clear translated error; still logged in after 20 min (refresh)                                                                                                     | ☐   | ☐   |
+| 2   | Post CRUD        | Create, edit, delete (confirm)                                                                                                                           | Appears in list; edit saved; delete asks for confirmation                                                                                                                                                                                 | ☐   | ☐   |
+| 3   | Categories       | Create one in each category                                                                                                                              | Coloured badge, translated name                                                                                                                                                                                                           | ☐   | ☐   |
+| 4   | Browse           | Filter, search, paginate                                                                                                                                 | Correct results; URL keeps filters; skeletons while loading                                                                                                                                                                               | ☐   | ☐   |
+| 5   | Comments         | Add, delete own                                                                                                                                          | New comment slides in; delete closes the gap                                                                                                                                                                                              | ☐   | ☐   |
+| 6   | Detail + resolve | Open a post, press Mark as resolved                                                                                                                      | Badge changes with a short animation                                                                                                                                                                                                      | ☐   | ☐   |
+| 7   | My profile       | Open Profile; change username, password and picture; Log out                                                                                             | My posts with status; changes saved (taken name refused); other devices logged out after a password change; logout works from this page                                                                                                   | ☐   | ☐   |
+| 8   | Price            | Tutoring 300 per month                                                                                                                                   | "300 сомонӣ / моҳ" style, per language                                                                                                                                                                                                    | ☐   | ☐   |
+| 9   | District         | Filter by district                                                                                                                                       | Only that district                                                                                                                                                                                                                        | ☐   | ☐   |
+| 10  | Contact          | Tap Telegram and Call                                                                                                                                    | Telegram opens `t.me/...`; phone opens the dialer                                                                                                                                                                                         | ☐   | ☐   |
+| 11  | Sort             | All four options                                                                                                                                         | Correct order                                                                                                                                                                                                                             | ☐   | ☐   |
+| 12  | Dark mode        | Light / dark / system, reload                                                                                                                            | Saved; no white flash                                                                                                                                                                                                                     | ☐   | ☐   |
+| 13  | About            | Open About as a guest                                                                                                                                    | The front door, translated; Log in button top right                                                                                                                                                                                       | ☐   | ☐   |
+| 14  | Counts           | Look at category filter                                                                                                                                  | "Tutoring (24)" style; changes with other filters                                                                                                                                                                                         | ☐   | ☐   |
+| 15  | Images           | Add 5 images (camera/gallery on phone); add a 6th                                                                                                        | Compressed, uploaded, swipeable gallery; sixth refused with message                                                                                                                                                                       | ☐   | ☐   |
+| 16  | Languages        | Switch EN/RU/TG on every page                                                                                                                            | No English left over, no missing text                                                                                                                                                                                                     | ☐   | ☐   |
+| 17  | Favorites        | Tap the heart; open Saved                                                                                                                                | Heart pops instantly; post listed on Saved                                                                                                                                                                                                | ☐   | ☐   |
+| 18  | Public profile   | Click an author name                                                                                                                                     | Join date and active posts, no email                                                                                                                                                                                                      | ☐   | ☐   |
+| 19  | Expiry/renew     | Use an expired demo post; press Renew                                                                                                                    | Becomes active again                                                                                                                                                                                                                      | ☐   | ☐   |
+| 20  | Report           | Report a post; report again                                                                                                                              | Success toast; second time shows "already reported"                                                                                                                                                                                       | ☐   | ☐   |
+| 21  | Share            | Copy link; Telegram; phone share sheet                                                                                                                   | Works                                                                                                                                                                                                                                     | ☐   | ☐   |
+| 22  | Admin            | Log in as admin; reports, remove post, block user, stats; press View on a post and click the author and a reporter name                                  | Tables on desktop, cards on mobile; View opens the admin post page (not the public one); names open the admin user page; admin cannot touch other admins; super admin sees Make admin / Remove admin; non-admin gets a "not allowed" page | ☐   | ☐   |
+| 23  | Notifications    | Another user comments; open bell                                                                                                                         | Badge shakes and counts up; mark as read                                                                                                                                                                                                  | ☐   | ☐   |
+| 24  | Student badge    | Add university email; click link                                                                                                                         | "Student ✓" badge                                                                                                                                                                                                                         | ☐   | ☐   |
+| 25  | Map              | Pin a location; open map view                                                                                                                            | Pin saved; pins on the browse map; "© OpenStreetMap contributors" visible                                                                                                                                                                 | ☐   | ☐   |
+| 26  | Messages         | Send a message between two accounts                                                                                                                      | Appears within ~5 s; unread badge                                                                                                                                                                                                         | ☐   | ☐   |
+| 27  | Limits/blocked   | Blocked user logs in; spam the login                                                                                                                     | Blocked message; "too many attempts" message                                                                                                                                                                                              | ☐   | ☐   |
 
 ### Permission tests
 
-| ☐   | Who     | Test                         | Expect                      |
-| --- | ------- | ---------------------------- | --------------------------- |
-| ☐   | Guest   | Open `/en/posts/new`         | Redirect to login           |
-| ☐   | Guest   | Open `/en/admin`             | Redirect to login           |
-| ☐   | User    | Open `/en/admin`             | Not allowed page            |
-| ☐   | User    | Edit someone else's post URL | Not allowed                 |
-| ☐   | Blocked | Try to log in                | Clear blocked message       |
-| ☐   | Admin   | Remove a post                | Disappears from public list |
+| ☐   | Who         | Test                                  | Expect                                                            |
+| --- | ----------- | ------------------------------------- | ----------------------------------------------------------------- |
+| ☐   | Guest       | Open `/en/posts/new` or any post link | About page with the Log in modal open; after login the link opens |
+| ☐   | Guest       | Open `/en/admin`                      | About page with the Log in modal open                             |
+| ☐   | Guest       | Open `/en/nonsense-address`           | The 404 page with "Go to the About page" and "Log in"             |
+| ☐   | User        | Open `/en/admin`                      | Not allowed page                                                  |
+| ☐   | User        | Edit someone else's post URL          | Not allowed                                                       |
+| ☐   | User        | Open a removed post's link            | 404 page ("Go to Home", "Search posts")                           |
+| ☐   | Blocked     | Try to log in                         | Clear blocked message                                             |
+| ☐   | Admin       | Remove a post                         | Disappears from the list                                          |
+| ☐   | Admin       | Try to block another admin            | Not possible (no button, and the API says 403)                    |
+| ☐   | Super admin | Make a user an admin; remove the role | Role badge changes; the user gets or loses the admin panel        |
 
 ### Design, motion, accessibility
 
 - [ ] Every item in the design review checklist (docs/11) ticked
+- [ ] **Dark mode** checked on laptop and phone (Light / Dark / System in Settings → Appearance), no flash of the wrong theme on reload
+- [ ] Each page compared side by side with its artboard in the design canvas (desktop and phone)
 - [ ] Reduced motion: turn on "Reduce motion" in the system settings; animations become simple fades or stop
 - [ ] Tab key moves through the page with a visible focus ring (desktop)
 - [ ] Nothing wider than the screen at 360px (no sideways scroll)
@@ -189,18 +226,21 @@ Columns: **M** = mobile (360px or real phone), **D** = desktop (1280px). Tick bo
 | Level              | Tool                         | Examples                                                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------ | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Backend unit       | Jest                         | `AuthService › register › throws EMAIL_TAKEN`, `PostsService › create › throws CONTACT_REQUIRED`, `PostsService › update › throws POST_NOT_OWNER`, `PostsService › list › excludes expired and removed`, `ReportsService › create › throws REPORT_ALREADY_EXISTS`, `TasksService › expirePosts › marks old posts EXPIRED`, `UploadsService › rejects 6th image`, `MessagesService › refuses messaging yourself` |
-| Backend e2e        | Jest + Supertest             | `register → login → create post → comment → resolve`; `report → admin removes post → post hidden`; `blocked user cannot log in or create`; `guest gets 401 on POST /posts`; `login is rate limited`                                                                                                                                                                                                             |
+| Backend e2e        | Jest + Supertest             | `register → login → create post → comment → resolve`; `report → admin removes post → post hidden`; `blocked user cannot log in or create`; `guest gets 401 on every posts/comments/users endpoint`; `login is rate limited`; `refresh token rotation and stolen-token protection`; `change password logs other devices out`; `role matrix: user / admin / super admin`                                          |
 | Frontend component | Jest + React Testing Library | `PostCard renders title, price and category badge`, `FilterPanel calls onChange when category clicked`, `LoginForm shows translated validation errors`, `FavoriteButton toggles optimistically`, `EmptyState shows its action`                                                                                                                                                                                  |
 | i18n               | script                       | `npm run i18n:check` fails if a key is missing in en/tg/ru                                                                                                                                                                                                                                                                                                                                                      |
 
-**Backend status (end of day 6):** 192 unit tests in 16 files (every service, the guards, the error filter, the status filter, the Brevo mail service and the email templates in 3 languages) and 56 end-to-end tests in 7 files, run with `npm test` and `npm run test:e2e` in `server/`:
+**Backend status (day 7, after the plan update):** 230 unit tests in 16 files (every service, the guards, the error filter, the status filter, the Brevo mail service and the email templates in 3 languages) and 100 end-to-end tests in 10 files, run with `npm test` and `npm run test:e2e` in `server/`:
 
-| e2e file          | What it proves                                                                                                                                                                                                                                                                                        |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs-and-errors` | health, security headers, CORS, one error format everywhere, and the **Swagger quality gate**: all 47 endpoints of docs/02 exist (and nothing else), each has a tag, summary, success response, 401 where needed, shared error DTO, path parameter descriptions, admin marking, multipart upload docs |
-| `posts-flow`      | register → login → create post → comment → notification → resolve → logout; post rules; edit/delete permissions; search, filters, sort, pagination and counts; expiry and renew                                                                                                                       |
-| `moderation`      | report → admin removes post → hidden, reports closed, author notified; admin lists; blocked users refused everywhere (login, old session, create); admin cannot be blocked; role read from the database                                                                                               |
-| `messages`        | chat flow with unread counts, polling with `after`, one notification per chat, read; only the two people can see a chat; message rules                                                                                                                                                                |
-| `social`          | favorites and `isFavorite`; public profile; language; university email (link in the user language, hashed token, expiry, replaced links, taken address)                                                                                                                                               |
-| `uploads`         | real multipart handling with a fake Cloudinary: jpg/png/webp, 5 images max, wrong types and fake extensions, 5 MB limit, permissions, cleanup of photos on delete and on failure                                                                                                                      |
-| `rate-limit`      | login, register, create post, comment, report, message and university email limits answer 429 `TOO_MANY_REQUESTS`                                                                                                                                                                                     |
+| e2e file              | What it proves                                                                                                                                                                                                                                                                                     |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs-and-errors`     | health, security headers, CORS, one error format everywhere, and the **Swagger quality gate**: all endpoints of docs/02 exist (and nothing else), each has a tag, summary, success response, 401 where needed, shared error DTO, path parameter descriptions, admin marking, multipart upload docs |
+| `posts-flow`          | register → login → create post → comment → notification → resolve → logout; post rules; edit/delete permissions; search, filters, sort, pagination and counts; expiry and renew                                                                                                                    |
+| `moderation`          | report → admin removes post → hidden, reports closed, author notified; admin lists; blocked users refused everywhere (login, old session, create); admin cannot be blocked; role read from the database                                                                                            |
+| `messages`            | chat flow with unread counts, polling with `after`, one notification per chat, read; only the two people can see a chat; message rules                                                                                                                                                             |
+| `social`              | favorites and `isFavorite`; public profile; language; university email (link in the user language, hashed token, expiry, replaced links, taken address)                                                                                                                                            |
+| `uploads`             | real multipart handling with a fake Cloudinary: jpg/png/webp, 5 images max, wrong types and fake extensions, 5 MB limit, permissions, cleanup of photos on delete and on failure                                                                                                                   |
+| `profile-and-session` | login-only access (guests get 401 on every posts/comments/users endpoint); refresh token (rotation, expiry, stolen-token protection, logout, blocked user); change password; username change; profile picture with a fake Cloudinary                                                               |
+| `roles`               | the full role matrix: nobody picks a role; user / admin / super admin each tried on every admin action; promote and demote; the one super admin from `.env`                                                                                                                                        |
+| `admin-pages`         | admin post page (post, reports with who reported, author summary), dismiss reports, admin user page (counts, their posts), ids for linking names                                                                                                                                                   |
+| `rate-limit`          | login, register, create post, comment, report, message and university email limits answer 429 `TOO_MANY_REQUESTS`                                                                                                                                                                                  |

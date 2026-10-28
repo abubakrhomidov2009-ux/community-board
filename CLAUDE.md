@@ -2,7 +2,15 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 6 (Messages, all unit + e2e tests and the full seed are done; the owner has asked me to run the checks myself, so I run them and report results). Next: Day 7, the backend gate (Swagger review, spec sync, tag api-v1.0.0, owner's big check).**
+**Current day: 7 (the backend gate). Built on day 7 before the gate: the 2026-10-28 plan update in the backend (login-only access, profile editing, refresh token, roles + super admin, admin post/user pages), all with unit + e2e tests. The owner asked me to run the checks myself, so I run them and report results. Next: finish the Swagger review, owner's SUPER_ADMIN_EMAIL / SUPER_ADMIN_PASSWORD in server/.env, spec sync, owner's big check, tag api-v1.0.0. Then Stage B (needs docs/design/logo.png and the design canvas/export first).**
+
+## Plan update (2026-10-28), applies everywhere
+
+- **About is the front door.** A guest only sees `/[locale]/about` (also `/[locale]`). Every other link shows About with the Log in modal open, then returns to that link after login. Backend: only `GET /api/health` and the auth endpoints are public; everything else needs a login. **No `/login` or `/register` pages**: Log in and Create account are one modal (bottom sheet on phones); after login go to Home (`/posts`); logout goes to About.
+- **Sessions.** Login token (cookie `access_token`, 15 min) + rotating refresh token (cookie `refresh_token`, 30 days, path `/api/auth`). The Axios interceptor calls `POST /api/auth/refresh` once on 401 `UNAUTHORIZED`, then repeats the request; on 401 `REFRESH_TOKEN_INVALID` it opens the Log in modal.
+- **Profile.** `PATCH /api/users/me` (username, language), `POST /api/auth/change-password`, `POST` / `DELETE /api/users/me/avatar`, logout on the profile page.
+- **Roles.** `Role` = USER, ADMIN, SUPER_ADMIN. Nobody picks a role. Exactly one super admin: the email `SUPER_ADMIN_EMAIL` in `server/.env` (password `SUPER_ADMIN_PASSWORD`; the server and the seed create or upgrade it). Admins block only normal users; only the super admin touches admins (`PATCH /api/admin/users/:id/promote|demote|block|unblock`); nobody changes the super admin. Student ✓ is a flag, not a role. Errors: `FORBIDDEN_ROLE`, `CANNOT_CHANGE_SUPER_ADMIN`, `USER_ALREADY_ADMIN`, `USER_NOT_ADMIN`. Admin actions are `PATCH`. Admin pages: `/admin/posts/[id]` and `/admin/users/[id]` (API: `GET /api/admin/posts/:id`, `GET /api/admin/users/:id`, `PATCH /api/admin/posts/:id/reports/dismiss`).
+- **Design v2 "Notice Slips".** Build exactly like the design canvas (see docs/11 §0): dotted board, slips with amber pin, category strip, tear-off tabs, stamps; fonts Unbounded + Onest; light + dark tokens (Light / Dark / System); round logo from `docs/design/logo.png`; every READY TO CHECK names the artboards to compare with. If the canvas or logo cannot be read, ask the owner (🙋 format) to export the design or put screenshots / the logo in `docs/design/`.
 
 ## Project
 
@@ -12,8 +20,8 @@ The owner is not a coder: Claude writes ALL code, installs ALL tools and package
 
 ## Stack (fixed)
 
-- **Frontend (`client/`)**: Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4 (`@tailwindcss/postcss`), shadcn/ui, lucide-react, next-intl (tg/ru/en, default en), next-themes, TanStack Query + Table, Axios (one instance, `lib/api/axios.ts`, base `/api`, `withCredentials`), Zod + react-hook-form, Motion, Embla, Vaul, react-leaflet, browser-image-compression, Serwist (PWA), Jest + React Testing Library, eslint-plugin-i18next.
-- **Backend (`server/`)**: NestJS 11, TypeScript, Prisma 6, PostgreSQL, JWT in httpOnly cookie (custom `JwtAuthGuard`, no Passport), bcrypt, class-validator/transformer, @nestjs/swagger 11.4.7, throttler, schedule, helmet, cookie-parser, multer + Cloudinary, Brevo via `fetch`.
+- **Frontend (`client/`)**: Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4 (`@tailwindcss/postcss`), shadcn/ui, lucide-react, fonts Unbounded + Onest (`next/font/google`), next-intl (tg/ru/en, default en), next-themes (Light / Dark / System), TanStack Query + Table, Axios (one instance, `lib/api/axios.ts`, base `/api`, `withCredentials`), Zod + react-hook-form, Motion, Embla, Vaul, react-leaflet, browser-image-compression, Serwist (PWA), Jest + React Testing Library, eslint-plugin-i18next.
+- **Backend (`server/`)**: NestJS 11, TypeScript, Prisma 6, PostgreSQL, JWT access cookie + rotating refresh-token cookie (custom `JwtAuthGuard`, no Passport), bcrypt, class-validator/transformer, @nestjs/swagger 11.4.7, throttler, schedule, helmet, cookie-parser, multer + Cloudinary, Brevo via `fetch`.
 - **Hosting (free)**: Neon (DB), Render (API), Vercel (web), Cloudinary, Brevo, OpenStreetMap, GitHub Actions.
 - npm only. Package versions and install notes: docs/05-SETUP-GUIDE.md. Client installs use `--legacy-peer-deps`.
 
@@ -44,8 +52,8 @@ Full annotated tree: docs/02-SPEC.md §2. One Git repo at the root only. Backend
 
 ## Data model names (use everywhere)
 
-Models: User, Post, PostImage, Comment, Favorite, Report, Notification, Conversation, ConversationParticipant, Message, EmailVerificationToken.
-Enums: Role {USER, ADMIN} · Category {LOST_FOUND, TUTORING, RENTALS, OTHER} · District {SINO, FIRDAVSI, SHOHMANSUR, ISMOILI_SOMONI, UNIVERSITY_CAMPUS, OTHER} · PostStatus {ACTIVE, RESOLVED, EXPIRED, REMOVED} · PriceUnit {ONCE, PER_HOUR, PER_MONTH} · ReportReason {SPAM, SCAM, OFFENSIVE, OTHER} · ReportStatus {OPEN, RESOLVED, DISMISSED} · NotificationType {NEW_COMMENT, POST_EXPIRING, POST_REMOVED, NEW_MESSAGE} · Locale {TG, RU, EN}. Prices are whole somoni (Int).
+Models: User, Post, PostImage, Comment, Favorite, Report, Notification, Conversation, ConversationParticipant, Message, EmailVerificationToken, RefreshToken.
+Enums: Role {USER, ADMIN, SUPER_ADMIN} · Category {LOST_FOUND, TUTORING, RENTALS, OTHER} · District {SINO, FIRDAVSI, SHOHMANSUR, ISMOILI_SOMONI, UNIVERSITY_CAMPUS, OTHER} · PostStatus {ACTIVE, RESOLVED, EXPIRED, REMOVED} · PriceUnit {ONCE, PER_HOUR, PER_MONTH} · ReportReason {SPAM, SCAM, OFFENSIVE, OTHER} · ReportStatus {OPEN, RESOLVED, DISMISSED} · NotificationType {NEW_COMMENT, POST_EXPIRING, POST_REMOVED, NEW_MESSAGE} · Locale {TG, RU, EN}. Prices are whole somoni (Int).
 Full schema, API and error codes: docs/02-SPEC.md.
 
 ## Decisions
@@ -56,13 +64,14 @@ Full schema, API and error codes: docs/02-SPEC.md.
 - Render free tier sleeps: expiry also checked on read + keep-awake workflow every 14 min.
 - NestJS 11 + matching package versions; Prisma 6; uploads go through the backend.
 - Backend never sends UI text, only error codes (`errors.<CODE>` on the frontend).
+- Login-only site (About is the only public page); roles USER / ADMIN / SUPER_ADMIN; short access token + rotating refresh token (plan update above).
 - Everything must be free. If a sign-up asks for a card: stop, switch to a free option.
 
 ## The 6 mandatory rules
 
 1. **i18n from day one:** next-intl + `[locale]` before the first page; no hardcoded UI text (ESLint `no-literal-string`); en/tg/ru keys identical (`npm run i18n:check`); Zod messages are keys; backend sends error codes; enums translated (`category.LOST_FOUND`); dates/numbers/prices via formatters; emails use `preferredLocale`; PWA manifest in 3 languages.
 2. **Swagger for every endpoint:** `@ApiTags`, `@ApiOperation`, `@ApiResponse` for each status, documented DTOs with examples, response DTOs, cookie auth, multipart docs for uploads, query docs. A feature is not done until it works in Swagger. Frontend types are generated from `/api/docs-json`.
-3. **Real UI design:** follow docs/11-DESIGN-SYSTEM.md (tokens, Inter with Cyrillic, lucide only, shadcn restyled, designed states, real dark palette, no AI-slop).
+3. **Real UI design:** follow docs/11-DESIGN-SYSTEM.md section 0 ("Notice Slips": tokens, Unbounded + Onest, round logo, slips, stamps, lucide only, shadcn restyled, designed states, real dark palette, no AI-slop) and match the design canvas artboards exactly.
 4. **Laptop AND mobile, both first-class:** mobile-first 360px; tablet 768; desktop 1024+ (max ~1280); bottom tab bar, bottom sheets, ≥44px targets, 16px inputs, safe area, camera upload, tap-to-call, share sheet; PWA; every READY TO CHECK has mobile and laptop steps.
 5. **Backend first, then frontend, deploy near the end:** Stage A days 2–7 (all 27 features, Swagger-tested), gate, then Stage B days 8–11, then Stage C days 12–14.
 6. **Motion:** Motion lib + tw-animate-css + Embla + Vaul; tokens `--duration-*`, `--ease-out`; presets in `client/src/lib/motion.ts`; transform/opacity only; `MotionConfig reducedMotion="user"`; motion table in docs/11.
@@ -97,24 +106,24 @@ Never ask the owner to paste secrets in chat: tell them which file/line. Verify 
 
 ## 14-day plan (details: docs/04-DAILY-PLAN.md)
 
-| Day | Stage  | Work                                                        | Features         |
-| --- | ------ | ----------------------------------------------------------- | ---------------- |
-| 1   | Setup  | tools, scaffolds, docs                                      | –                |
-| 2   | A      | schema, migrations, seed, errors, Auth, guards              | 1                |
-| 3   | A      | Posts, Comments                                             | 2–6, 8–11, 14    |
-| 4   | A      | Uploads, Users, Favorites, Reports, expiry job              | 15, 17–20        |
-| 5   | A      | Admin, Notifications, Email, Map fields, Rate limits        | 22–25, 27        |
-| 6   | A      | Messages, unit + e2e tests                                  | 26               |
-| 7   | A gate | Swagger review, spec sync, tag `api-v1.0.0`                 | all              |
-| 8   | B      | API types, i18n, tokens, logo, shell, auth pages            | 1, 12            |
-| 9   | B      | Browse, detail, comments, create/edit + photos              | 2–11, 14, 15     |
-| 10  | B      | Profiles, saved, report, share, renew, About, notifications | 7, 13, 17–21, 23 |
-| 11  | B      | Admin, messages, map, student verification, PWA, tg+ru      | 16, 22, 24–26    |
-| 12  | C      | Deploy (GitHub, Neon, Render, Vercel)                       | –                |
-| 13  | C      | Production fixes, phone tests, Lighthouse                   | –                |
-| 14  | C      | Final check of all 27, README screenshots                   | all              |
+| Day | Stage  | Work                                                          | Features         |
+| --- | ------ | ------------------------------------------------------------- | ---------------- |
+| 1   | Setup  | tools, scaffolds, docs                                        | –                |
+| 2   | A      | schema, migrations, seed, errors, Auth, guards                | 1                |
+| 3   | A      | Posts, Comments                                               | 2–6, 8–11, 14    |
+| 4   | A      | Uploads, Users, Favorites, Reports, expiry job                | 15, 17–20        |
+| 5   | A      | Admin, Notifications, Email, Map fields, Rate limits          | 22–25, 27        |
+| 6   | A      | Messages, unit + e2e tests                                    | 26               |
+| 7   | A gate | Swagger review, spec sync, tag `api-v1.0.0`                   | all              |
+| 8   | B      | API types, i18n, tokens, logo, shell, About page + auth modal | 1, 12, 13        |
+| 9   | B      | Browse, detail, comments, create/edit + photos                | 2–11, 14, 15     |
+| 10  | B      | Profiles, saved, report, share, renew, About, notifications   | 7, 13, 17–21, 23 |
+| 11  | B      | Admin, messages, map, student verification, PWA, tg+ru        | 16, 22, 24–26    |
+| 12  | C      | Deploy (GitHub, Neon, Render, Vercel)                         | –                |
+| 13  | C      | Production fixes, phone tests, Lighthouse                     | –                |
+| 14  | C      | Final check of all 27, README screenshots                     | all              |
 
-Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail · days 8, 11 phone on the same Wi-Fi · day 12 GitHub/Neon/Render/Vercel accounts · day 13 phone with the live link.
+Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail · day 7 SUPER_ADMIN_EMAIL + SUPER_ADMIN_PASSWORD in server/.env · day 8 docs/design/logo.png + the design canvas export (if Claude cannot read it) · days 8, 11 phone on the same Wi-Fi · day 12 GitHub/Neon/Render/Vercel accounts · day 13 phone with the live link.
 
 ## Feature progress (two boxes: backend done / frontend done)
 
@@ -155,6 +164,7 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 - [ ] All backend unit and e2e tests pass
 - [ ] `npm run db:seed` (in `server/`) loads the seed data
 - [ ] docs/02-SPEC.md matches the real API
+- [ ] Login-only access verified (guests get 401 everywhere except health and auth); roles matrix + super admin from server/.env verified
 - [ ] Owner did the day-7 big check in Swagger and all bugs are fixed
 - [ ] `git tag api-v1.0.0`
 

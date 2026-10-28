@@ -36,8 +36,14 @@ export class CloudinaryService {
     return this.configured;
   }
 
-  /** Uploads one image. The picture is limited to 1600px so pages stay light on slow phones. */
-  upload(buffer: Buffer): Promise<UploadedImage> {
+  /**
+   * Uploads one image. Post pictures are limited to 1600px so pages stay light on slow phones;
+   * profile pictures are cut to a 400px square around the face.
+   */
+  upload(
+    buffer: Buffer,
+    kind: 'post' | 'avatar' = 'post',
+  ): Promise<UploadedImage> {
     return new Promise((resolve, reject) => {
       if (!this.configured) {
         reject(new Error('Cloudinary is not configured'));
@@ -45,10 +51,18 @@ export class CloudinaryService {
       }
       const stream = cloudinary.uploader.upload_stream(
         {
-          folder: 'community-board/posts',
+          folder: `community-board/${kind === 'avatar' ? 'avatars' : 'posts'}`,
           resource_type: 'image',
           transformation: [
-            { width: 1600, height: 1600, crop: 'limit', quality: 'auto' },
+            kind === 'avatar'
+              ? {
+                  width: 400,
+                  height: 400,
+                  crop: 'fill',
+                  gravity: 'face',
+                  quality: 'auto',
+                }
+              : { width: 1600, height: 1600, crop: 'limit', quality: 'auto' },
           ],
         },
         (error, result) => {

@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { RolesGuard } from '../../common/guards/roles.guard';
+import { DEFAULT_ACCESS_EXPIRES_IN } from './auth.cookie';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
@@ -15,13 +16,13 @@ import { AuthService } from './auth.service';
         secret: config.getOrThrow<string>('JWT_SECRET'),
         signOptions: {
           expiresIn: (config.get<string>('JWT_EXPIRES_IN') ??
-            '7d') as `${number}d`,
+            DEFAULT_ACCESS_EXPIRES_IN) as `${number}m`,
         },
       }),
     }),
   ],
   controllers: [AuthController],
   providers: [AuthService, RolesGuard],
-  exports: [JwtModule, RolesGuard],
+  exports: [JwtModule, RolesGuard, AuthService],
 })
 export class AuthModule {}

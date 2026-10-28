@@ -15,6 +15,8 @@ const user: AuthUser = {
   role: Role.USER,
   isBlocked: false,
   universityEmail: null,
+  avatarUrl: null,
+  avatarPublicId: null,
   isStudentVerified: false,
   preferredLocale: Locale.EN,
   createdAt: new Date('2026-01-01T00:00:00Z'),

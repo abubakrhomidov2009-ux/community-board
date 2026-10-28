@@ -96,8 +96,8 @@ describe('Posts (e2e)', () => {
       86_400_000;
     expect(days).toBeCloseTo(30, 1);
 
-    // a guest sees it in the list; the response never contains author ids
-    const list = await guestClient(ctx.app).get('/api/posts').expect(200);
+    // it shows in the list; the response never contains author ids
+    const list = await azizaClient.get('/api/posts').expect(200);
     expect(bodyOf<Page<Post>>(list).items.map((item) => item.id)).toContain(
       post.id,
     );
@@ -128,7 +128,7 @@ describe('Posts (e2e)', () => {
       actorUsername: 'rustam',
       postId: post.id,
     });
-    const comments = await guestClient(ctx.app)
+    const comments = await azizaClient
       .get(`/api/posts/${post.id}/comments`)
       .expect(200);
     expect(bodyOf<Page<{ body: string }>>(comments).items[0].body).toBe(
@@ -148,9 +148,7 @@ describe('Posts (e2e)', () => {
     await azizaClient.post(`/api/posts/${post.id}/resolve`).expect(409);
 
     // detail shows the final state
-    const detail = await guestClient(ctx.app)
-      .get(`/api/posts/${post.id}`)
-      .expect(200);
+    const detail = await azizaClient.get(`/api/posts/${post.id}`).expect(200);
     expect(bodyOf<Post>(detail)).toMatchObject({
       status: 'RESOLVED',
       commentsCount: 1,
@@ -161,6 +159,9 @@ describe('Posts (e2e)', () => {
     expect(
       (loggedOut.headers['set-cookie'] as unknown as string[]).join(';'),
     ).toContain('access_token=;');
+    expect(
+      (loggedOut.headers['set-cookie'] as unknown as string[]).join(';'),
+    ).toContain('refresh_token=;');
     await azizaClient.get('/api/auth/me').expect(401);
 
     // login again by username and by email
@@ -331,7 +332,7 @@ describe('Posts (e2e)', () => {
     await rustamClient.post(`/api/posts/${post.id}/resolve`).expect(403);
 
     await azizaClient.delete(`/api/posts/${post.id}`).expect(204);
-    await guestClient(ctx.app).get(`/api/posts/${post.id}`).expect(404);
+    await rustamClient.get(`/api/posts/${post.id}`).expect(404);
     await azizaClient.delete(`/api/posts/${post.id}`).expect(404);
 
     const second = bodyOf<Post>(
@@ -387,7 +388,7 @@ describe('Posts (e2e)', () => {
       district: 'SINO',
     });
 
-    const guest = guestClient(ctx.app);
+    const guest = client;
     const get = async (query: string) =>
       bodyOf<Page<Post>>(await guest.get(`/api/posts${query}`).expect(200));
 
@@ -462,7 +463,8 @@ describe('Posts (e2e)', () => {
       data: { expiresAt: new Date(Date.now() - 86_400_000) },
     });
 
-    const guest = guestClient(ctx.app);
+    const viewer = await createUser(ctx.prisma, { username: 'viewer' });
+    const guest = clientWithToken(ctx.app, viewer.id);
     expect((await guest.get('/api/posts').expect(200)).body).toMatchObject({
       total: 0,
     });
