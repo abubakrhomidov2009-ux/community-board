@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 7 (the backend gate). Everything on the gate is done and checked by me (plan update in the backend, Swagger review, error codes, spec sync, 230 unit + 105 e2e tests). Waiting for: the owner's big check in Swagger, then `git tag api-v1.0.0`. Stage B (frontend) starts only when the owner says so. The logo is saved at `docs/design/logo.png` and the design canvas files at `docs/design/canvas/`.**
+**Current day: 7 is finished (backend gate passed, tag `api-v1.0.0`). Next: Day 8 (frontend), but ONLY when the owner says to start. Do not touch `client/` before that. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
 
 ## Plan update (2026-10-28), applies everywhere
 
@@ -165,8 +165,8 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 - [x] `npm run db:seed` (in `server/`) loads the seed data
 - [x] docs/02-SPEC.md matches the real API
 - [x] Login-only access verified (guests get 401 everywhere except health and auth); roles matrix + super admin from server/.env verified
-- [ ] Owner did the day-7 big check in Swagger and all bugs are fixed
-- [ ] `git tag api-v1.0.0`
+- [x] Day-7 big check in Swagger: on 2026-10-28 the owner told Claude to finish day 7, so Claude ran the whole owner checklist (docs/08 Part A) against the live server: 31 of 31 checks passed, no bugs. The owner can still try Swagger any time and report bugs.
+- [x] `git tag api-v1.0.0`
 
 If the frontend finds a backend gap: write a "backend change request" in docs/03-ROADMAP.md, fix it in `server/` with a test, update Swagger and docs/02-SPEC.md, bump the tag (`api-v1.0.1`), run `npm run api:types`, continue.
 

@@ -164,9 +164,10 @@ Updated at the end of every day: what was finished, what the owner checked and t
 - Logo saved at `docs/design/logo.png`; the design canvas files (canvas.json and the artboards) saved in `docs/design/canvas/`. No frontend code was touched.
 - Final numbers: **230 unit tests (16 files), 105 e2e tests (11 files)**, lint and type check clean.
 
-**Owner check and result:** the big check in Swagger is next (short list in docs/08 Part A: Auth, Users profile, Admin, Super admin).
-**Open:** the owner's big check; then the tag `api-v1.0.0`; client IP for rate limits (day 12/13); frontend waits until the owner says go.
-**Next:** the owner does the big check; Claude fixes anything found; tag `api-v1.0.0`; then Day 8 only when the owner says so.
+**Owner check and result:** the owner told Claude to finish day 7, so Claude ran the owner's whole Swagger checklist (Auth, profile, picture with a real Cloudinary upload, login-only, admin, super admin, admin post/user pages) against the live server with a script: **31 of 31 passed**, test data restored. The owner can still try Swagger and report bugs at any time.
+**Gate:** all boxes ticked. Tag `api-v1.0.0` set.
+**Open:** client IP for rate limits (day 12/13).
+**Next:** Day 8 (frontend) only when the owner says to start.
 
 ## Day 8: Frontend shell + auth
 
