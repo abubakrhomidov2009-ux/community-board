@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const apiTarget = process.env.API_PROXY_TARGET ?? 'http://localhost:4000';
 
@@ -14,4 +15,4 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.*.*', '10.*.*.*'],
 };
 
-export default nextConfig;
+export default createNextIntlPlugin('./src/i18n/request.ts')(nextConfig);

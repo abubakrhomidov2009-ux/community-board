@@ -169,6 +169,31 @@ Updated at the end of every day: what was finished, what the owner checked and t
 **Open:** client IP for rate limits (day 12/13).
 **Next:** Day 8 (frontend) only when the owner says to start.
 
+## Day 8 (step 1 of the frontend, 2026-10-29): About page + Log in / Create account
+
+**Finished**
+
+- Foundation: next-intl (en/ru/tg, 139 keys, `npm run i18n:check`), design tokens light + dark (docs/11 §0.3), Light / Dark / System with no flash, Unbounded + Onest fonts, the round logo and every icon made from `docs/design/logo.png` (`npm run icons`), TanStack Query, Axios with silent login renewal, motion presets, the `proxy.ts` guest guard, API types generated from Swagger (`npm run api:types`).
+- **About page** (desktop and phone) = the front door: hero with pinned example slips, categories band, How it works, Safe and fair, House rules, call to action, footer (also language and theme switchers).
+- **Log in / Create account** modal: a slip on laptop, a bottom sheet on phone; validation with translated messages, server errors (wrong password, email/username taken, blocked, too many tries, no connection), focus trap, Esc, drag to close.
+- Guest guard: a guest opening any other link sees About with the modal open and returns to that link after login. Logout returns to About. Temporary `/posts` page proves the login.
+- 404 page, skeletons for every page (no spinners), motion on every page (see docs/11 §10), lazy loading of the modal.
+- Tests: 26 frontend unit tests (schemas, safe redirect, Axios renewal, translations), lint (with the no-hard-coded-text rule) and type check clean, 39 real-browser checks (Edge, laptop + phone, light + dark, en/ru/tg) all passed.
+
+**Problems and fixes**
+
+- Next.js 16 renamed `middleware.ts` to `proxy.ts`. A lost backslash in the proxy's path pattern made the guard run only on `/`: found by the browser test, fixed.
+- After Log out the guard also fired and opened the Log in modal; the redirect after logout never ran because the page was already gone. Fixed (redirect lives in the logout hook).
+- **Dev mode broke** with "Can't resolve @vercel/turbopack-next/internal/font/google/font": Google font downloads timed out on this PC. Fonts are now saved in `public/fonts`.
+- **Unbounded has no Tajik letters**: Tajik headings use Onest bold.
+- An old dev server from day 1 was still running on port 3000 (stale, serving old code); the owner asked to close it and it was restarted.
+
+**Owner check:** pending (see the READY TO CHECK message).
+**Open:** Tajik and Russian texts should be read by a native speaker; the real Home board and post pages are the next step; logged-in header links (Saved, Messages, Pin a post, Profile) lead to the 404 page until those pages exist.
+**Next:** wait for the owner's go.
+
+---
+
 ## Day 8: Frontend shell + auth
 
 **Finished:**

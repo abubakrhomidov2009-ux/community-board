@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "title": "Community Board · Dushanbe's notice board",
+    "description": "Pin a slip for a lost wallet, a tutor or a room near campus. Dushanbe's notice board, in Tajik, Russian and English."
+  },
+  "common": {
+    "logoAlt": "Community Board logo",
+    "wordmarkStart": "community",
+    "wordmarkEnd": "board",
+    "skipToContent": "Skip to content",
+    "close": "Close",
+    "loading": "Loading"
+  },
+  "nav": {
+    "main": "Main",
+    "about": "About",
+    "howItWorks": "How it works",
+    "categories": "Categories",
+    "rules": "Rules",
+    "logIn": "Log in",
+    "createAccount": "Create account",
+    "board": "Board",
+    "saved": "Saved",
+    "messages": "Messages",
+    "pinPost": "Pin a post",
+    "myProfile": "My profile",
+    "language": "Language",
+    "languageName": { "en": "English", "ru": "Русский", "tg": "Тоҷикӣ" },
+    "languageShort": { "en": "En", "ru": "Ру", "tg": "Тҷ" }
+  },
+  "about": {
+    "badge": "Dushanbe · our university",
+    "heroTitleStart": "The city’s notice board,",
+    "heroTitleAccent": "now in your pocket.",
+    "heroText": "Pin a slip for a lost wallet, a tutor before exams, or a room near campus. People tear off a tab and write to you on Telegram.",
+    "heroNote": "Free. Тоҷикӣ · Русский · English. Works on any phone.",
+    "exampleBoard": "Example slips on the board",
+    "how": {
+      "title": "How it works",
+      "step1Title": "Pin a slip",
+      "step1Text": "Category, a clear title, photos, district, and price. One minute.",
+      "step2Title": "People find it",
+      "step2Text": "They browse the board by category, district, and price.",
+      "step3Title": "Tear off a tab",
+      "step3Text": "They write on Telegram or call. When it’s done, you stamp it resolved."
+    },
+    "safe": {
+      "title": "Safe and fair",
+      "checkedStamp": "Checked",
+      "checkedText": "Anyone can report a slip. Admins remove spam and scams.",
+      "studentStamp": "Student ✓",
+      "studentText": "Confirm your university email to get the student badge.",
+      "daysStamp": "30 days",
+      "daysText": "Slips come down after 30 days, so the board stays fresh."
+    },
+    "rules": {
+      "title": "House rules",
+      "item1": "Be honest: real items, real prices, real photos.",
+      "item2": "One slip per item or offer.",
+      "item3": "Pick the right category and district.",
+      "item4": "Nothing illegal or dangerous.",
+      "item5": "Be kind in comments and messages.",
+      "item6": "Stamp it resolved when it’s done."
+    },
+    "cta": { "line1": "Pin your first slip", "line2": "in a minute." },
+    "footer": { "madeIn": "Made in Dushanbe" },
+    "examples": {
+      "lost": {
+        "time": "2 h ago",
+        "title": "Black wallet near the library",
+        "price": "Reward offered",
+        "district": "University campus"
+      },
+      "rent": {
+        "time": "Yesterday",
+        "title": "Room 10 minutes from campus",
+        "price": "800 somoni / month",
+        "district": "Firdavsi"
+      },
+      "tutor": {
+        "time": "5 h ago",
+        "title": "English for IELTS",
+        "price": "50 somoni / hour",
+        "district": "Sino"
+      }
+    }
+  },
+  "category": {
+    "LOST_FOUND": "Lost and found",
+    "TUTORING": "Tutoring",
+    "RENTALS": "Rentals",
+    "OTHER": "Other"
+  },
+  "slip": {
+    "write": "Write",
+    "call": "Call",
+    "save": "Save",
+    "saved": "Saved",
+    "writeLabel": "Write on Telegram",
+    "callLabel": "Call the author",
+    "saveLabel": "Save post",
+    "unsaveLabel": "Remove from saved"
+  },
+  "status": {
+    "resolved": "Resolved",
+    "expired": "Expired",
+    "removed": "Removed"
+  },
+  "theme": {
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginSub": "Log in to see what’s pinned near you.",
+    "registerTitle": "Join the board",
+    "registerSub": "Free, and it takes a minute.",
+    "identifier": "Email or username",
+    "identifierPlaceholder": "aziz@example.com",
+    "username": "Username",
+    "usernamePlaceholder": "aziz_h",
+    "email": "Email",
+    "emailPlaceholder": "aziz@example.com",
+    "password": "Password",
+    "passwordHint": "At least 8 characters.",
+    "agree": "I agree to the <rules>posting rules</rules>",
+    "submitLogin": "Log in",
+    "submitRegister": "Create account",
+    "pending": "Please wait",
+    "switchToRegisterText": "New here?",
+    "switchToRegisterCta": "Create an account",
+    "switchToLoginText": "Already on the board?",
+    "switchToLoginCta": "Log in",
+    "dialogLabel": "Log in or create an account"
+  },
+  "validation": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address.",
+    "usernameFormat": "3–20 characters: letters, digits, underscore or dot.",
+    "passwordLength": "Use at least 8 characters.",
+    "passwordLetterDigit": "Use at least one letter and one digit.",
+    "agree": "Please agree to the posting rules."
+  },
+  "errors": {
+    "VALIDATION_FAILED": "Please check the fields and try again.",
+    "UNAUTHORIZED": "Please log in to continue.",
+    "REFRESH_TOKEN_INVALID": "Your session ended. Please log in again.",
+    "INVALID_CREDENTIALS": "Wrong email, username or password.",
+    "USER_BLOCKED": "This account is blocked.",
+    "EMAIL_TAKEN": "This email is already registered.",
+    "USERNAME_TAKEN": "This username is taken. Try another one.",
+    "TOO_MANY_REQUESTS": "Too many attempts. Please wait a minute and try again.",
+    "FORBIDDEN": "You are not allowed to do this.",
+    "NOT_FOUND": "We could not find that.",
+    "NETWORK_ERROR": "No connection. Check your internet and try again.",
+    "INTERNAL_ERROR": "Something went wrong on our side. Please try again.",
+    "UNKNOWN": "Something went wrong. Please try again."
+  },
+  "home": {
+    "title": "The board",
+    "soon": "The board itself is coming in the next step.",
+    "signedInAs": "Logged in as {name}",
+    "logout": "Log out"
+  },
+  "notFound": {
+    "stamp": "404",
+    "title": "This slip isn’t on the board",
+    "text": "The link may be old, or the slip was taken down or has expired.",
+    "home": "Go to the board",
+    "search": "Search slips",
+    "about": "Go to the About page",
+    "login": "Log in"
+  }
+}

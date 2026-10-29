@@ -12,6 +12,15 @@
 - **Roles.** `Role` = USER, ADMIN, SUPER_ADMIN. Nobody picks a role. Exactly one super admin: the email `SUPER_ADMIN_EMAIL` in `server/.env` (password `SUPER_ADMIN_PASSWORD`; the server and the seed create or upgrade it). Admins block only normal users; only the super admin touches admins (`PATCH /api/admin/users/:id/promote|demote|block|unblock`); nobody changes the super admin. Student ✓ is a flag, not a role. Errors: `FORBIDDEN_ROLE`, `CANNOT_CHANGE_SUPER_ADMIN`, `USER_ALREADY_ADMIN`, `USER_NOT_ADMIN`. Admin actions are `PATCH`. Admin pages: `/admin/posts/[id]` and `/admin/users/[id]` (API: `GET /api/admin/posts/:id`, `GET /api/admin/users/:id`, `PATCH /api/admin/posts/:id/reports/dismiss`).
 - **Design v2 "Notice Slips".** Build exactly like the design canvas (see docs/11 §0): dotted board, slips with amber pin, category strip, tear-off tabs, stamps; fonts Unbounded + Onest; light + dark tokens (Light / Dark / System); round logo from `docs/design/logo.png`; every READY TO CHECK names the artboards to compare with. If the canvas or logo cannot be read, ask the owner (🙋 format) to export the design or put screenshots / the logo in `docs/design/`.
 
+## Frontend facts (learned in step 1)
+
+- **Next.js 16: `middleware.ts` is called `proxy.ts`** (`client/src/proxy.ts`: language redirect + guest guard). Read `client/node_modules/next/dist/docs/` before using a Next API. Never delete `client/.next` while a dev server runs.
+- **Guest guard** uses a small cookie `cb_session` (set by the frontend after login, no secret). The real `refresh_token` cookie has `Path=/api/auth`, so the proxy cannot see it. A guest makes no `/auth/me` request at all (no red 401 lines in the console).
+- **Fonts are saved in `client/public/fonts`** (`node scripts/fetch-fonts.mjs` re-creates them): Google downloads timed out in dev mode on this PC and broke the pages. **Unbounded has no Tajik letters** (ғ ӣ қ ӯ ҳ ҷ), Onest has: in Tajik the headings use Onest bold; the wordmark `community board` stays Unbounded (`font-brand`).
+- **Pages are lazy:** the auth modal (forms, validation, sheet) is downloaded only when needed and prefetched when the browser is idle; devtools only in dev. Every page has a skeleton (`loading.tsx`), never a spinner.
+- Checks: `npm run typecheck`, `npm run lint` (includes the no-hard-coded-text rule), `npm test`, `npm run i18n:check`, `npm run preview` (production build, fast; dev mode compiles each page on first visit, which is slow on this PC).
+- The `/posts` page is a TEMPORARY placeholder (shows who is logged in + Log out) until the real board is built.
+
 ## Project
 
 "Community Board": multilingual (Tajik / Russian / English) web app for local announcements in Dushanbe and the university. Categories: Lost & Found, Tutoring, Rentals, Other. One responsive codebase + installable PWA. Must be deployed and free (no paid plans, no card, no domain).

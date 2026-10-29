@@ -1,130 +1,255 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+/* Unbounded and Onest, saved in public/fonts (see scripts/fetch-fonts.mjs): no download from Google at run time. */
+@import './fonts.css';
 
+/* Dark mode is the `.dark` class on <html> (set by next-themes: Light / Dark / System). */
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
-
+/*
+ * Design tokens for "Notice Slips" (docs/11-DESIGN-SYSTEM.md section 0).
+ * One place for every color, light and dark. Components use the utilities (bg-paper, text-ink...),
+ * never raw hex values.
+ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --board: #ecf1ee;
+  --board-dot: rgba(14, 26, 23, 0.1);
+  --paper: #ffffff;
+  --border: #d9e1dd;
+  --line: #c9d3cf; /* input border and the dashed tear line */
+  --soft: #f1f5f3;
+  --ink: #0e1a17;
+  --on-ink: #ffffff;
+  --body: #2b3835;
+  --body-2: #44524e;
+  --muted: #5d6b67;
+  --primary: #0f766e;
+  --primary-hover: #0b4f4a;
+  --on-primary: #ffffff;
+  --primary-soft: #e6f4f1;
+  --primary-soft-ink: #0b4f4a;
+  --pin: #f59e0b;
+  --note: #fff8e6;
+  --note-border: #ebddb5;
+  --note-ink: #2b2615;
+  --note-pin: #dc2626;
+  --danger: #b91c1c;
+  --danger-soft: #fdeceb;
+  --lost: #f97316;
+  --lost-ink: #c2410c;
+  --tutor: #3b82f6;
+  --tutor-ink: #1d4ed8;
+  --rent: #22c55e;
+  --rent-ink: #15803d;
+  --other: #94a3b8;
+  --other-ink: #475569;
+  --stamp-resolved: #0f766e;
+  --stamp-expired: #64748b;
+  --stamp-student: #1d4ed8;
+  --stamp-scam: #b91c1c;
+  --ghost: #d5ded9; /* the giant wordmark in the footer */
+  --cta: #0f766e;
+  --on-cta: #ffffff;
+  --hero-board: #0b4f4a;
+  --overlay: rgba(14, 26, 23, 0.62);
+
+  --font-unbounded: 'Unbounded';
+  --font-onest: 'Onest';
+
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --board: #0b1412;
+  --board-dot: rgba(255, 255, 255, 0.06);
+  --paper: #13201d;
+  --border: #22332f;
+  --line: #2c403b;
+  --soft: #182724;
+  --ink: #e6efec;
+  --on-ink: #0b1412;
+  --body: #b4c4bf;
+  --body-2: #b4c4bf;
+  --muted: #97aaa4;
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --on-primary: #042f2c;
+  --primary-soft: #123b36;
+  --primary-soft-ink: #99f6e4;
+  --pin: #f59e0b;
+  --note: #2a2412;
+  --note-border: #4a3f1e;
+  --note-ink: #f3e9c4;
+  --note-pin: #ef4444;
+  --danger: #f87171;
+  --danger-soft: #3a1c1c;
+  --lost: #f97316;
+  --lost-ink: #fdba74;
+  --tutor: #3b82f6;
+  --tutor-ink: #93c5fd;
+  --rent: #22c55e;
+  --rent-ink: #86efac;
+  --other: #94a3b8;
+  --other-ink: #cbd5e1;
+  --stamp-resolved: #2dd4bf;
+  --stamp-expired: #94a3b8;
+  --stamp-student: #93c5fd;
+  --stamp-scam: #f87171;
+  --ghost: #1a2b27;
+  --cta: #0f766e;
+  --on-cta: #ffffff;
+  --hero-board: #0b4f4a;
+  --overlay: rgba(2, 8, 7, 0.72);
+}
+
+@theme inline {
+  --color-board: var(--board);
+  --color-paper: var(--paper);
+  --color-border: var(--border);
+  --color-line: var(--line);
+  --color-soft: var(--soft);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
+  --color-body: var(--body);
+  --color-body-2: var(--body-2);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-ink: var(--primary-soft-ink);
+  --color-pin: var(--pin);
+  --color-note: var(--note);
+  --color-note-border: var(--note-border);
+  --color-note-ink: var(--note-ink);
+  --color-note-pin: var(--note-pin);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-lost: var(--lost);
+  --color-lost-ink: var(--lost-ink);
+  --color-tutor: var(--tutor);
+  --color-tutor-ink: var(--tutor-ink);
+  --color-rent: var(--rent);
+  --color-rent-ink: var(--rent-ink);
+  --color-other: var(--other);
+  --color-other-ink: var(--other-ink);
+  --color-stamp-resolved: var(--stamp-resolved);
+  --color-stamp-expired: var(--stamp-expired);
+  --color-stamp-student: var(--stamp-student);
+  --color-stamp-scam: var(--stamp-scam);
+  --color-ghost: var(--ghost);
+  --color-cta: var(--cta);
+  --color-on-cta: var(--on-cta);
+  --color-hero-board: var(--hero-board);
+  --color-overlay: var(--overlay);
+
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-unbounded), var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  --font-brand: var(--font-unbounded), var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
-    @apply font-sans;
+    color-scheme: light;
+    scroll-padding-top: 96px; /* room for the floating navbar when jumping to #how, #rules */
+    -webkit-text-size-adjust: 100%;
   }
+  html.dark {
+    color-scheme: dark;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--board);
+    /* the dotted board */
+    background-image: radial-gradient(var(--board-dot) 1px, transparent 1.3px);
+    background-size: 18px 18px;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    transition:
+      background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  button,
+  input {
+    font-family: inherit;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* Skeleton loaders: a calm sweep (transform only), no spinners anywhere. */
+@keyframes skeleton-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--soft);
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--paper) 70%, transparent),
+    transparent
+  );
+  animation: skeleton-sweep 1.4s var(--ease-out) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
+/* Small helpers used by several components. */
+.pin-dot {
+  background: var(--pin);
+  border: 3px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+/*
+ * Unbounded has no Tajik letters (ғ ӣ қ ӯ ҳ ҷ), but Onest has all of them. So in Tajik the headings use
+ * Onest bold (one consistent look, no mixed letters). The wordmark "community board" keeps Unbounded (font-brand).
+ */
+html:lang(tg) .font-display {
+  font-family: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }

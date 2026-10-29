@@ -112,14 +112,14 @@ Every day ends with a `🔍 DAILY CHECK` for the owner. The next day starts only
 
 - **Tasks**
   - [ ] **Design:** read the "Community Board Design v2 — Notice Slips" canvas (or the exported files in `docs/design/`) and the logo `docs/design/logo.png`. If they are missing, ask the owner (🙋 format).
-  - [ ] `npm run api:types` (openapi-typescript from `/api/docs-json` → `src/lib/api/schema.d.ts`)
-  - [ ] next-intl + `[locale]` routing + `middleware.ts`; en/tg/ru.json skeleton; `npm run i18n:check`
-  - [ ] eslint-plugin-i18next `no-literal-string`
-  - [ ] Design tokens (light + dark, docs/11) in `globals.css`, fonts Unbounded + Onest (check ғ ӣ қ ӯ ҳ ҷ), logo files and icons made from `docs/design/logo.png`
-  - [ ] Axios instance with the refresh-on-401 interceptor, QueryProvider, next-themes (Light / Dark / System), MotionConfig
+  - [x] `npm run api:types` (openapi-typescript from `/api/docs-json` → `src/lib/api/schema.d.ts`)
+  - [x] next-intl + `[locale]` routing + `proxy.ts` (Next 16 name); en/tg/ru.json skeleton; `npm run i18n:check`
+  - [x] eslint-plugin-i18next `no-literal-string`
+  - [x] Design tokens (light + dark, docs/11) in `globals.css`, fonts Unbounded + Onest (check ғ ӣ қ ӯ ҳ ҷ), logo files and icons made from `docs/design/logo.png`
+  - [x] Axios instance with the refresh-on-401 interceptor, QueryProvider, next-themes (Light / Dark / System), MotionConfig
   - [ ] Layout shell: Navbar (floating pill), MobileTopBar, BottomTabBar (floating dark), MobileDrawer, theme + language switchers
-  - [ ] **About page** (`/[locale]` and `/about`) = the front door; **AuthModal** (Log in / Create account tabs, bottom sheet on phones); route guard: guests on any other link see About with the modal open, then return to that link after login; no `/login` or `/register` pages
-  - [ ] 404 page (`not-found.tsx`, locale and root), offline page
+  - [x] **About page** (`/[locale]` and `/about`) = the front door; **AuthModal** (Log in / Create account tabs, bottom sheet on phones); route guard: guests on any other link see About with the modal open, then return to that link after login; no `/login` or `/register` pages
+  - [x] 404 page (offline page comes with the PWA) (`not-found.tsx`, locale and root), offline page
   - [ ] Dev server reachable on Wi-Fi (`http://<ip>:3000`)
 - **Needs from owner:** phone on the same Wi-Fi; `docs/design/logo.png`; the design export if Claude cannot read the canvas
 - **READY TO CHECK:** names the artboards to compare with (AboutDesktop/AboutMobile, LoginDesktop/Mobile, RegisterDesktop/Mobile, NotFoundDesktop/Mobile, OfflineDesktop/Mobile, Style)
