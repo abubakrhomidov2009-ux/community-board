@@ -12,6 +12,7 @@ import { t as motionTime } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Logo } from './Logo';
+import { ThemeToggle } from './ThemeToggle';
 
 const initials = (username: string) => username.slice(0, 2).toUpperCase();
 
@@ -84,6 +85,7 @@ function Navbar() {
               ))}
             </nav>
             <div className="flex items-center gap-1">
+              <ThemeToggle />
               <LanguageSwitcher />
               <button
                 type="button"
@@ -114,6 +116,7 @@ function Navbar() {
               ))}
             </nav>
             <div className="flex items-center gap-1">
+              <ThemeToggle />
               <LanguageSwitcher />
               <Link href="/posts/new" className={pillClass('green', 'md', 'ml-1 gap-2')}>
                 <Plus size={17} strokeWidth={2.4} aria-hidden="true" />
@@ -142,25 +145,28 @@ function MobileTopBar() {
   return (
     <header className="flex h-16 items-center justify-between gap-2 pl-3.5 pr-2.5 lg:hidden">
       <Logo size="sm" />
-      {session.status === 'loading' && <Skeleton className="size-11 rounded-full" />}
-      {session.status === 'guest' && (
-        <button
-          type="button"
-          onClick={() => openAuth('login')}
-          className={pillClass('ink', 'md', 'px-[18px]')}
-        >
-          {t('logIn')}
-        </button>
-      )}
-      {session.status === 'user' && (
-        <Link
-          href="/profile"
-          aria-label={t('myProfile')}
-          className="flex size-11 items-center justify-center rounded-full bg-note text-sm font-bold text-note-ink no-underline"
-        >
-          {initials(session.user.username)}
-        </Link>
-      )}
+      <div className="flex items-center gap-1">
+        <ThemeToggle />
+        {session.status === 'loading' && <Skeleton className="size-11 rounded-full" />}
+        {session.status === 'guest' && (
+          <button
+            type="button"
+            onClick={() => openAuth('login')}
+            className={pillClass('ink', 'md', 'px-[18px]')}
+          >
+            {t('logIn')}
+          </button>
+        )}
+        {session.status === 'user' && (
+          <Link
+            href="/profile"
+            aria-label={t('myProfile')}
+            className="flex size-11 items-center justify-center rounded-full bg-note text-sm font-bold text-note-ink no-underline"
+          >
+            {initials(session.user.username)}
+          </Link>
+        )}
+      </div>
     </header>
   );
 }

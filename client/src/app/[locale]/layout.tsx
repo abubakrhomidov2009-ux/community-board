@@ -8,6 +8,7 @@ import type { ReactNode } from 'react';
 import { routing } from '@/i18n/routing';
 import { SESSION_HINT_COOKIE } from '@/lib/session-hint';
 import { Providers } from '@/providers/Providers';
+import { THEME_SCRIPT } from '@/providers/theme';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -48,6 +49,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <NextIntlClientProvider>
           <Providers initialSessionHint={initialSessionHint}>{children}</Providers>

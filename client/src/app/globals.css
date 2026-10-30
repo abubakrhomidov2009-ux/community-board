@@ -3,7 +3,7 @@
 /* Unbounded and Onest, saved in public/fonts (see scripts/fetch-fonts.mjs): no download from Google at run time. */
 @import './fonts.css';
 
-/* Dark mode is the `.dark` class on <html> (set by next-themes: Light / Dark / System). */
+/* Dark mode is the `.dark` class on <html> (set by src/providers/theme.tsx: Light / Dark / System). */
 @custom-variant dark (&:is(.dark *));
 
 /*

@@ -3,11 +3,11 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { MotionConfig } from 'motion/react';
 import dynamic from 'next/dynamic';
-import { ThemeProvider } from 'next-themes';
 import { useState, type ReactNode } from 'react';
 import { AuthProvider } from '@/features/auth/components/AuthProvider';
 import { InitialSessionHintContext } from '@/features/auth/queries';
 import { makeQueryClient } from '@/lib/query-client';
+import { ThemeProvider } from './theme';
 
 // Only in development, and only downloaded then.
 const ReactQueryDevtools = dynamic(
@@ -28,7 +28,7 @@ export function Providers({
   const [queryClient] = useState(makeQueryClient);
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <ThemeProvider>
       {/* People who asked their device for less motion get simple fades instead of sliding and scaling. */}
       <MotionConfig reducedMotion="user">
         <QueryClientProvider client={queryClient}>

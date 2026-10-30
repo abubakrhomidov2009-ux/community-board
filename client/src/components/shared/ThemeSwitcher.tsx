@@ -2,8 +2,8 @@
 
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useTheme } from 'next-themes';
 import { useSyncExternalStore } from 'react';
+import { useTheme } from '@/providers/theme';
 import { cn } from '@/lib/utils';
 import { Skeleton } from './Skeleton';
 
@@ -15,7 +15,7 @@ const OPTIONS = [
 
 const noop = () => () => {};
 
-/** Light / Dark / System. Saved on the device by next-themes. */
+/** Light / Dark / System. Saved on the device (localStorage). */
 export function ThemeSwitcher({ className }: { className?: string }) {
   const t = useTranslations('theme');
   const { theme, setTheme } = useTheme();
