@@ -1,11 +1,15 @@
 import { BedDouble, BookOpen, FileText, Heart, MapPin, Phone, Send, Tag } from 'lucide-react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
 export type SlipKind = 'lost' | 'tutor' | 'rent' | 'other';
 export type SlipStatus = 'resolved' | 'expired' | 'removed';
 
 export interface SlipData {
+  /** The post id. Present on real slips: the title then links to the post page. */
+  id?: string;
   kind: SlipKind;
   categoryLabel: string;
   time: string;
@@ -14,6 +18,11 @@ export interface SlipData {
   district: string;
   /** Shows the photo area (a placeholder until real photos are wired in). */
   photo?: boolean;
+  /** The first picture of the post. Without it the photo area shows the category icon. */
+  photoUrl?: string;
+  /** Telegram username (without @) and phone number of the author: the Write and Call tabs. */
+  telegram?: string;
+  phone?: string;
   /** Tilt in degrees; the design keeps it under 1 degree on the board and a few degrees on the About page. */
   tilt?: number;
   status?: SlipStatus;
@@ -62,10 +71,13 @@ const STAMPS = {
 export function PostSlip({
   item,
   interactive = false,
+  onToggleSave,
   className,
 }: {
   item: SlipData;
   interactive?: boolean;
+  /** Called when the Save tab is pressed (the heart). */
+  onToggleSave?: () => void;
   className?: string;
 }) {
   const t = useTranslations('slip');
@@ -76,8 +88,20 @@ export function PostSlip({
   const tabBase =
     'flex h-12 items-center justify-center gap-1.5 text-[13px] font-semibold text-ink no-underline';
   const tabs = [
-    { key: 'write', icon: Send, text: t('write'), label: t('writeLabel') },
-    { key: 'call', icon: Phone, text: t('call'), label: t('callLabel') },
+    {
+      key: 'write',
+      icon: Send,
+      text: t('write'),
+      label: t('writeLabel'),
+      href: item.telegram ? `https://t.me/${item.telegram.replace(/^@/, '')}` : undefined,
+    },
+    {
+      key: 'call',
+      icon: Phone,
+      text: t('call'),
+      label: t('callLabel'),
+      href: item.phone ? `tel:${item.phone}` : undefined,
+    },
   ];
 
   return (
@@ -102,7 +126,18 @@ export function PostSlip({
             kind.label,
           )}
         >
-          <KindIcon size={40} strokeWidth={1.5} aria-hidden="true" />
+          {item.photoUrl ? (
+            <Image
+              src={item.photoUrl}
+              alt=""
+              width={480}
+              height={300}
+              unoptimized
+              className="size-full rounded-[10px] object-cover"
+            />
+          ) : (
+            <KindIcon size={40} strokeWidth={1.5} aria-hidden="true" />
+          )}
         </div>
       )}
 
@@ -119,8 +154,17 @@ export function PostSlip({
           </span>
           <span className="shrink-0 whitespace-nowrap text-xs text-muted">{item.time}</span>
         </div>
-        <h3 className="m-0 font-display text-base font-medium leading-[1.35] tracking-[-0.2px]">
-          {item.title}
+        <h3 className="m-0 font-display text-base font-medium leading-[1.35] tracking-[-0.2px] [overflow-wrap:anywhere]">
+          {interactive && item.id ? (
+            <Link
+              href={`/posts/${item.id}`}
+              className="text-ink no-underline after:absolute after:inset-0 after:bottom-12 after:content-[''] hover:underline"
+            >
+              {item.title}
+            </Link>
+          ) : (
+            item.title
+          )}
         </h3>
         <p className="m-0 text-[19px] font-bold text-primary">{item.price}</p>
         <p className="m-0 flex items-center gap-1.5 text-[13px] text-body-2">
@@ -130,19 +174,30 @@ export function PostSlip({
       </div>
 
       <div className="grid grid-cols-3 border-t-[1.5px] border-dashed border-line">
-        {tabs.map(({ key, icon: Icon, text, label }) =>
-          interactive ? (
+        {tabs.map(({ key, icon: Icon, text, label, href }) =>
+          interactive && href ? (
             <a
               key={key}
-              href={key === 'write' ? 'https://t.me/' : 'tel:'}
+              href={href}
+              {...(key === 'write' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               aria-label={label}
-              className={cn(tabBase, 'border-r-[1.5px] border-dashed border-line')}
+              className={cn(
+                tabBase,
+                'relative border-r-[1.5px] border-dashed border-line hover:bg-soft',
+              )}
             >
               <Icon size={15} strokeWidth={2} aria-hidden="true" />
               {text}
             </a>
           ) : (
-            <span key={key} className={cn(tabBase, 'border-r-[1.5px] border-dashed border-line')}>
+            <span
+              key={key}
+              className={cn(
+                tabBase,
+                'border-r-[1.5px] border-dashed border-line',
+                interactive && 'text-muted',
+              )}
+            >
               <Icon size={15} strokeWidth={2} aria-hidden="true" />
               {text}
             </span>
@@ -152,7 +207,13 @@ export function PostSlip({
           <button
             type="button"
             aria-label={item.saved ? t('unsaveLabel') : t('saveLabel')}
-            className={cn(tabBase, 'border-0 bg-transparent', item.saved && 'text-danger')}
+            aria-pressed={Boolean(item.saved)}
+            onClick={onToggleSave}
+            className={cn(
+              tabBase,
+              'relative cursor-pointer border-0 bg-transparent hover:bg-soft',
+              item.saved && 'text-danger',
+            )}
           >
             <Heart
               size={15}

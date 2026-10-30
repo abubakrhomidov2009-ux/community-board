@@ -4,4976 +4,5028 @@
  */
 
 export interface paths {
-    "/api/notifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My notifications (newest first) */
-        get: operations["NotificationsController_list"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  '/api/notifications': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/notifications/unread-count": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Number of unread notifications (for the badge in the header) */
-        get: operations["NotificationsController_unreadCount"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** My notifications (newest first) */
+    get: operations['NotificationsController_list'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/notifications/unread-count': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/notifications/read-all": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Mark all my notifications as read */
-        post: operations["NotificationsController_markAllRead"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Number of unread notifications (for the badge in the header) */
+    get: operations['NotificationsController_unreadCount'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/notifications/read-all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/notifications/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Mark one notification as read */
-        post: operations["NotificationsController_markRead"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Mark all my notifications as read */
+    post: operations['NotificationsController_markAllRead'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/notifications/{id}/read': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/register": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Create an account and log in (sets the access_token and refresh_token cookies) */
-        post: operations["AuthController_register"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Mark one notification as read */
+    post: operations['NotificationsController_markRead'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/auth/register': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Log in with email or username (sets the access_token and refresh_token cookies) */
-        post: operations["AuthController_login"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Create an account and log in (sets the access_token and refresh_token cookies) */
+    post: operations['AuthController_register'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/auth/login': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Get a new login token with the refresh_token cookie
-         * @description The login token (access_token) lasts 15 minutes. When any request answers 401 UNAUTHORIZED, call this once and repeat the request. The refresh token is replaced on every call. If this answers 401 REFRESH_TOKEN_INVALID, the user must log in again.
-         */
-        post: operations["AuthController_refresh"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Log in with email or username (sets the access_token and refresh_token cookies) */
+    post: operations['AuthController_login'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/auth/refresh': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Log out (ends this session and clears both cookies) */
-        post: operations["AuthController_logout"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Get a new login token with the refresh_token cookie
+     * @description The login token (access_token) lasts 15 minutes. When any request answers 401 UNAUTHORIZED, call this once and repeat the request. The refresh token is replaced on every call. If this answers 401 REFRESH_TOKEN_INVALID, the user must log in again.
+     */
+    post: operations['AuthController_refresh'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/auth/logout': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/change-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Change my password
-         * @description Needs my current password. All my other devices are logged out; this one stays logged in with new cookies.
-         */
-        post: operations["AuthController_changePassword"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Log out (ends this session and clears both cookies) */
+    post: operations['AuthController_logout'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/auth/change-password': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get the logged-in user */
-        get: operations["AuthController_me"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Change my password
+     * @description Needs my current password. All my other devices are logged out; this one stays logged in with new cookies.
+     */
+    post: operations['AuthController_changePassword'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/auth/me': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * Edit my profile: username and/or language
-         * @description Send only the fields to change. Usernames are unique and saved in lowercase. The role cannot be changed here.
-         */
-        patch: operations["UsersController_updateMe"];
-        trace?: never;
+    /** Get the logged-in user */
+    get: operations['AuthController_me'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/users/me': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/me/avatar": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Set my profile picture
-         * @description Replaces the old picture. It is cropped to a square around the face.
-         */
-        post: operations["UsersController_setAvatar"];
-        /** Remove my profile picture */
-        delete: operations["UsersController_removeAvatar"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * Edit my profile: username and/or language
+     * @description Send only the fields to change. Usernames are unique and saved in lowercase. The role cannot be changed here.
+     */
+    patch: operations['UsersController_updateMe'];
+    trace?: never;
+  };
+  '/api/users/me/avatar': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/me/university-email": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Send a verification link to my university email
-         * @description The email is written in my preferred language. The link works for 24 hours. Only domains from the allowed list are accepted. Users should also check their spam folder.
-         */
-        post: operations["UsersController_requestUniversityEmail"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Set my profile picture
+     * @description Replaces the old picture. It is cropped to a square around the face.
+     */
+    post: operations['UsersController_setAvatar'];
+    /** Remove my profile picture */
+    delete: operations['UsersController_removeAvatar'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/users/me/university-email': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/me/university-email/verify": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Confirm my university email with the token from the link
-         * @description You must be logged in as the same user who asked for the link. Gives the "Student ✓" badge.
-         */
-        post: operations["UsersController_verifyUniversityEmail"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Send a verification link to my university email
+     * @description The email is written in my preferred language. The link works for 24 hours. Only domains from the allowed list are accepted. Users should also check their spam folder.
+     */
+    post: operations['UsersController_requestUniversityEmail'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/users/me/university-email/verify': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/{username}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Public profile of a user (login needed)
-         * @description Shows username, picture, join date, student badge and the number of active posts. Never the email.
-         */
-        get: operations["UsersController_getOne"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Confirm my university email with the token from the link
+     * @description You must be logged in as the same user who asked for the link. Gives the "Student ✓" badge.
+     */
+    post: operations['UsersController_verifyUniversityEmail'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/users/{username}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/{username}/posts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * A user's active posts (newest first)
-         * @description Only ACTIVE, not expired posts. Login needed.
-         */
-        get: operations["UsersController_listPosts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Public profile of a user (login needed)
+     * @description Shows username, picture, join date, student badge and the number of active posts. Never the email.
+     */
+    get: operations['UsersController_getOne'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/users/{username}/posts': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Browse posts: filter, search, sort, paginate
-         * @description Login needed. Shows ACTIVE and RESOLVED posts that have not expired.
-         */
-        get: operations["PostsController_list"];
-        put?: never;
-        /**
-         * Create a post
-         * @description The post expires 30 days after creation. At least one contact (Telegram or phone) is required. Price and priceUnit are only allowed for TUTORING and RENTALS.
-         */
-        post: operations["PostsController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * A user's active posts (newest first)
+     * @description Only ACTIVE, not expired posts. Login needed.
+     */
+    get: operations['UsersController_listPosts'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/counts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Post count per category
-         * @description Follows the same filters as the list (search, district, price), without category and sort.
-         */
-        get: operations["PostsController_counts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Browse posts: filter, search, sort, paginate
+     * @description Login needed. Shows ACTIVE and RESOLVED posts that have not expired.
+     */
+    get: operations['PostsController_list'];
+    put?: never;
+    /**
+     * Create a post
+     * @description The post expires 30 days after creation. At least one contact (Telegram or phone) is required. Price and priceUnit are only allowed for TUTORING and RENTALS.
+     */
+    post: operations['PostsController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/counts': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/map": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Map pins: posts that have a location (max 300)
-         * @description Same filters as the list, without sort and paging.
-         */
-        get: operations["PostsController_map"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Post count per category
+     * @description Follows the same filters as the list (search, district, price), without category and sort.
+     */
+    get: operations['PostsController_counts'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/map': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/mine": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My posts (all statuses, newest first) */
-        get: operations["PostsController_mine"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Map pins: posts that have a location (max 300)
+     * @description Same filters as the list, without sort and paging.
+     */
+    get: operations['PostsController_map'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/mine': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get one post
-         * @description Login needed. Removed posts are only visible to their author and to admins (others get 404).
-         */
-        get: operations["PostsController_getOne"];
-        put?: never;
-        post?: never;
-        /** Delete a post (the author, or an admin) */
-        delete: operations["PostsController_remove"];
-        options?: never;
-        head?: never;
-        /**
-         * Edit my post
-         * @description Only the author. Send only the fields to change. Send `null` to clear price, contacts or location.
-         */
-        patch: operations["PostsController_update"];
-        trace?: never;
+    /** My posts (all statuses, newest first) */
+    get: operations['PostsController_mine'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{id}/resolve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Mark my post as resolved
-         * @description Only the author, only for an ACTIVE post.
-         */
-        post: operations["PostsController_resolve"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get one post
+     * @description Login needed. Removed posts are only visible to their author and to admins (others get 404).
+     */
+    get: operations['PostsController_getOne'];
+    put?: never;
+    post?: never;
+    /** Delete a post (the author, or an admin) */
+    delete: operations['PostsController_remove'];
+    options?: never;
+    head?: never;
+    /**
+     * Edit my post
+     * @description Only the author. Send only the fields to change. Send `null` to clear price, contacts or location.
+     */
+    patch: operations['PostsController_update'];
+    trace?: never;
+  };
+  '/api/posts/{id}/resolve': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{id}/renew": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Renew my post for another 30 days
-         * @description Only the author. Allowed when the post is EXPIRED, or ACTIVE and expiring within 3 days. The post becomes ACTIVE again.
-         */
-        post: operations["PostsController_renew"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Mark my post as resolved
+     * @description Only the author, only for an ACTIVE post.
+     */
+    post: operations['PostsController_resolve'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/{id}/renew': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{id}/images": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Add images to my post
-         * @description Only the author. Up to 5 images per post in total. The first image is the thumbnail.
-         */
-        post: operations["UploadsController_add"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Renew my post for another 30 days
+     * @description Only the author. Allowed when the post is EXPIRED, or ACTIVE and expiring within 3 days. The post becomes ACTIVE again.
+     */
+    post: operations['PostsController_renew'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/{id}/images': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{id}/images/{imageId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Remove one image from my post */
-        delete: operations["UploadsController_remove"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Add images to my post
+     * @description Only the author. Up to 5 images per post in total. The first image is the thumbnail.
+     */
+    post: operations['UploadsController_add'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/{id}/images/{imageId}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{postId}/comments": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List comments of a post (oldest first)
-         * @description Login needed.
-         */
-        get: operations["CommentsController_list"];
-        put?: never;
-        /**
-         * Add a comment
-         * @description Only on ACTIVE posts. The post author is notified (added with notifications).
-         */
-        post: operations["CommentsController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Remove one image from my post */
+    delete: operations['UploadsController_remove'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/{postId}/comments': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/comments/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Delete a comment (its author, or an admin) */
-        delete: operations["CommentsController_remove"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * List comments of a post (oldest first)
+     * @description Login needed.
+     */
+    get: operations['CommentsController_list'];
+    put?: never;
+    /**
+     * Add a comment
+     * @description Only on ACTIVE posts. The post author is notified (added with notifications).
+     */
+    post: operations['CommentsController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/comments/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/favorites": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My saved posts (newest save first) */
-        get: operations["FavoritesController_list"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Delete a comment (its author, or an admin) */
+    delete: operations['CommentsController_remove'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/favorites': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{id}/favorite": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Save a post (the heart). Saving twice is fine. */
-        put: operations["FavoritesController_add"];
-        post?: never;
-        /** Remove a post from my saved posts. Removing twice is fine. */
-        delete: operations["FavoritesController_remove"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** My saved posts (newest save first) */
+    get: operations['FavoritesController_list'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/{id}/favorite': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/posts/{id}/report": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Report a post
-         * @description One report per user per post. You cannot report your own post. Admins review reports.
-         */
-        post: operations["ReportsController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    /** Save a post (the heart). Saving twice is fine. */
+    put: operations['FavoritesController_add'];
+    post?: never;
+    /** Remove a post from my saved posts. Removing twice is fine. */
+    delete: operations['FavoritesController_remove'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/posts/{id}/report': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/conversations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * My conversations (newest activity first)
-         * @description Each item has the other person, the last message and how many messages I have not read.
-         */
-        get: operations["MessagesController_list"];
-        put?: never;
-        /**
-         * Write to someone: start a conversation and send the first message
-         * @description If you already have a conversation with this person, the message is added to it.
-         */
-        post: operations["MessagesController_start"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Report a post
+     * @description One report per user per post. You cannot report your own post. Admins review reports.
+     */
+    post: operations['ReportsController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/conversations': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/conversations/{id}/messages": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Messages of a conversation (oldest first)
-         * @description Without `after` you get the newest messages (up to `limit`). For polling, send `after` = the createdAt of the last message you have and you only get newer ones.
-         */
-        get: operations["MessagesController_listMessages"];
-        put?: never;
-        /**
-         * Send a message in a conversation
-         * @description The other person gets a NEW_MESSAGE notification.
-         */
-        post: operations["MessagesController_send"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * My conversations (newest activity first)
+     * @description Each item has the other person, the last message and how many messages I have not read.
+     */
+    get: operations['MessagesController_list'];
+    put?: never;
+    /**
+     * Write to someone: start a conversation and send the first message
+     * @description If you already have a conversation with this person, the message is added to it.
+     */
+    post: operations['MessagesController_start'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/conversations/{id}/messages': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/conversations/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Mark the conversation as read (clears my unread count for it) */
-        post: operations["MessagesController_markRead"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Messages of a conversation (oldest first)
+     * @description Without `after` you get the newest messages (up to `limit`). For polling, send `after` = the createdAt of the last message you have and you only get newer ones.
+     */
+    get: operations['MessagesController_listMessages'];
+    put?: never;
+    /**
+     * Send a message in a conversation
+     * @description The other person gets a NEW_MESSAGE notification.
+     */
+    post: operations['MessagesController_send'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/conversations/{id}/read': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** (Admin) Basic numbers: users, posts, open reports */
-        get: operations["AdminController_stats"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Mark the conversation as read (clears my unread count for it) */
+    post: operations['MessagesController_markRead'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/admin/stats': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/reports": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** (Admin) List reports, with filter, sort and pagination */
-        get: operations["AdminController_listReports"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** (Admin) Basic numbers: users, posts, open reports */
+    get: operations['AdminController_stats'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/admin/reports': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/reports/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** (Admin) Mark a report as RESOLVED or DISMISSED */
-        patch: operations["AdminController_updateReport"];
-        trace?: never;
+    /** (Admin) List reports, with filter, sort and pagination */
+    get: operations['AdminController_listReports'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/admin/reports/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/posts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** (Admin) List all posts (any status), with filter, search, sort and pagination */
-        get: operations["AdminController_listPosts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /** (Admin) Mark a report as RESOLVED or DISMISSED */
+    patch: operations['AdminController_updateReport'];
+    trace?: never;
+  };
+  '/api/admin/posts': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/posts/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * (Admin) One post with all its reports and a summary of its author
-         * @description Works for any status, including removed and expired posts. This feeds the admin post page.
-         */
-        get: operations["AdminController_getPost"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** (Admin) List all posts (any status), with filter, search, sort and pagination */
+    get: operations['AdminController_listPosts'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/admin/posts/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/posts/{id}/remove": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * (Admin) Remove a post
-         * @description The post disappears from public lists and pages. Its open reports are marked RESOLVED and the author gets a POST_REMOVED notification. Only the super admin may remove the post of an admin.
-         */
-        patch: operations["AdminController_removePost"];
-        trace?: never;
+    /**
+     * (Admin) One post with all its reports and a summary of its author
+     * @description Works for any status, including removed and expired posts. This feeds the admin post page.
+     */
+    get: operations['AdminController_getPost'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/admin/posts/{id}/remove': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/posts/{id}/restore": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * (Admin) Restore a removed post
-         * @description Only the super admin may restore the post of an admin.
-         */
-        patch: operations["AdminController_restorePost"];
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * (Admin) Remove a post
+     * @description The post disappears from public lists and pages. Its open reports are marked RESOLVED and the author gets a POST_REMOVED notification. Only the super admin may remove the post of an admin.
+     */
+    patch: operations['AdminController_removePost'];
+    trace?: never;
+  };
+  '/api/admin/posts/{id}/restore': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/posts/{id}/reports/dismiss": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * (Admin) Dismiss all open reports on a post
-         * @description The post stays as it is. Returns the post page data with the updated reports.
-         */
-        patch: operations["AdminController_dismissReports"];
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * (Admin) Restore a removed post
+     * @description Only the super admin may restore the post of an admin.
+     */
+    patch: operations['AdminController_restorePost'];
+    trace?: never;
+  };
+  '/api/admin/posts/{id}/reports/dismiss': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/users": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** (Admin) List users, with search, role and blocked filters, sort and pagination */
-        get: operations["AdminController_listUsers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * (Admin) Dismiss all open reports on a post
+     * @description The post stays as it is. Returns the post page data with the updated reports.
+     */
+    patch: operations['AdminController_dismissReports'];
+    trace?: never;
+  };
+  '/api/admin/users': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/users/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * (Admin) One user with counts and their posts
-         * @description Includes the email. Counts: posts, reports on their posts, comments, removed posts. Lists their latest 50 posts. This feeds the admin user page.
-         */
-        get: operations["AdminController_getUser"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** (Admin) List users, with search, role and blocked filters, sort and pagination */
+    get: operations['AdminController_listUsers'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/admin/users/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/users/{id}/block": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * (Admin) Block a user
-         * @description A blocked user cannot log in or use the site. An admin can block normal users only. Only the super admin can block an admin. Nobody can block the super admin.
-         */
-        patch: operations["AdminController_blockUser"];
-        trace?: never;
+    /**
+     * (Admin) One user with counts and their posts
+     * @description Includes the email. Counts: posts, reports on their posts, comments, removed posts. Lists their latest 50 posts. This feeds the admin user page.
+     */
+    get: operations['AdminController_getUser'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/admin/users/{id}/block': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/users/{id}/unblock": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * (Admin) Unblock a user
-         * @description Same rules as blocking.
-         */
-        patch: operations["AdminController_unblockUser"];
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * (Admin) Block a user
+     * @description A blocked user cannot log in or use the site. An admin can block normal users only. Only the super admin can block an admin. Nobody can block the super admin.
+     */
+    patch: operations['AdminController_blockUser'];
+    trace?: never;
+  };
+  '/api/admin/users/{id}/unblock': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/users/{id}/promote": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * (Super admin) Make a user an admin
-         * @description USER becomes ADMIN. Only the super admin can do this.
-         */
-        patch: operations["AdminController_promoteUser"];
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * (Admin) Unblock a user
+     * @description Same rules as blocking.
+     */
+    patch: operations['AdminController_unblockUser'];
+    trace?: never;
+  };
+  '/api/admin/users/{id}/promote': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/admin/users/{id}/demote": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * (Super admin) Remove the admin role of an admin
-         * @description ADMIN becomes USER. Only the super admin can do this.
-         */
-        patch: operations["AdminController_demoteUser"];
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * (Super admin) Make a user an admin
+     * @description USER becomes ADMIN. Only the super admin can do this.
+     */
+    patch: operations['AdminController_promoteUser'];
+    trace?: never;
+  };
+  '/api/admin/users/{id}/demote': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/health": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Check that the API is running */
-        get: operations["HealthController_check"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * (Super admin) Remove the admin role of an admin
+     * @description ADMIN becomes USER. Only the super admin can do this.
+     */
+    patch: operations['AdminController_demoteUser'];
+    trace?: never;
+  };
+  '/api/health': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    /** Check that the API is running */
+    get: operations['HealthController_check'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        ErrorDetailDto: {
-            /**
-             * @description The field that failed validation
-             * @example password
-             */
-            field: string;
-            /**
-             * @description The validation rule that failed
-             * @example minLength
-             */
-            code: string;
-        };
-        ErrorResponseDto: {
-            /**
-             * @description HTTP status code
-             * @example 404
-             */
-            statusCode: number;
-            /**
-             * @description Stable error code. The frontend translates it; do not show `message` to users.
-             * @example POST_NOT_FOUND
-             * @enum {string}
-             */
-            errorCode: "VALIDATION_FAILED" | "CONTACT_REQUIRED" | "PRICE_NOT_ALLOWED" | "PRICE_UNIT_REQUIRED" | "IMAGE_LIMIT_EXCEEDED" | "IMAGE_TYPE_INVALID" | "IMAGE_TOO_LARGE" | "REPORT_OWN_POST" | "MESSAGE_SELF" | "FORBIDDEN_ROLE" | "CANNOT_CHANGE_SUPER_ADMIN" | "CURRENT_PASSWORD_INCORRECT" | "UNIVERSITY_DOMAIN_NOT_ALLOWED" | "VERIFICATION_TOKEN_INVALID" | "VERIFICATION_TOKEN_EXPIRED" | "UNAUTHORIZED" | "INVALID_CREDENTIALS" | "REFRESH_TOKEN_INVALID" | "FORBIDDEN" | "ADMIN_ONLY" | "USER_BLOCKED" | "POST_NOT_OWNER" | "COMMENT_NOT_OWNER" | "NOT_FOUND" | "USER_NOT_FOUND" | "POST_NOT_FOUND" | "COMMENT_NOT_FOUND" | "IMAGE_NOT_FOUND" | "REPORT_NOT_FOUND" | "NOTIFICATION_NOT_FOUND" | "CONVERSATION_NOT_FOUND" | "EMAIL_TAKEN" | "USERNAME_TAKEN" | "UNIVERSITY_EMAIL_TAKEN" | "ALREADY_VERIFIED" | "USER_ALREADY_ADMIN" | "USER_NOT_ADMIN" | "POST_NOT_ACTIVE" | "RENEW_NOT_ALLOWED" | "REPORT_ALREADY_EXISTS" | "TOO_MANY_REQUESTS" | "UPLOAD_FAILED" | "MAIL_SEND_FAILED" | "INTERNAL_ERROR";
-            /**
-             * @description Short hint for developers (English)
-             * @example POST_NOT_FOUND
-             */
-            message: string;
-            /** @description Field-level problems (only for VALIDATION_FAILED) */
-            details?: components["schemas"]["ErrorDetailDto"][] | null;
-        };
-        NotificationResponseDto: {
-            /** @example cm2xnotif0000abc */
-            id: string;
-            /**
-             * @description The frontend writes the text in the user language from this type
-             * @example NEW_COMMENT
-             * @enum {string}
-             */
-            type: "NEW_COMMENT" | "POST_EXPIRING" | "POST_REMOVED" | "NEW_MESSAGE";
-            /**
-             * @description Open this post
-             * @example cm2xpost0000abc
-             */
-            postId: string | null;
-            /**
-             * @description Open this conversation
-             * @example null
-             */
-            conversationId: string | null;
-            /**
-             * @description Who commented or wrote
-             * @example rustam
-             */
-            actorUsername: string | null;
-            /**
-             * Format: date-time
-             * @description null means unread
-             * @example null
-             */
-            readAt: string | null;
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-        };
-        PaginatedNotificationsResponseDto: {
-            /** @description Newest first */
-            items: components["schemas"]["NotificationResponseDto"][];
-            /** @example 1 */
-            page: number;
-            /** @example 20 */
-            limit: number;
-            /** @example 3 */
-            total: number;
-            /** @example 1 */
-            totalPages: number;
-        };
-        UnreadCountResponseDto: {
-            /**
-             * @description Number of unread notifications
-             * @example 2
-             */
-            count: number;
-        };
-        RegisterDto: {
-            /**
-             * Format: email
-             * @description Must be unique
-             * @example aziza@example.com
-             */
-            email: string;
-            /**
-             * @description Unique. 3-20 characters: a-z, 0-9, underscore, dot. Saved in lowercase.
-             * @example aziza
-             */
-            username: string;
-            /**
-             * @description 8-72 characters, at least one letter and one digit
-             * @example Demo12345
-             */
-            password: string;
-            /**
-             * @description Language of the user
-             * @default EN
-             * @example EN
-             * @enum {string}
-             */
-            preferredLocale: "TG" | "RU" | "EN";
-        };
-        UserResponseDto: {
-            /** @example cm2x1abcd0000xyz123456789 */
-            id: string;
-            /** @example aziza@example.com */
-            email: string;
-            /**
-             * @description Unique, lowercase
-             * @example aziza
-             */
-            username: string;
-            /**
-             * @example USER
-             * @enum {string}
-             */
-            role: "USER" | "ADMIN" | "SUPER_ADMIN";
-            /**
-             * @description True after the university email is verified ("Student ✓")
-             * @example false
-             */
-            isStudentVerified: boolean;
-            /**
-             * @description The university email, if one was added
-             * @example null
-             */
-            universityEmail: string | null;
-            /**
-             * @description Language saved in the profile
-             * @example EN
-             * @enum {string}
-             */
-            preferredLocale: "TG" | "RU" | "EN";
-            /**
-             * @description My profile picture, or null when I have none
-             * @example null
-             */
-            avatarUrl: string | null;
-            /**
-             * Format: date-time
-             * @example 2026-03-01T10:00:00.000Z
-             */
-            createdAt: string;
-        };
-        LoginDto: {
-            /**
-             * @description Email or username
-             * @example aziza
-             */
-            emailOrUsername: string;
-            /** @example Demo12345 */
-            password: string;
-        };
-        ChangePasswordDto: {
-            /**
-             * @description My password right now
-             * @example Demo12345
-             */
-            currentPassword: string;
-            /**
-             * @description 8-72 characters, at least one letter and one digit
-             * @example NewPass6789
-             */
-            newPassword: string;
-        };
-        UpdateMeDto: {
-            /**
-             * @description New username. Unique. 3-20 characters: a-z, 0-9, underscore, dot. Saved in lowercase.
-             * @example aziza_d
-             */
-            username?: string;
-            /**
-             * @description Language saved in the profile
-             * @example TG
-             * @enum {string}
-             */
-            preferredLocale?: "TG" | "RU" | "EN";
-        };
-        RequestUniversityEmailDto: {
-            /**
-             * Format: email
-             * @description Must end with an allowed university domain (see server/src/config/university-domains.ts)
-             * @example name@students.university.tj
-             */
-            universityEmail: string;
-        };
-        VerifyUniversityEmailDto: {
-            /**
-             * @description The token from the link in the email
-             * @example 3f9a1c0d5b7e4a2f8c6d1e9b0a3c5d7f2e4b6a8c0d1e3f5a7b9c2d4e6f8a0b1c
-             */
-            token: string;
-        };
-        PublicUserResponseDto: {
-            /** @example aziza */
-            username: string;
-            /**
-             * @description Profile picture, or null when the user has none
-             * @example null
-             */
-            avatarUrl: string | null;
-            /**
-             * Format: date-time
-             * @description Join date
-             * @example 2026-03-01T10:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * @description Shows the "Student ✓" badge
-             * @example false
-             */
-            isStudentVerified: boolean;
-            /**
-             * @description Number of visible (active, not expired) posts
-             * @example 4
-             */
-            activePostsCount: number;
-        };
-        PostImageResponseDto: {
-            /** @example cm2ximg0000abc */
-            id: string;
-            /** @example https://res.cloudinary.com/demo/image/upload/v1/sample.jpg */
-            url: string;
-            /**
-             * @description Order of the image. 0 is the thumbnail.
-             * @example 0
-             */
-            position: number;
-        };
-        PostAuthorDto: {
-            /** @example aziza */
-            username: string;
-            /**
-             * @description Shows the "Student ✓" badge
-             * @example false
-             */
-            isStudentVerified: boolean;
-        };
-        PostResponseDto: {
-            /** @example cm2xpost0000abc */
-            id: string;
-            /** @example Math tutor for first-year students */
-            title: string;
-            /** @example I teach calculus and linear algebra. Free first lesson. */
-            description: string;
-            /**
-             * @example TUTORING
-             * @enum {string}
-             */
-            category: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            /**
-             * @example UNIVERSITY_CAMPUS
-             * @enum {string}
-             */
-            district: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-            /**
-             * @description An ACTIVE post past its expiry date is reported as EXPIRED
-             * @example ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "RESOLVED" | "EXPIRED" | "REMOVED";
-            /**
-             * @description Whole somoni
-             * @example 100
-             */
-            price: number | null;
-            /**
-             * @example PER_HOUR
-             * @enum {string|null}
-             */
-            priceUnit: "ONCE" | "PER_HOUR" | "PER_MONTH" | null;
-            /**
-             * @description Opens https://t.me/<username>
-             * @example aziza_tutor
-             */
-            contactTelegram: string | null;
-            /**
-             * @description Use as a tel: link
-             * @example +992901234567
-             */
-            contactPhone: string | null;
-            /** @example 38.5598 */
-            latitude: number | null;
-            /** @example 68.787 */
-            longitude: number | null;
-            /**
-             * Format: date-time
-             * @description The post expires at this time
-             * @example 2026-04-01T10:00:00.000Z
-             */
-            expiresAt: string;
-            /**
-             * Format: date-time
-             * @example 2026-03-02T10:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @example 2026-03-02T10:00:00.000Z
-             */
-            updatedAt: string;
-            images: components["schemas"]["PostImageResponseDto"][];
-            author: components["schemas"]["PostAuthorDto"];
-            /** @example 3 */
-            commentsCount: number;
-            /**
-             * @description Did the logged-in user save this post? Always false for guests.
-             * @example false
-             */
-            isFavorite: boolean;
-        };
-        PaginatedPostsResponseDto: {
-            items: components["schemas"]["PostResponseDto"][];
-            /** @example 1 */
-            page: number;
-            /** @example 20 */
-            limit: number;
-            /**
-             * @description Total posts matching the filters
-             * @example 45
-             */
-            total: number;
-            /** @example 3 */
-            totalPages: number;
-        };
-        PostCountsResponseDto: {
-            /**
-             * @description All categories together
-             * @example 120
-             */
-            ALL: number;
-            /** @example 18 */
-            LOST_FOUND: number;
-            /** @example 24 */
-            TUTORING: number;
-            /** @example 40 */
-            RENTALS: number;
-            /** @example 38 */
-            OTHER: number;
-        };
-        MapPinResponseDto: {
-            /** @example cm2xpost0000abc */
-            id: string;
-            /** @example 2-room apartment near the university */
-            title: string;
-            /**
-             * @example RENTALS
-             * @enum {string}
-             */
-            category: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            /** @example 38.5598 */
-            latitude: number;
-            /** @example 68.787 */
-            longitude: number;
-            /** @example 1500 */
-            price: number | null;
-            /**
-             * @example PER_MONTH
-             * @enum {string|null}
-             */
-            priceUnit: "ONCE" | "PER_HOUR" | "PER_MONTH" | null;
-        };
-        CreatePostDto: {
-            /** @example Math tutor for first-year students */
-            title: string;
-            /** @example I teach calculus and linear algebra. Online or at the university library. Free first lesson. */
-            description: string;
-            /**
-             * @example TUTORING
-             * @enum {string}
-             */
-            category: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            /**
-             * @example UNIVERSITY_CAMPUS
-             * @enum {string}
-             */
-            district: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-            /**
-             * @description Whole somoni. Only for TUTORING and RENTALS (otherwise PRICE_NOT_ALLOWED). Needs priceUnit.
-             * @example 100
-             */
-            price?: number | null;
-            /**
-             * @description Required when price is set (otherwise PRICE_UNIT_REQUIRED)
-             * @example PER_HOUR
-             * @enum {string|null}
-             */
-            priceUnit?: "ONCE" | "PER_HOUR" | "PER_MONTH" | null;
-            /**
-             * @description Telegram username without @ (5-32 letters, digits, underscore). Telegram or phone is required.
-             * @example aziza_tutor
-             */
-            contactTelegram?: string | null;
-            /**
-             * @description 7-15 digits, optional leading +. Spaces and dashes are removed. Telegram or phone is required.
-             * @example +992901234567
-             */
-            contactPhone?: string | null;
-            /**
-             * @description Map pin latitude (-90 to 90). Send together with longitude.
-             * @example 38.5598
-             */
-            latitude?: number | null;
-            /**
-             * @description Map pin longitude (-180 to 180). Send together with latitude.
-             * @example 68.787
-             */
-            longitude?: number | null;
-        };
-        UpdatePostDto: {
-            /** @example Math tutor for first-year students */
-            title?: string;
-            /** @example I teach calculus and linear algebra. Online or at the university library. Free first lesson. */
-            description?: string;
-            /**
-             * @example TUTORING
-             * @enum {string}
-             */
-            category?: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            /**
-             * @example UNIVERSITY_CAMPUS
-             * @enum {string}
-             */
-            district?: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-            /**
-             * @description Whole somoni. Only for TUTORING and RENTALS (otherwise PRICE_NOT_ALLOWED). Needs priceUnit.
-             * @example 100
-             */
-            price?: number | null;
-            /**
-             * @description Required when price is set (otherwise PRICE_UNIT_REQUIRED)
-             * @example PER_HOUR
-             * @enum {string|null}
-             */
-            priceUnit?: "ONCE" | "PER_HOUR" | "PER_MONTH" | null;
-            /**
-             * @description Telegram username without @ (5-32 letters, digits, underscore). Telegram or phone is required.
-             * @example aziza_tutor
-             */
-            contactTelegram?: string | null;
-            /**
-             * @description 7-15 digits, optional leading +. Spaces and dashes are removed. Telegram or phone is required.
-             * @example +992901234567
-             */
-            contactPhone?: string | null;
-            /**
-             * @description Map pin latitude (-90 to 90). Send together with longitude.
-             * @example 38.5598
-             */
-            latitude?: number | null;
-            /**
-             * @description Map pin longitude (-180 to 180). Send together with latitude.
-             * @example 68.787
-             */
-            longitude?: number | null;
-        };
-        CommentResponseDto: {
-            /** @example cm2xcomment0000abc */
-            id: string;
-            /** @example Is this still available? */
-            body: string;
-            /** @example cm2xpost0000abc */
-            postId: string;
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-            author: components["schemas"]["PostAuthorDto"];
-        };
-        PaginatedCommentsResponseDto: {
-            /** @description Oldest first */
-            items: components["schemas"]["CommentResponseDto"][];
-            /** @example 1 */
-            page: number;
-            /** @example 20 */
-            limit: number;
-            /** @example 3 */
-            total: number;
-            /** @example 1 */
-            totalPages: number;
-        };
-        CreateCommentDto: {
-            /** @example Is this still available? */
-            body: string;
-        };
-        CreateReportDto: {
-            /**
-             * @example SPAM
-             * @enum {string}
-             */
-            reason: "SPAM" | "SCAM" | "OFFENSIVE" | "OTHER";
-            /**
-             * @description Optional explanation
-             * @example The same text is posted every day.
-             */
-            details?: string;
-        };
-        ReportResponseDto: {
-            /** @example cm2xreport0000abc */
-            id: string;
-            /** @example cm2xpost0000abc */
-            postId: string;
-            /**
-             * @example SPAM
-             * @enum {string}
-             */
-            reason: "SPAM" | "SCAM" | "OFFENSIVE" | "OTHER";
-            /** @example The same text is posted every day. */
-            details: string | null;
-            /**
-             * @example OPEN
-             * @enum {string}
-             */
-            status: "OPEN" | "RESOLVED" | "DISMISSED";
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-        };
-        ChatUserDto: {
-            /** @example rustam */
-            username: string;
-            /**
-             * @description Shows the "Student ✓" badge
-             * @example false
-             */
-            isStudentVerified: boolean;
-        };
-        MessageResponseDto: {
-            /** @example cm2xmsg0000abc */
-            id: string;
-            /** @example cm2xconv0000abc */
-            conversationId: string;
-            /** @example Hi! Is the room still free? */
-            body: string;
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-            sender: components["schemas"]["ChatUserDto"];
-            /**
-             * @description True when I sent this message (show it on the right)
-             * @example true
-             */
-            isMine: boolean;
-        };
-        ConversationResponseDto: {
-            /** @example cm2xconv0000abc */
-            id: string;
-            /** @description The other person in the conversation */
-            otherUser: components["schemas"]["ChatUserDto"];
-            /** @description The newest message */
-            lastMessage: components["schemas"]["MessageResponseDto"] | null;
-            /**
-             * @description Messages from the other person that I have not read yet
-             * @example 2
-             */
-            unreadCount: number;
-            /**
-             * Format: date-time
-             * @description Conversations are sorted by this, newest first
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            lastMessageAt: string;
-        };
-        PaginatedConversationsResponseDto: {
-            items: components["schemas"]["ConversationResponseDto"][];
-            /** @example 1 */
-            page: number;
-            /** @example 20 */
-            limit: number;
-            /** @example 3 */
-            total: number;
-            /** @example 1 */
-            totalPages: number;
-        };
-        CreateConversationDto: {
-            /**
-             * @description Username of the person to write to. If you already have a conversation, it is reused.
-             * @example rustam
-             */
-            recipientUsername: string;
-            /** @example Hi! Is the room still free? */
-            body: string;
-        };
-        SendMessageDto: {
-            /** @example Yes, you can come tomorrow at 6. */
-            body: string;
-        };
-        AdminStatsResponseDto: {
-            /**
-             * @description All registered users
-             * @example 120
-             */
-            users: number;
-            /**
-             * @description All posts, any status
-             * @example 340
-             */
-            posts: number;
-            /**
-             * @description ACTIVE posts that have not expired
-             * @example 210
-             */
-            activePosts: number;
-            /**
-             * @description Reports waiting for review
-             * @example 7
-             */
-            reportsOpen: number;
-            /** @example 2 */
-            blockedUsers: number;
-        };
-        NameDto: {
-            /**
-             * @description Use it to open the admin user page
-             * @example cm2xuser0000abc
-             */
-            id: string;
-            /** @example aziza */
-            username: string;
-        };
-        ReportedPostDto: {
-            /** @example cm2xpost0000abc */
-            id: string;
-            /** @example Click here to win a free phone */
-            title: string;
-            /**
-             * @example ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "RESOLVED" | "EXPIRED" | "REMOVED";
-            author: components["schemas"]["NameDto"];
-        };
-        AdminReportResponseDto: {
-            /** @example cm2xreport0000abc */
-            id: string;
-            /**
-             * @example SPAM
-             * @enum {string}
-             */
-            reason: "SPAM" | "SCAM" | "OFFENSIVE" | "OTHER";
-            /** @example Posted every day */
-            details: string | null;
-            /**
-             * @example OPEN
-             * @enum {string}
-             */
-            status: "OPEN" | "RESOLVED" | "DISMISSED";
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @example null
-             */
-            resolvedAt: string | null;
-            post: components["schemas"]["ReportedPostDto"];
-            reporter: components["schemas"]["NameDto"];
-        };
-        PaginatedAdminReportsResponseDto: {
-            items: components["schemas"]["AdminReportResponseDto"][];
-            /** @example 1 */
-            page: number;
-            /** @example 20 */
-            limit: number;
-            /** @example 3 */
-            total: number;
-            /** @example 1 */
-            totalPages: number;
-        };
-        UpdateReportDto: {
-            /**
-             * @example DISMISSED
-             * @enum {string}
-             */
-            status: "RESOLVED" | "DISMISSED";
-        };
-        AdminPostResponseDto: {
-            /** @example cm2xpost0000abc */
-            id: string;
-            /** @example Math tutor for first-year students */
-            title: string;
-            /**
-             * @example TUTORING
-             * @enum {string}
-             */
-            category: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            /**
-             * @example SINO
-             * @enum {string}
-             */
-            district: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-            /**
-             * @example ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "RESOLVED" | "EXPIRED" | "REMOVED";
-            /** @example Spam */
-            removedReason: string | null;
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @example 2026-04-01T11:00:00.000Z
-             */
-            expiresAt: string;
-            author: components["schemas"]["NameDto"];
-            /**
-             * @description Reports about this post that are still OPEN
-             * @example 2
-             */
-            openReportsCount: number;
-        };
-        PaginatedAdminPostsResponseDto: {
-            items: components["schemas"]["AdminPostResponseDto"][];
-            /** @example 1 */
-            page: number;
-            /** @example 20 */
-            limit: number;
-            /** @example 3 */
-            total: number;
-            /** @example 1 */
-            totalPages: number;
-        };
-        AdminPostReportResponseDto: {
-            /** @example cm2xreport0000abc */
-            id: string;
-            /**
-             * @example SPAM
-             * @enum {string}
-             */
-            reason: "SPAM" | "SCAM" | "OFFENSIVE" | "OTHER";
-            /** @example Posted every day */
-            details: string | null;
-            /**
-             * @example OPEN
-             * @enum {string}
-             */
-            status: "OPEN" | "RESOLVED" | "DISMISSED";
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @example null
-             */
-            resolvedAt: string | null;
-            /** @description Who reported */
-            reporter: components["schemas"]["NameDto"];
-        };
-        AdminPostAuthorResponseDto: {
-            /** @example cm2xuser0000abc */
-            id: string;
-            /** @example aziza */
-            username: string;
-            /** @example aziza@example.com */
-            email: string;
-            /**
-             * @example USER
-             * @enum {string}
-             */
-            role: "USER" | "ADMIN" | "SUPER_ADMIN";
-            /** @example false */
-            isBlocked: boolean;
-            /**
-             * @description "Student ✓"
-             * @example false
-             */
-            isStudentVerified: boolean;
-            /**
-             * Format: date-time
-             * @example 2026-03-01T10:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * @description All posts of this user
-             * @example 4
-             */
-            postsCount: number;
-            /**
-             * @description Reports about posts of this user (any status)
-             * @example 2
-             */
-            reportsOnPostsCount: number;
-        };
-        AdminPostDetailResponseDto: {
-            /** @example cm2xpost0000abc */
-            id: string;
-            /** @example Math tutor for first-year students */
-            title: string;
-            /** @example I teach calculus and linear algebra. */
-            description: string;
-            /**
-             * @example TUTORING
-             * @enum {string}
-             */
-            category: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            /**
-             * @example SINO
-             * @enum {string}
-             */
-            district: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-            /**
-             * @example ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "RESOLVED" | "EXPIRED" | "REMOVED";
-            /** @example 100 */
-            price: number | null;
-            /**
-             * @example PER_HOUR
-             * @enum {string|null}
-             */
-            priceUnit: "ONCE" | "PER_HOUR" | "PER_MONTH" | null;
-            /** @example aziza_tutor */
-            contactTelegram: string | null;
-            /** @example +992 900 00 00 00 */
-            contactPhone: string | null;
-            /** @example Spam */
-            removedReason: string | null;
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @example 2026-04-01T11:00:00.000Z
-             */
-            expiresAt: string;
-            images: components["schemas"]["PostImageResponseDto"][];
-            /** @description Every report on this post, newest first */
-            reports: components["schemas"]["AdminPostReportResponseDto"][];
-            author: components["schemas"]["AdminPostAuthorResponseDto"];
-        };
-        RemovePostDto: {
-            /**
-             * @description Why the post was removed (saved with the post)
-             * @example Spam
-             */
-            reason?: string;
-        };
-        AdminUserResponseDto: {
-            /** @example cm2xuser0000abc */
-            id: string;
-            /** @example aziza@example.com */
-            email: string;
-            /** @example aziza */
-            username: string;
-            /**
-             * @example USER
-             * @enum {string}
-             */
-            role: "USER" | "ADMIN" | "SUPER_ADMIN";
-            /** @example false */
-            isBlocked: boolean;
-            /** @example false */
-            isStudentVerified: boolean;
-            /**
-             * Format: date-time
-             * @example 2026-03-01T10:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * @description Number of posts of this user
-             * @example 4
-             */
-            postsCount: number;
-        };
-        PaginatedAdminUsersResponseDto: {
-            items: components["schemas"]["AdminUserResponseDto"][];
-            /** @example 1 */
-            page: number;
-            /** @example 20 */
-            limit: number;
-            /** @example 3 */
-            total: number;
-            /** @example 1 */
-            totalPages: number;
-        };
-        AdminUserCountsResponseDto: {
-            /**
-             * @description All posts of this user
-             * @example 4
-             */
-            posts: number;
-            /**
-             * @description Reports about posts of this user (any status)
-             * @example 2
-             */
-            reportsOnPosts: number;
-            /** @example 12 */
-            comments: number;
-            /**
-             * @description Posts of this user that admins removed
-             * @example 1
-             */
-            removedPosts: number;
-        };
-        AdminUserPostResponseDto: {
-            /** @example cm2xpost0000abc */
-            id: string;
-            /** @example Math tutor for first-year students */
-            title: string;
-            /**
-             * @example TUTORING
-             * @enum {string}
-             */
-            category: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            /**
-             * @example ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "RESOLVED" | "EXPIRED" | "REMOVED";
-            /**
-             * Format: date-time
-             * @example 2026-03-02T11:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * @description Reports about this post that are still OPEN
-             * @example 1
-             */
-            openReportsCount: number;
-        };
-        AdminUserDetailResponseDto: {
-            /** @example cm2xuser0000abc */
-            id: string;
-            /** @example aziza@example.com */
-            email: string;
-            /** @example aziza */
-            username: string;
-            /**
-             * @example USER
-             * @enum {string}
-             */
-            role: "USER" | "ADMIN" | "SUPER_ADMIN";
-            /** @example false */
-            isBlocked: boolean;
-            /** @example false */
-            isStudentVerified: boolean;
-            /**
-             * Format: date-time
-             * @example 2026-03-01T10:00:00.000Z
-             */
-            createdAt: string;
-            /**
-             * @description Number of posts of this user
-             * @example 4
-             */
-            postsCount: number;
-            counts: components["schemas"]["AdminUserCountsResponseDto"];
-            /** @description Their latest 50 posts (any status), newest first */
-            posts: components["schemas"]["AdminUserPostResponseDto"][];
-        };
+  schemas: {
+    ErrorDetailDto: {
+      /**
+       * @description The field that failed validation
+       * @example password
+       */
+      field: string;
+      /**
+       * @description The validation rule that failed
+       * @example minLength
+       */
+      code: string;
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    ErrorResponseDto: {
+      /**
+       * @description HTTP status code
+       * @example 404
+       */
+      statusCode: number;
+      /**
+       * @description Stable error code. The frontend translates it; do not show `message` to users.
+       * @example POST_NOT_FOUND
+       * @enum {string}
+       */
+      errorCode:
+        | 'VALIDATION_FAILED'
+        | 'CONTACT_REQUIRED'
+        | 'PRICE_NOT_ALLOWED'
+        | 'PRICE_UNIT_REQUIRED'
+        | 'IMAGE_LIMIT_EXCEEDED'
+        | 'IMAGE_TYPE_INVALID'
+        | 'IMAGE_TOO_LARGE'
+        | 'REPORT_OWN_POST'
+        | 'MESSAGE_SELF'
+        | 'FORBIDDEN_ROLE'
+        | 'CANNOT_CHANGE_SUPER_ADMIN'
+        | 'CURRENT_PASSWORD_INCORRECT'
+        | 'UNIVERSITY_DOMAIN_NOT_ALLOWED'
+        | 'VERIFICATION_TOKEN_INVALID'
+        | 'VERIFICATION_TOKEN_EXPIRED'
+        | 'UNAUTHORIZED'
+        | 'INVALID_CREDENTIALS'
+        | 'REFRESH_TOKEN_INVALID'
+        | 'FORBIDDEN'
+        | 'ADMIN_ONLY'
+        | 'USER_BLOCKED'
+        | 'POST_NOT_OWNER'
+        | 'COMMENT_NOT_OWNER'
+        | 'NOT_FOUND'
+        | 'USER_NOT_FOUND'
+        | 'POST_NOT_FOUND'
+        | 'COMMENT_NOT_FOUND'
+        | 'IMAGE_NOT_FOUND'
+        | 'REPORT_NOT_FOUND'
+        | 'NOTIFICATION_NOT_FOUND'
+        | 'CONVERSATION_NOT_FOUND'
+        | 'EMAIL_TAKEN'
+        | 'USERNAME_TAKEN'
+        | 'UNIVERSITY_EMAIL_TAKEN'
+        | 'ALREADY_VERIFIED'
+        | 'USER_ALREADY_ADMIN'
+        | 'USER_NOT_ADMIN'
+        | 'POST_NOT_ACTIVE'
+        | 'RENEW_NOT_ALLOWED'
+        | 'REPORT_ALREADY_EXISTS'
+        | 'TOO_MANY_REQUESTS'
+        | 'UPLOAD_FAILED'
+        | 'MAIL_SEND_FAILED'
+        | 'INTERNAL_ERROR';
+      /**
+       * @description Short hint for developers (English)
+       * @example POST_NOT_FOUND
+       */
+      message: string;
+      /** @description Field-level problems (only for VALIDATION_FAILED) */
+      details?: components['schemas']['ErrorDetailDto'][] | null;
+    };
+    NotificationResponseDto: {
+      /** @example cm2xnotif0000abc */
+      id: string;
+      /**
+       * @description The frontend writes the text in the user language from this type
+       * @example NEW_COMMENT
+       * @enum {string}
+       */
+      type: 'NEW_COMMENT' | 'POST_EXPIRING' | 'POST_REMOVED' | 'NEW_MESSAGE';
+      /**
+       * @description Open this post
+       * @example cm2xpost0000abc
+       */
+      postId: string | null;
+      /**
+       * @description Open this conversation
+       * @example null
+       */
+      conversationId: string | null;
+      /**
+       * @description Who commented or wrote
+       * @example rustam
+       */
+      actorUsername: string | null;
+      /**
+       * Format: date-time
+       * @description null means unread
+       * @example null
+       */
+      readAt: string | null;
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+    };
+    PaginatedNotificationsResponseDto: {
+      /** @description Newest first */
+      items: components['schemas']['NotificationResponseDto'][];
+      /** @example 1 */
+      page: number;
+      /** @example 20 */
+      limit: number;
+      /** @example 3 */
+      total: number;
+      /** @example 1 */
+      totalPages: number;
+    };
+    UnreadCountResponseDto: {
+      /**
+       * @description Number of unread notifications
+       * @example 2
+       */
+      count: number;
+    };
+    RegisterDto: {
+      /**
+       * Format: email
+       * @description Must be unique
+       * @example aziza@example.com
+       */
+      email: string;
+      /**
+       * @description Unique. 3-20 characters: a-z, 0-9, underscore, dot. Saved in lowercase.
+       * @example aziza
+       */
+      username: string;
+      /**
+       * @description 8-72 characters, at least one letter and one digit
+       * @example Demo12345
+       */
+      password: string;
+      /**
+       * @description Language of the user
+       * @default EN
+       * @example EN
+       * @enum {string}
+       */
+      preferredLocale: 'TG' | 'RU' | 'EN';
+    };
+    UserResponseDto: {
+      /** @example cm2x1abcd0000xyz123456789 */
+      id: string;
+      /** @example aziza@example.com */
+      email: string;
+      /**
+       * @description Unique, lowercase
+       * @example aziza
+       */
+      username: string;
+      /**
+       * @example USER
+       * @enum {string}
+       */
+      role: 'USER' | 'ADMIN' | 'SUPER_ADMIN';
+      /**
+       * @description True after the university email is verified ("Student ✓")
+       * @example false
+       */
+      isStudentVerified: boolean;
+      /**
+       * @description The university email, if one was added
+       * @example null
+       */
+      universityEmail: string | null;
+      /**
+       * @description Language saved in the profile
+       * @example EN
+       * @enum {string}
+       */
+      preferredLocale: 'TG' | 'RU' | 'EN';
+      /**
+       * @description My profile picture, or null when I have none
+       * @example null
+       */
+      avatarUrl: string | null;
+      /**
+       * Format: date-time
+       * @example 2026-03-01T10:00:00.000Z
+       */
+      createdAt: string;
+    };
+    LoginDto: {
+      /**
+       * @description Email or username
+       * @example aziza
+       */
+      emailOrUsername: string;
+      /** @example Demo12345 */
+      password: string;
+    };
+    ChangePasswordDto: {
+      /**
+       * @description My password right now
+       * @example Demo12345
+       */
+      currentPassword: string;
+      /**
+       * @description 8-72 characters, at least one letter and one digit
+       * @example NewPass6789
+       */
+      newPassword: string;
+    };
+    UpdateMeDto: {
+      /**
+       * @description New username. Unique. 3-20 characters: a-z, 0-9, underscore, dot. Saved in lowercase.
+       * @example aziza_d
+       */
+      username?: string;
+      /**
+       * @description Language saved in the profile
+       * @example TG
+       * @enum {string}
+       */
+      preferredLocale?: 'TG' | 'RU' | 'EN';
+    };
+    RequestUniversityEmailDto: {
+      /**
+       * Format: email
+       * @description Must end with an allowed university domain (see server/src/config/university-domains.ts)
+       * @example name@students.university.tj
+       */
+      universityEmail: string;
+    };
+    VerifyUniversityEmailDto: {
+      /**
+       * @description The token from the link in the email
+       * @example 3f9a1c0d5b7e4a2f8c6d1e9b0a3c5d7f2e4b6a8c0d1e3f5a7b9c2d4e6f8a0b1c
+       */
+      token: string;
+    };
+    PublicUserResponseDto: {
+      /** @example aziza */
+      username: string;
+      /**
+       * @description Profile picture, or null when the user has none
+       * @example null
+       */
+      avatarUrl: string | null;
+      /**
+       * Format: date-time
+       * @description Join date
+       * @example 2026-03-01T10:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * @description Shows the "Student ✓" badge
+       * @example false
+       */
+      isStudentVerified: boolean;
+      /**
+       * @description Number of visible (active, not expired) posts
+       * @example 4
+       */
+      activePostsCount: number;
+    };
+    PostImageResponseDto: {
+      /** @example cm2ximg0000abc */
+      id: string;
+      /** @example https://res.cloudinary.com/demo/image/upload/v1/sample.jpg */
+      url: string;
+      /**
+       * @description Order of the image. 0 is the thumbnail.
+       * @example 0
+       */
+      position: number;
+    };
+    PostAuthorDto: {
+      /** @example aziza */
+      username: string;
+      /**
+       * @description Shows the "Student ✓" badge
+       * @example false
+       */
+      isStudentVerified: boolean;
+    };
+    PostResponseDto: {
+      /** @example cm2xpost0000abc */
+      id: string;
+      /** @example Math tutor for first-year students */
+      title: string;
+      /** @example I teach calculus and linear algebra. Free first lesson. */
+      description: string;
+      /**
+       * @example TUTORING
+       * @enum {string}
+       */
+      category: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      /**
+       * @example UNIVERSITY_CAMPUS
+       * @enum {string}
+       */
+      district:
+        'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+      /**
+       * @description An ACTIVE post past its expiry date is reported as EXPIRED
+       * @example ACTIVE
+       * @enum {string}
+       */
+      status: 'ACTIVE' | 'RESOLVED' | 'EXPIRED' | 'REMOVED';
+      /**
+       * @description Whole somoni
+       * @example 100
+       */
+      price: number | null;
+      /**
+       * @example PER_HOUR
+       * @enum {string|null}
+       */
+      priceUnit: 'ONCE' | 'PER_HOUR' | 'PER_MONTH' | null;
+      /**
+       * @description Opens https://t.me/<username>
+       * @example aziza_tutor
+       */
+      contactTelegram: string | null;
+      /**
+       * @description Use as a tel: link
+       * @example +992901234567
+       */
+      contactPhone: string | null;
+      /** @example 38.5598 */
+      latitude: number | null;
+      /** @example 68.787 */
+      longitude: number | null;
+      /**
+       * Format: date-time
+       * @description The post expires at this time
+       * @example 2026-04-01T10:00:00.000Z
+       */
+      expiresAt: string;
+      /**
+       * Format: date-time
+       * @example 2026-03-02T10:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @example 2026-03-02T10:00:00.000Z
+       */
+      updatedAt: string;
+      images: components['schemas']['PostImageResponseDto'][];
+      author: components['schemas']['PostAuthorDto'];
+      /** @example 3 */
+      commentsCount: number;
+      /**
+       * @description Did the logged-in user save this post? Always false for guests.
+       * @example false
+       */
+      isFavorite: boolean;
+    };
+    PaginatedPostsResponseDto: {
+      items: components['schemas']['PostResponseDto'][];
+      /** @example 1 */
+      page: number;
+      /** @example 20 */
+      limit: number;
+      /**
+       * @description Total posts matching the filters
+       * @example 45
+       */
+      total: number;
+      /** @example 3 */
+      totalPages: number;
+    };
+    PostCountsResponseDto: {
+      /**
+       * @description All categories together
+       * @example 120
+       */
+      ALL: number;
+      /** @example 18 */
+      LOST_FOUND: number;
+      /** @example 24 */
+      TUTORING: number;
+      /** @example 40 */
+      RENTALS: number;
+      /** @example 38 */
+      OTHER: number;
+    };
+    MapPinResponseDto: {
+      /** @example cm2xpost0000abc */
+      id: string;
+      /** @example 2-room apartment near the university */
+      title: string;
+      /**
+       * @example RENTALS
+       * @enum {string}
+       */
+      category: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      /** @example 38.5598 */
+      latitude: number;
+      /** @example 68.787 */
+      longitude: number;
+      /** @example 1500 */
+      price: number | null;
+      /**
+       * @example PER_MONTH
+       * @enum {string|null}
+       */
+      priceUnit: 'ONCE' | 'PER_HOUR' | 'PER_MONTH' | null;
+    };
+    CreatePostDto: {
+      /** @example Math tutor for first-year students */
+      title: string;
+      /** @example I teach calculus and linear algebra. Online or at the university library. Free first lesson. */
+      description: string;
+      /**
+       * @example TUTORING
+       * @enum {string}
+       */
+      category: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      /**
+       * @example UNIVERSITY_CAMPUS
+       * @enum {string}
+       */
+      district:
+        'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+      /**
+       * @description Whole somoni. Only for TUTORING and RENTALS (otherwise PRICE_NOT_ALLOWED). Needs priceUnit.
+       * @example 100
+       */
+      price?: number | null;
+      /**
+       * @description Required when price is set (otherwise PRICE_UNIT_REQUIRED)
+       * @example PER_HOUR
+       * @enum {string|null}
+       */
+      priceUnit?: 'ONCE' | 'PER_HOUR' | 'PER_MONTH' | null;
+      /**
+       * @description Telegram username without @ (5-32 letters, digits, underscore). Telegram or phone is required.
+       * @example aziza_tutor
+       */
+      contactTelegram?: string | null;
+      /**
+       * @description 7-15 digits, optional leading +. Spaces and dashes are removed. Telegram or phone is required.
+       * @example +992901234567
+       */
+      contactPhone?: string | null;
+      /**
+       * @description Map pin latitude (-90 to 90). Send together with longitude.
+       * @example 38.5598
+       */
+      latitude?: number | null;
+      /**
+       * @description Map pin longitude (-180 to 180). Send together with latitude.
+       * @example 68.787
+       */
+      longitude?: number | null;
+    };
+    UpdatePostDto: {
+      /** @example Math tutor for first-year students */
+      title?: string;
+      /** @example I teach calculus and linear algebra. Online or at the university library. Free first lesson. */
+      description?: string;
+      /**
+       * @example TUTORING
+       * @enum {string}
+       */
+      category?: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      /**
+       * @example UNIVERSITY_CAMPUS
+       * @enum {string}
+       */
+      district?:
+        'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+      /**
+       * @description Whole somoni. Only for TUTORING and RENTALS (otherwise PRICE_NOT_ALLOWED). Needs priceUnit.
+       * @example 100
+       */
+      price?: number | null;
+      /**
+       * @description Required when price is set (otherwise PRICE_UNIT_REQUIRED)
+       * @example PER_HOUR
+       * @enum {string|null}
+       */
+      priceUnit?: 'ONCE' | 'PER_HOUR' | 'PER_MONTH' | null;
+      /**
+       * @description Telegram username without @ (5-32 letters, digits, underscore). Telegram or phone is required.
+       * @example aziza_tutor
+       */
+      contactTelegram?: string | null;
+      /**
+       * @description 7-15 digits, optional leading +. Spaces and dashes are removed. Telegram or phone is required.
+       * @example +992901234567
+       */
+      contactPhone?: string | null;
+      /**
+       * @description Map pin latitude (-90 to 90). Send together with longitude.
+       * @example 38.5598
+       */
+      latitude?: number | null;
+      /**
+       * @description Map pin longitude (-180 to 180). Send together with latitude.
+       * @example 68.787
+       */
+      longitude?: number | null;
+    };
+    CommentResponseDto: {
+      /** @example cm2xcomment0000abc */
+      id: string;
+      /** @example Is this still available? */
+      body: string;
+      /** @example cm2xpost0000abc */
+      postId: string;
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+      author: components['schemas']['PostAuthorDto'];
+    };
+    PaginatedCommentsResponseDto: {
+      /** @description Oldest first */
+      items: components['schemas']['CommentResponseDto'][];
+      /** @example 1 */
+      page: number;
+      /** @example 20 */
+      limit: number;
+      /** @example 3 */
+      total: number;
+      /** @example 1 */
+      totalPages: number;
+    };
+    CreateCommentDto: {
+      /** @example Is this still available? */
+      body: string;
+    };
+    CreateReportDto: {
+      /**
+       * @example SPAM
+       * @enum {string}
+       */
+      reason: 'SPAM' | 'SCAM' | 'OFFENSIVE' | 'OTHER';
+      /**
+       * @description Optional explanation
+       * @example The same text is posted every day.
+       */
+      details?: string;
+    };
+    ReportResponseDto: {
+      /** @example cm2xreport0000abc */
+      id: string;
+      /** @example cm2xpost0000abc */
+      postId: string;
+      /**
+       * @example SPAM
+       * @enum {string}
+       */
+      reason: 'SPAM' | 'SCAM' | 'OFFENSIVE' | 'OTHER';
+      /** @example The same text is posted every day. */
+      details: string | null;
+      /**
+       * @example OPEN
+       * @enum {string}
+       */
+      status: 'OPEN' | 'RESOLVED' | 'DISMISSED';
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+    };
+    ChatUserDto: {
+      /** @example rustam */
+      username: string;
+      /**
+       * @description Shows the "Student ✓" badge
+       * @example false
+       */
+      isStudentVerified: boolean;
+    };
+    MessageResponseDto: {
+      /** @example cm2xmsg0000abc */
+      id: string;
+      /** @example cm2xconv0000abc */
+      conversationId: string;
+      /** @example Hi! Is the room still free? */
+      body: string;
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+      sender: components['schemas']['ChatUserDto'];
+      /**
+       * @description True when I sent this message (show it on the right)
+       * @example true
+       */
+      isMine: boolean;
+    };
+    ConversationResponseDto: {
+      /** @example cm2xconv0000abc */
+      id: string;
+      /** @description The other person in the conversation */
+      otherUser: components['schemas']['ChatUserDto'];
+      /** @description The newest message */
+      lastMessage: components['schemas']['MessageResponseDto'] | null;
+      /**
+       * @description Messages from the other person that I have not read yet
+       * @example 2
+       */
+      unreadCount: number;
+      /**
+       * Format: date-time
+       * @description Conversations are sorted by this, newest first
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      lastMessageAt: string;
+    };
+    PaginatedConversationsResponseDto: {
+      items: components['schemas']['ConversationResponseDto'][];
+      /** @example 1 */
+      page: number;
+      /** @example 20 */
+      limit: number;
+      /** @example 3 */
+      total: number;
+      /** @example 1 */
+      totalPages: number;
+    };
+    CreateConversationDto: {
+      /**
+       * @description Username of the person to write to. If you already have a conversation, it is reused.
+       * @example rustam
+       */
+      recipientUsername: string;
+      /** @example Hi! Is the room still free? */
+      body: string;
+    };
+    SendMessageDto: {
+      /** @example Yes, you can come tomorrow at 6. */
+      body: string;
+    };
+    AdminStatsResponseDto: {
+      /**
+       * @description All registered users
+       * @example 120
+       */
+      users: number;
+      /**
+       * @description All posts, any status
+       * @example 340
+       */
+      posts: number;
+      /**
+       * @description ACTIVE posts that have not expired
+       * @example 210
+       */
+      activePosts: number;
+      /**
+       * @description Reports waiting for review
+       * @example 7
+       */
+      reportsOpen: number;
+      /** @example 2 */
+      blockedUsers: number;
+    };
+    NameDto: {
+      /**
+       * @description Use it to open the admin user page
+       * @example cm2xuser0000abc
+       */
+      id: string;
+      /** @example aziza */
+      username: string;
+    };
+    ReportedPostDto: {
+      /** @example cm2xpost0000abc */
+      id: string;
+      /** @example Click here to win a free phone */
+      title: string;
+      /**
+       * @example ACTIVE
+       * @enum {string}
+       */
+      status: 'ACTIVE' | 'RESOLVED' | 'EXPIRED' | 'REMOVED';
+      author: components['schemas']['NameDto'];
+    };
+    AdminReportResponseDto: {
+      /** @example cm2xreport0000abc */
+      id: string;
+      /**
+       * @example SPAM
+       * @enum {string}
+       */
+      reason: 'SPAM' | 'SCAM' | 'OFFENSIVE' | 'OTHER';
+      /** @example Posted every day */
+      details: string | null;
+      /**
+       * @example OPEN
+       * @enum {string}
+       */
+      status: 'OPEN' | 'RESOLVED' | 'DISMISSED';
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @example null
+       */
+      resolvedAt: string | null;
+      post: components['schemas']['ReportedPostDto'];
+      reporter: components['schemas']['NameDto'];
+    };
+    PaginatedAdminReportsResponseDto: {
+      items: components['schemas']['AdminReportResponseDto'][];
+      /** @example 1 */
+      page: number;
+      /** @example 20 */
+      limit: number;
+      /** @example 3 */
+      total: number;
+      /** @example 1 */
+      totalPages: number;
+    };
+    UpdateReportDto: {
+      /**
+       * @example DISMISSED
+       * @enum {string}
+       */
+      status: 'RESOLVED' | 'DISMISSED';
+    };
+    AdminPostResponseDto: {
+      /** @example cm2xpost0000abc */
+      id: string;
+      /** @example Math tutor for first-year students */
+      title: string;
+      /**
+       * @example TUTORING
+       * @enum {string}
+       */
+      category: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      /**
+       * @example SINO
+       * @enum {string}
+       */
+      district:
+        'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+      /**
+       * @example ACTIVE
+       * @enum {string}
+       */
+      status: 'ACTIVE' | 'RESOLVED' | 'EXPIRED' | 'REMOVED';
+      /** @example Spam */
+      removedReason: string | null;
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @example 2026-04-01T11:00:00.000Z
+       */
+      expiresAt: string;
+      author: components['schemas']['NameDto'];
+      /**
+       * @description Reports about this post that are still OPEN
+       * @example 2
+       */
+      openReportsCount: number;
+    };
+    PaginatedAdminPostsResponseDto: {
+      items: components['schemas']['AdminPostResponseDto'][];
+      /** @example 1 */
+      page: number;
+      /** @example 20 */
+      limit: number;
+      /** @example 3 */
+      total: number;
+      /** @example 1 */
+      totalPages: number;
+    };
+    AdminPostReportResponseDto: {
+      /** @example cm2xreport0000abc */
+      id: string;
+      /**
+       * @example SPAM
+       * @enum {string}
+       */
+      reason: 'SPAM' | 'SCAM' | 'OFFENSIVE' | 'OTHER';
+      /** @example Posted every day */
+      details: string | null;
+      /**
+       * @example OPEN
+       * @enum {string}
+       */
+      status: 'OPEN' | 'RESOLVED' | 'DISMISSED';
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @example null
+       */
+      resolvedAt: string | null;
+      /** @description Who reported */
+      reporter: components['schemas']['NameDto'];
+    };
+    AdminPostAuthorResponseDto: {
+      /** @example cm2xuser0000abc */
+      id: string;
+      /** @example aziza */
+      username: string;
+      /** @example aziza@example.com */
+      email: string;
+      /**
+       * @example USER
+       * @enum {string}
+       */
+      role: 'USER' | 'ADMIN' | 'SUPER_ADMIN';
+      /** @example false */
+      isBlocked: boolean;
+      /**
+       * @description "Student ✓"
+       * @example false
+       */
+      isStudentVerified: boolean;
+      /**
+       * Format: date-time
+       * @example 2026-03-01T10:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * @description All posts of this user
+       * @example 4
+       */
+      postsCount: number;
+      /**
+       * @description Reports about posts of this user (any status)
+       * @example 2
+       */
+      reportsOnPostsCount: number;
+    };
+    AdminPostDetailResponseDto: {
+      /** @example cm2xpost0000abc */
+      id: string;
+      /** @example Math tutor for first-year students */
+      title: string;
+      /** @example I teach calculus and linear algebra. */
+      description: string;
+      /**
+       * @example TUTORING
+       * @enum {string}
+       */
+      category: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      /**
+       * @example SINO
+       * @enum {string}
+       */
+      district:
+        'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+      /**
+       * @example ACTIVE
+       * @enum {string}
+       */
+      status: 'ACTIVE' | 'RESOLVED' | 'EXPIRED' | 'REMOVED';
+      /** @example 100 */
+      price: number | null;
+      /**
+       * @example PER_HOUR
+       * @enum {string|null}
+       */
+      priceUnit: 'ONCE' | 'PER_HOUR' | 'PER_MONTH' | null;
+      /** @example aziza_tutor */
+      contactTelegram: string | null;
+      /** @example +992 900 00 00 00 */
+      contactPhone: string | null;
+      /** @example Spam */
+      removedReason: string | null;
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @example 2026-04-01T11:00:00.000Z
+       */
+      expiresAt: string;
+      images: components['schemas']['PostImageResponseDto'][];
+      /** @description Every report on this post, newest first */
+      reports: components['schemas']['AdminPostReportResponseDto'][];
+      author: components['schemas']['AdminPostAuthorResponseDto'];
+    };
+    RemovePostDto: {
+      /**
+       * @description Why the post was removed (saved with the post)
+       * @example Spam
+       */
+      reason?: string;
+    };
+    AdminUserResponseDto: {
+      /** @example cm2xuser0000abc */
+      id: string;
+      /** @example aziza@example.com */
+      email: string;
+      /** @example aziza */
+      username: string;
+      /**
+       * @example USER
+       * @enum {string}
+       */
+      role: 'USER' | 'ADMIN' | 'SUPER_ADMIN';
+      /** @example false */
+      isBlocked: boolean;
+      /** @example false */
+      isStudentVerified: boolean;
+      /**
+       * Format: date-time
+       * @example 2026-03-01T10:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * @description Number of posts of this user
+       * @example 4
+       */
+      postsCount: number;
+    };
+    PaginatedAdminUsersResponseDto: {
+      items: components['schemas']['AdminUserResponseDto'][];
+      /** @example 1 */
+      page: number;
+      /** @example 20 */
+      limit: number;
+      /** @example 3 */
+      total: number;
+      /** @example 1 */
+      totalPages: number;
+    };
+    AdminUserCountsResponseDto: {
+      /**
+       * @description All posts of this user
+       * @example 4
+       */
+      posts: number;
+      /**
+       * @description Reports about posts of this user (any status)
+       * @example 2
+       */
+      reportsOnPosts: number;
+      /** @example 12 */
+      comments: number;
+      /**
+       * @description Posts of this user that admins removed
+       * @example 1
+       */
+      removedPosts: number;
+    };
+    AdminUserPostResponseDto: {
+      /** @example cm2xpost0000abc */
+      id: string;
+      /** @example Math tutor for first-year students */
+      title: string;
+      /**
+       * @example TUTORING
+       * @enum {string}
+       */
+      category: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      /**
+       * @example ACTIVE
+       * @enum {string}
+       */
+      status: 'ACTIVE' | 'RESOLVED' | 'EXPIRED' | 'REMOVED';
+      /**
+       * Format: date-time
+       * @example 2026-03-02T11:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * @description Reports about this post that are still OPEN
+       * @example 1
+       */
+      openReportsCount: number;
+    };
+    AdminUserDetailResponseDto: {
+      /** @example cm2xuser0000abc */
+      id: string;
+      /** @example aziza@example.com */
+      email: string;
+      /** @example aziza */
+      username: string;
+      /**
+       * @example USER
+       * @enum {string}
+       */
+      role: 'USER' | 'ADMIN' | 'SUPER_ADMIN';
+      /** @example false */
+      isBlocked: boolean;
+      /** @example false */
+      isStudentVerified: boolean;
+      /**
+       * Format: date-time
+       * @example 2026-03-01T10:00:00.000Z
+       */
+      createdAt: string;
+      /**
+       * @description Number of posts of this user
+       * @example 4
+       */
+      postsCount: number;
+      counts: components['schemas']['AdminUserCountsResponseDto'];
+      /** @description Their latest 50 posts (any status), newest first */
+      posts: components['schemas']['AdminUserPostResponseDto'][];
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    NotificationsController_list: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedNotificationsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  NotificationsController_list: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    NotificationsController_unreadCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UnreadCountResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PaginatedNotificationsResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    NotificationsController_markAllRead: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Done */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  NotificationsController_unreadCount: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    NotificationsController_markRead: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Notification id */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Done */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: NOTIFICATION_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['UnreadCountResponseDto'];
         };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AuthController_register: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RegisterDto"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: EMAIL_TAKEN, USERNAME_TAKEN */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  NotificationsController_markAllRead: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    AuthController_login: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Done */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LoginDto"];
-            };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
         };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: INVALID_CREDENTIALS */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
         };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AuthController_refresh: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: REFRESH_TOKEN_INVALID */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  NotificationsController_markRead: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Notification id */
+        id: string;
+      };
+      cookie?: never;
     };
-    AuthController_logout: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Done */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Logged out. Also fine when you were not logged in. */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: NOTIFICATION_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AuthController_changePassword: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ChangePasswordDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, CURRENT_PASSWORD_INCORRECT */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  AuthController_register: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    AuthController_me: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['RegisterDto'];
+      };
     };
-    UsersController_updateMe: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateMeDto"];
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USERNAME_TAKEN */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: EMAIL_TAKEN, USERNAME_TAKEN */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    UsersController_setAvatar: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /**
-                     * Format: binary
-                     * @description jpg, png or webp. Max 5 MB.
-                     */
-                    file: string;
-                };
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, IMAGE_TYPE_INVALID */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: IMAGE_TOO_LARGE */
-            413: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UPLOAD_FAILED */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  AuthController_login: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    UsersController_removeAvatar: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Removed. Also fine when I had no picture. */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LoginDto'];
+      };
     };
-    UsersController_requestUniversityEmail: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RequestUniversityEmailDto"];
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
-        responses: {
-            /** @description The email was sent */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: VALIDATION_FAILED, UNIVERSITY_DOMAIN_NOT_ALLOWED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNIVERSITY_EMAIL_TAKEN, ALREADY_VERIFIED */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: MAIL_SEND_FAILED */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: INVALID_CREDENTIALS */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    UsersController_verifyUniversityEmail: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["VerifyUniversityEmailDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, VERIFICATION_TOKEN_INVALID, VERIFICATION_TOKEN_EXPIRED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ALREADY_VERIFIED, UNIVERSITY_EMAIL_TAKEN */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  AuthController_refresh: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    UsersController_getOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Username (not case sensitive) */
-                username: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PublicUserResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
+      };
+      /** @description Error codes: REFRESH_TOKEN_INVALID */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    UsersController_listPosts: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-            };
-            header?: never;
-            path: {
-                /** @description Username (not case sensitive) */
-                username: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedPostsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  AuthController_logout: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    PostsController_list: {
-        parameters: {
-            query?: {
-                /** @description Search in title and description (not case sensitive) */
-                q?: string;
-                district?: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-                /** @description Minimum price in somoni */
-                minPrice?: number;
-                /** @description Maximum price in somoni */
-                maxPrice?: number;
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-                category?: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-                /** @description Posts without a price come last when sorting by price */
-                sort?: "newest" | "oldest" | "price_asc" | "price_desc";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Logged out. Also fine when you were not logged in. */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedPostsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+        content?: never;
+      };
     };
-    PostsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreatePostDto"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, CONTACT_REQUIRED, PRICE_NOT_ALLOWED, PRICE_UNIT_REQUIRED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  AuthController_changePassword: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    PostsController_counts: {
-        parameters: {
-            query?: {
-                /** @description Search in title and description (not case sensitive) */
-                q?: string;
-                district?: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-                /** @description Minimum price in somoni */
-                minPrice?: number;
-                /** @description Maximum price in somoni */
-                maxPrice?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostCountsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ChangePasswordDto'];
+      };
     };
-    PostsController_map: {
-        parameters: {
-            query?: {
-                /** @description Search in title and description (not case sensitive) */
-                q?: string;
-                district?: "SINO" | "FIRDAVSI" | "SHOHMANSUR" | "ISMOILI_SOMONI" | "UNIVERSITY_CAMPUS" | "OTHER";
-                /** @description Minimum price in somoni */
-                minPrice?: number;
-                /** @description Maximum price in somoni */
-                maxPrice?: number;
-                category?: "LOST_FOUND" | "TUTORING" | "RENTALS" | "OTHER";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MapPinResponseDto"][];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED, CURRENT_PASSWORD_INCORRECT */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    PostsController_mine: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-                /** @description Only posts with this status */
-                status?: "ACTIVE" | "RESOLVED" | "EXPIRED" | "REMOVED";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedPostsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  AuthController_me: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    PostsController_getOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    PostsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Deleted */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  UsersController_updateMe: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    PostsController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdatePostDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, CONTACT_REQUIRED, PRICE_NOT_ALLOWED, PRICE_UNIT_REQUIRED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_ACTIVE */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateMeDto'];
+      };
     };
-    PostsController_resolve: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_ACTIVE */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USERNAME_TAKEN */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    PostsController_renew: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: RENEW_NOT_ALLOWED */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  UsersController_setAvatar: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    UploadsController_add: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
+    requestBody: {
+      content: {
+        'multipart/form-data': {
+          /**
+           * Format: binary
+           * @description jpg, png or webp. Max 5 MB.
+           */
+          file: string;
         };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /** @description jpg, png or webp. Max 5 MB each. Max 5 images per post. */
-                    files: string[];
-                };
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostImageResponseDto"][];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, IMAGE_LIMIT_EXCEEDED, IMAGE_TYPE_INVALID */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_ACTIVE */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: IMAGE_TOO_LARGE */
-            413: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UPLOAD_FAILED */
-            502: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+      };
     };
-    UploadsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-                /** @description Image id */
-                imageId: string;
-            };
-            cookie?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Removed */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: IMAGE_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED, IMAGE_TYPE_INVALID */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: IMAGE_TOO_LARGE */
+      413: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UPLOAD_FAILED */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    CommentsController_list: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-            };
-            header?: never;
-            path: {
-                /** @description Post id */
-                postId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedCommentsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  UsersController_removeAvatar: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    CommentsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                postId: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Removed. Also fine when I had no picture. */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateCommentDto"];
-            };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
         };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CommentResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_ACTIVE */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
         };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    CommentsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Comment id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Deleted */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: COMMENT_NOT_OWNER, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: COMMENT_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  UsersController_requestUniversityEmail: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    FavoritesController_list: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedPostsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['RequestUniversityEmailDto'];
+      };
     };
-    FavoritesController_add: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
+    responses: {
+      /** @description The email was sent */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Saved */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content?: never;
+      };
+      /** @description Error codes: VALIDATION_FAILED, UNIVERSITY_DOMAIN_NOT_ALLOWED */
+      400: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNIVERSITY_EMAIL_TAKEN, ALREADY_VERIFIED */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: MAIL_SEND_FAILED */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    FavoritesController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Removed */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  UsersController_verifyUniversityEmail: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    ReportsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateReportDto"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ReportResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, REPORT_OWN_POST */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: REPORT_ALREADY_EXISTS */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['VerifyUniversityEmailDto'];
+      };
     };
-    MessagesController_list: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedConversationsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['UserResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED, VERIFICATION_TOKEN_INVALID, VERIFICATION_TOKEN_EXPIRED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ALREADY_VERIFIED, UNIVERSITY_EMAIL_TAKEN */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    MessagesController_start: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateConversationDto"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ConversationResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED, MESSAGE_SELF */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  UsersController_getOne: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Username (not case sensitive) */
+        username: string;
+      };
+      cookie?: never;
     };
-    MessagesController_listMessages: {
-        parameters: {
-            query?: {
-                /** @description Only messages newer than this time. Used by polling: send the createdAt of the last message you have. */
-                after?: string;
-                limit?: number;
-            };
-            header?: never;
-            path: {
-                /** @description Conversation id */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MessageResponseDto"][];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: CONVERSATION_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PublicUserResponseDto'];
         };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    MessagesController_send: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Conversation id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SendMessageDto"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MessageResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: CONVERSATION_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: TOO_MANY_REQUESTS */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  UsersController_listPosts: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Username (not case sensitive) */
+        username: string;
+      };
+      cookie?: never;
     };
-    MessagesController_markRead: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Conversation id */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Done */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: CONVERSATION_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PaginatedPostsResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AdminController_stats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminStatsResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  PostsController_list: {
+    parameters: {
+      query?: {
+        /** @description Search in title and description (not case sensitive) */
+        q?: string;
+        district?:
+          'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+        /** @description Minimum price in somoni */
+        minPrice?: number;
+        /** @description Maximum price in somoni */
+        maxPrice?: number;
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+        category?: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+        /** @description Posts without a price come last when sorting by price */
+        sort?: 'newest' | 'oldest' | 'price_asc' | 'price_desc';
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    AdminController_listReports: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-                status?: "OPEN" | "RESOLVED" | "DISMISSED";
-                sortBy?: "createdAt" | "reason" | "status";
-                order?: "asc" | "desc";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedAdminReportsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PaginatedPostsResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AdminController_updateReport: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Report id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateReportDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminReportResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: REPORT_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  PostsController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    AdminController_listPosts: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-                status?: "ACTIVE" | "RESOLVED" | "EXPIRED" | "REMOVED";
-                /** @description Search in the title */
-                q?: string;
-                sortBy?: "createdAt" | "title" | "status" | "category";
-                order?: "asc" | "desc";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedAdminPostsResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreatePostDto'];
+      };
     };
-    AdminController_getPost: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminPostDetailResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PostResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED, CONTACT_REQUIRED, PRICE_NOT_ALLOWED, PRICE_UNIT_REQUIRED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AdminController_removePost: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RemovePostDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminPostResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  PostsController_counts: {
+    parameters: {
+      query?: {
+        /** @description Search in title and description (not case sensitive) */
+        q?: string;
+        district?:
+          'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+        /** @description Minimum price in somoni */
+        minPrice?: number;
+        /** @description Maximum price in somoni */
+        maxPrice?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    AdminController_restorePost: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminPostResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_ACTIVE */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PostCountsResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AdminController_dismissReports: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Post id */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminPostDetailResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: POST_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  PostsController_map: {
+    parameters: {
+      query?: {
+        /** @description Search in title and description (not case sensitive) */
+        q?: string;
+        district?:
+          'SINO' | 'FIRDAVSI' | 'SHOHMANSUR' | 'ISMOILI_SOMONI' | 'UNIVERSITY_CAMPUS' | 'OTHER';
+        /** @description Minimum price in somoni */
+        minPrice?: number;
+        /** @description Maximum price in somoni */
+        maxPrice?: number;
+        category?: 'LOST_FOUND' | 'TUTORING' | 'RENTALS' | 'OTHER';
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    AdminController_listUsers: {
-        parameters: {
-            query?: {
-                /** @description Page number, starting at 1 */
-                page?: number;
-                /** @description Items per page */
-                limit?: number;
-                /** @description Search in username and email */
-                q?: string;
-                /** @description Only blocked (true) or only not blocked (false) users */
-                isBlocked?: boolean;
-                /** @description USER = normal users only. ADMIN = admins, including the super admin. */
-                role?: "USER" | "ADMIN";
-                sortBy?: "createdAt" | "username" | "email";
-                order?: "asc" | "desc";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedAdminUsersResponseDto"];
-                };
-            };
-            /** @description Error codes: VALIDATION_FAILED */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['MapPinResponseDto'][];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AdminController_getUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description User id (not the username) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminUserDetailResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  PostsController_mine: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+        /** @description Only posts with this status */
+        status?: 'ACTIVE' | 'RESOLVED' | 'EXPIRED' | 'REMOVED';
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    AdminController_blockUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description User id (not the username) */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminUserResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PaginatedPostsResponseDto'];
         };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AdminController_unblockUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description User id (not the username) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminUserResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  PostsController_getOne: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
     };
-    AdminController_promoteUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description User id (not the username) */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminUserResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: FORBIDDEN_ROLE, USER_BLOCKED, CANNOT_CHANGE_SUPER_ADMIN */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_ALREADY_ADMIN */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
+        content: {
+          'application/json': components['schemas']['PostResponseDto'];
         };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
-    AdminController_demoteUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description User id (not the username) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminUserResponseDto"];
-                };
-            };
-            /** @description Error codes: UNAUTHORIZED */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: FORBIDDEN_ROLE, USER_BLOCKED, CANNOT_CHANGE_SUPER_ADMIN */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_FOUND */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-            /** @description Error codes: USER_NOT_ADMIN */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponseDto"];
-                };
-            };
-        };
+  };
+  PostsController_remove: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
     };
-    HealthController_check: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Deleted */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
     };
+  };
+  PostsController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdatePostDto'];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PostResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED, CONTACT_REQUIRED, PRICE_NOT_ALLOWED, PRICE_UNIT_REQUIRED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_ACTIVE */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  PostsController_resolve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PostResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_ACTIVE */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  PostsController_renew: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PostResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: RENEW_NOT_ALLOWED */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  UploadsController_add: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'multipart/form-data': {
+          /** @description jpg, png or webp. Max 5 MB each. Max 5 images per post. */
+          files: string[];
+        };
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PostImageResponseDto'][];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED, IMAGE_LIMIT_EXCEEDED, IMAGE_TYPE_INVALID */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_ACTIVE */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: IMAGE_TOO_LARGE */
+      413: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UPLOAD_FAILED */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  UploadsController_remove: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+        /** @description Image id */
+        imageId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Removed */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_OWNER, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: IMAGE_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  CommentsController_list: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Post id */
+        postId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PaginatedCommentsResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  CommentsController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        postId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateCommentDto'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CommentResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_ACTIVE */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  CommentsController_remove: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Comment id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Deleted */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: COMMENT_NOT_OWNER, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: COMMENT_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  FavoritesController_list: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PaginatedPostsResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  FavoritesController_add: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Saved */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  FavoritesController_remove: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Removed */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  ReportsController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateReportDto'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ReportResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED, REPORT_OWN_POST */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: REPORT_ALREADY_EXISTS */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  MessagesController_list: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PaginatedConversationsResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  MessagesController_start: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateConversationDto'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ConversationResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED, MESSAGE_SELF */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  MessagesController_listMessages: {
+    parameters: {
+      query?: {
+        /** @description Only messages newer than this time. Used by polling: send the createdAt of the last message you have. */
+        after?: string;
+        limit?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Conversation id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MessageResponseDto'][];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: CONVERSATION_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  MessagesController_send: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Conversation id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['SendMessageDto'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MessageResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: CONVERSATION_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: TOO_MANY_REQUESTS */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  MessagesController_markRead: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Conversation id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Done */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: CONVERSATION_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_stats: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminStatsResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_listReports: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+        status?: 'OPEN' | 'RESOLVED' | 'DISMISSED';
+        sortBy?: 'createdAt' | 'reason' | 'status';
+        order?: 'asc' | 'desc';
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PaginatedAdminReportsResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_updateReport: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Report id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateReportDto'];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminReportResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: REPORT_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_listPosts: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+        status?: 'ACTIVE' | 'RESOLVED' | 'EXPIRED' | 'REMOVED';
+        /** @description Search in the title */
+        q?: string;
+        sortBy?: 'createdAt' | 'title' | 'status' | 'category';
+        order?: 'asc' | 'desc';
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PaginatedAdminPostsResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_getPost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminPostDetailResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_removePost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['RemovePostDto'];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminPostResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_restorePost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminPostResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_ACTIVE */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_dismissReports: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Post id */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminPostDetailResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: POST_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_listUsers: {
+    parameters: {
+      query?: {
+        /** @description Page number, starting at 1 */
+        page?: number;
+        /** @description Items per page */
+        limit?: number;
+        /** @description Search in username and email */
+        q?: string;
+        /** @description Only blocked (true) or only not blocked (false) users */
+        isBlocked?: boolean;
+        /** @description USER = normal users only. ADMIN = admins, including the super admin. */
+        role?: 'USER' | 'ADMIN';
+        sortBy?: 'createdAt' | 'username' | 'email';
+        order?: 'asc' | 'desc';
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PaginatedAdminUsersResponseDto'];
+        };
+      };
+      /** @description Error codes: VALIDATION_FAILED */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_getUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description User id (not the username) */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminUserDetailResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_blockUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description User id (not the username) */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminUserResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_unblockUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description User id (not the username) */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminUserResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: ADMIN_ONLY, USER_BLOCKED, FORBIDDEN_ROLE, CANNOT_CHANGE_SUPER_ADMIN */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_promoteUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description User id (not the username) */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminUserResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: FORBIDDEN_ROLE, USER_BLOCKED, CANNOT_CHANGE_SUPER_ADMIN */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_ALREADY_ADMIN */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  AdminController_demoteUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description User id (not the username) */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AdminUserResponseDto'];
+        };
+      };
+      /** @description Error codes: UNAUTHORIZED */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: FORBIDDEN_ROLE, USER_BLOCKED, CANNOT_CHANGE_SUPER_ADMIN */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_FOUND */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+      /** @description Error codes: USER_NOT_ADMIN */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponseDto'];
+        };
+      };
+    };
+  };
+  HealthController_check: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
 }

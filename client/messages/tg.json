@@ -9,7 +9,8 @@
     "wordmarkEnd": "board",
     "skipToContent": "Гузаштан ба мундариҷа",
     "close": "Пӯшидан",
-    "loading": "Бор шуда истодааст"
+    "loading": "Бор шуда истодааст",
+    "retry": "Дубора кӯшиш кунед"
   },
   "nav": {
     "main": "Меню",
@@ -25,8 +26,29 @@
     "pinPost": "Эълон гузоштан",
     "myProfile": "Профили ман",
     "language": "Забон",
-    "languageName": { "en": "English", "ru": "Русский", "tg": "Тоҷикӣ" },
-    "languageShort": { "en": "En", "ru": "Ру", "tg": "Тҷ" }
+    "languageName": {
+      "en": "English",
+      "ru": "Русский",
+      "tg": "Тоҷикӣ"
+    },
+    "languageShort": {
+      "en": "En",
+      "ru": "Ру",
+      "tg": "Тҷ"
+    },
+    "search": "Ҷустуҷӯ",
+    "me": "Ман",
+    "menu": "Меню",
+    "openMenu": "Кушодани меню",
+    "closeMenu": "Бастани меню",
+    "notifications": "Огоҳиҳо",
+    "notificationsUnread": "Огоҳиҳо, нахондашуда: {count}",
+    "savedSlips": "Захирашудаҳо",
+    "settings": "Танзимот",
+    "adminPanel": "Панели админ",
+    "adminOnly": "танҳо барои админҳо",
+    "logOut": "Баромад",
+    "themeLabel": "Мавзӯъ"
   },
   "about": {
     "badge": "Душанбе · донишгоҳи мо",
@@ -62,8 +84,13 @@
       "item5": "Дар шарҳ ва паёмҳо меҳрубон бошед.",
       "item6": "Вақте кор тамом шуд, мӯҳри «Ҳал шуд» занед."
     },
-    "cta": { "line1": "Аввалин эълони худро гузоред", "line2": "дар як дақиқа." },
-    "footer": { "madeIn": "Дар Душанбе сохта шудааст" },
+    "cta": {
+      "line1": "Аввалин эълони худро гузоред",
+      "line2": "дар як дақиқа."
+    },
+    "footer": {
+      "madeIn": "Дар Душанбе сохта шудааст"
+    },
     "examples": {
       "lost": {
         "time": "2 соат пеш",
@@ -158,12 +185,6 @@
     "INTERNAL_ERROR": "Дар тарафи мо хатогӣ шуд. Бори дигар кӯшиш кунед.",
     "UNKNOWN": "Хатогӣ рух дод. Бори дигар кӯшиш кунед."
   },
-  "home": {
-    "title": "Тахта",
-    "soon": "Худи тахта дар қадами оянда пайдо мешавад.",
-    "signedInAs": "Шумо ҳамчун {name} ворид шудед",
-    "logout": "Баромадан"
-  },
   "notFound": {
     "stamp": "404",
     "title": "Ин эълон дар тахта нест",
@@ -172,5 +193,56 @@
     "search": "Ҷустуҷӯи эълонҳо",
     "about": "Ба саҳифаи «Дар бораи лоиҳа»",
     "login": "Даромадан"
+  },
+  "board": {
+    "title": "Тахта",
+    "dateLine": "{date} · Душанбе",
+    "searchLabel": "Ҷустуҷӯ дар тахта",
+    "searchPlaceholder": "Калид, IELTS, ҳуҷра назди кампус…",
+    "searchShort": "Ҷустуҷӯ дар тахта",
+    "categoryLabel": "Категория",
+    "all": "Ҳама",
+    "where": "Дар куҷо",
+    "sort": "Тартиб",
+    "price": "Нарх",
+    "priceTitle": "Нарх, сомонӣ",
+    "filters": "Филтрҳо",
+    "filtersCount": "Филтрҳо · {count}",
+    "filtersTitle": "Филтрҳои тахта",
+    "what": "Чӣ",
+    "min": "Аз",
+    "max": "То",
+    "reset": "Аз нав",
+    "apply": "Татбиқ",
+    "showResults": "Нишон додан ({count})",
+    "showMore": "Бештар нишон диҳед",
+    "showing": "Нишон дода шуд: {shown} аз {total}",
+    "loadingMore": "Боргирӣ…",
+    "emptyTitle": "Дар ин ҷо ҳоло чизе нест",
+    "emptyText": "Калимаи дигар санҷед ё филтрҳоро тоза кунед.",
+    "clear": "Тоза кардани филтрҳо",
+    "errorTitle": "Тахта бор карда нашуд",
+    "sortOptions": {
+      "newest": "Аввал навҳо",
+      "oldest": "Аввал кӯҳнаҳо",
+      "price_asc": "Нарх: аз паст ба боло",
+      "price_desc": "Нарх: аз боло ба паст"
+    },
+    "dateShort": "{date}"
+  },
+  "district": {
+    "UNIVERSITY_CAMPUS": "Кампуси донишгоҳ",
+    "SINO": "Сино",
+    "FIRDAVSI": "Фирдавсӣ",
+    "SHOHMANSUR": "Шоҳмансур",
+    "ISMOILI_SOMONI": "Исмоили Сомонӣ",
+    "OTHER": "Ноҳияи дигар"
+  },
+  "price": {
+    "free": "Ройгон",
+    "ask": "Нархро муаллиф мегӯяд",
+    "once": "{amount} сомонӣ",
+    "perHour": "{amount} сомонӣ / соат",
+    "perMonth": "{amount} сомонӣ / моҳ"
   }
 }

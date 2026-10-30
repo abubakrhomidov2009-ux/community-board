@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { BottomTabBar } from '@/components/layout/BottomTabBar';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { BoardSkeleton } from '@/components/shared/BoardSkeleton';
 import { RequireSession } from '@/features/auth/components/RequireSession';
@@ -9,6 +10,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     <>
       <SiteHeader />
       <RequireSession fallback={<BoardSkeleton />}>{children}</RequireSession>
+      <BottomTabBar />
     </>
   );
 }

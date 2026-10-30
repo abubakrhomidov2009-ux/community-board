@@ -19,7 +19,7 @@
 - **Fonts are saved in `client/public/fonts`** (`node scripts/fetch-fonts.mjs` re-creates them): Google downloads timed out in dev mode on this PC and broke the pages. **Unbounded has no Tajik letters** (ғ ӣ қ ӯ ҳ ҷ), Onest has: in Tajik the headings use Onest bold; the wordmark `community board` stays Unbounded (`font-brand`).
 - **Pages are lazy:** the auth modal (forms, validation, sheet) is downloaded only when needed and prefetched when the browser is idle; devtools only in dev. Every page has a skeleton (`loading.tsx`), never a spinner.
 - Checks: `npm run typecheck`, `npm run lint` (includes the no-hard-coded-text rule), `npm test`, `npm run i18n:check`, `npm run preview` (production build, fast; dev mode compiles each page on first visit, which is slow on this PC).
-- The `/posts` page is a TEMPORARY placeholder (shows who is logged in + Log out) until the real board is built.
+- `/posts` is the real Home board (step 2). Theme is our own `src/providers/theme.tsx` (not next-themes). Local `DATABASE_URL` needs `connection_limit=20&pool_timeout=30` (see docs/12). Never run browser checks right after editing files in dev mode: Fast Refresh reloads cause fake hydration errors.
 
 ## Project
 

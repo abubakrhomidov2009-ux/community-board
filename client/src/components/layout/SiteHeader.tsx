@@ -12,6 +12,8 @@ import { t as motionTime } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Logo } from './Logo';
+import { MobileMenu } from './MobileMenu';
+import { NotificationBell } from './NotificationBell';
 import { ThemeToggle } from './ThemeToggle';
 
 const initials = (username: string) => username.slice(0, 2).toUpperCase();
@@ -118,6 +120,7 @@ function Navbar() {
             <div className="flex items-center gap-1">
               <ThemeToggle />
               <LanguageSwitcher />
+              <NotificationBell />
               <Link href="/posts/new" className={pillClass('green', 'md', 'ml-1 gap-2')}>
                 <Plus size={17} strokeWidth={2.4} aria-hidden="true" />
                 {t('pinPost')}
@@ -158,13 +161,10 @@ function MobileTopBar() {
           </button>
         )}
         {session.status === 'user' && (
-          <Link
-            href="/profile"
-            aria-label={t('myProfile')}
-            className="flex size-11 items-center justify-center rounded-full bg-note text-sm font-bold text-note-ink no-underline"
-          >
-            {initials(session.user.username)}
-          </Link>
+          <>
+            <NotificationBell />
+            <MobileMenu user={session.user} />
+          </>
         )}
       </div>
     </header>

@@ -194,6 +194,27 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 ---
 
+## Day 8 (step 2 of the frontend, 2026-10-30): Home board, phone tab bar and menu
+
+**Finished**
+
+- Home board at `/posts` (Main, HomeMobile, FiltersMobile, DrawerMobile): search (waits 300 ms), category tabs with counts, district chips, sort, price filter (popover on laptop, bottom sheet on phone), "Show more slips", empty and error states, skeleton, heart (optimistic). Filters live in the page address (`?category=RENTALS&q=room`).
+- Phone: floating dark tab bar (Board, Search, +, Saved, Me) and the menu drawer (links, language, theme, Log out). Bell with the unread number on laptop and phone. Light/Dark button in the navbar.
+- Replaced next-themes with our own small theme switch (`src/providers/theme.tsx`, first-paint script via next/script): React 19 warned "script tag" with next-themes.
+- Backend: `keepAliveTimeout` 65 s (the Next.js proxy got ECONNRESET = HTTP 500 on idle connections); local DATABASE_URL now has `connect_timeout=30&connection_limit=20&pool_timeout=30` (Prisma's default pool of 5 timed out under the board's burst of requests).
+- Tests: 33 frontend unit tests, lint, tsc, i18n (192 keys), and 24 real-browser checks (Edge, laptop + phone, light + dark): all passed with 0 console errors.
+
+**Problems and fixes**
+
+- Owner saw the red "script tag" error: fixed (own theme switch).
+- Random 500s in the browser test: (1) proxy ECONNRESET, (2) Prisma pool of 5 timed out. Both fixed.
+- Clear filters did not empty the search box: the box now follows the address.
+
+**Open:** slip titles link to `/posts/[id]` and Create/Saved/Messages/Notifications/Settings/Profile links give the 404 page until those pages exist (next steps). On Neon (day 12) use its pooled connection string and a small `connection_limit`. ru/tg texts need a native speaker. Saving a heart that fails goes back silently (no toast yet).
+**Next:** post detail page, comments, create/edit form (Day 9), when the owner says go.
+
+---
+
 ## Day 8: Frontend shell + auth
 
 **Finished:**

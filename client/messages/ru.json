@@ -9,7 +9,8 @@
     "wordmarkEnd": "board",
     "skipToContent": "Перейти к содержимому",
     "close": "Закрыть",
-    "loading": "Загрузка"
+    "loading": "Загрузка",
+    "retry": "Повторить"
   },
   "nav": {
     "main": "Главное меню",
@@ -25,8 +26,29 @@
     "pinPost": "Повесить объявление",
     "myProfile": "Мой профиль",
     "language": "Язык",
-    "languageName": { "en": "English", "ru": "Русский", "tg": "Тоҷикӣ" },
-    "languageShort": { "en": "En", "ru": "Ру", "tg": "Тҷ" }
+    "languageName": {
+      "en": "English",
+      "ru": "Русский",
+      "tg": "Тоҷикӣ"
+    },
+    "languageShort": {
+      "en": "En",
+      "ru": "Ру",
+      "tg": "Тҷ"
+    },
+    "search": "Поиск",
+    "me": "Я",
+    "menu": "Меню",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню",
+    "notifications": "Уведомления",
+    "notificationsUnread": "Уведомления, непрочитанных: {count}",
+    "savedSlips": "Сохранённые",
+    "settings": "Настройки",
+    "adminPanel": "Админ-панель",
+    "adminOnly": "только для админов",
+    "logOut": "Выйти",
+    "themeLabel": "Тема"
   },
   "about": {
     "badge": "Душанбе · наш университет",
@@ -62,8 +84,13 @@
       "item5": "Будьте добры в комментариях и сообщениях.",
       "item6": "Поставьте штамп «Решено», когда всё готово."
     },
-    "cta": { "line1": "Повесьте первое объявление", "line2": "за одну минуту." },
-    "footer": { "madeIn": "Сделано в Душанбе" },
+    "cta": {
+      "line1": "Повесьте первое объявление",
+      "line2": "за одну минуту."
+    },
+    "footer": {
+      "madeIn": "Сделано в Душанбе"
+    },
     "examples": {
       "lost": {
         "time": "2 ч назад",
@@ -158,12 +185,6 @@
     "INTERNAL_ERROR": "Что-то пошло не так на нашей стороне. Повторите попытку.",
     "UNKNOWN": "Что-то пошло не так. Повторите попытку."
   },
-  "home": {
-    "title": "Доска",
-    "soon": "Сама доска появится на следующем шаге.",
-    "signedInAs": "Вы вошли как {name}",
-    "logout": "Выйти"
-  },
   "notFound": {
     "stamp": "404",
     "title": "Этого объявления нет на доске",
@@ -172,5 +193,56 @@
     "search": "Искать объявления",
     "about": "На страницу «О проекте»",
     "login": "Войти"
+  },
+  "board": {
+    "title": "Доска",
+    "dateLine": "{date} · Душанбе",
+    "searchLabel": "Искать на доске",
+    "searchPlaceholder": "Ключи, IELTS, комната у кампуса…",
+    "searchShort": "Поиск по доске",
+    "categoryLabel": "Категория",
+    "all": "Все",
+    "where": "Где",
+    "sort": "Сортировка",
+    "price": "Цена",
+    "priceTitle": "Цена, сомони",
+    "filters": "Фильтры",
+    "filtersCount": "Фильтры · {count}",
+    "filtersTitle": "Фильтры доски",
+    "what": "Что",
+    "min": "От",
+    "max": "До",
+    "reset": "Сбросить",
+    "apply": "Применить",
+    "showResults": "Показать ({count})",
+    "showMore": "Показать ещё",
+    "showing": "Показано {shown} из {total}",
+    "loadingMore": "Загрузка…",
+    "emptyTitle": "Здесь пока ничего не прикреплено",
+    "emptyText": "Попробуйте другое слово или сбросьте фильтры.",
+    "clear": "Сбросить фильтры",
+    "errorTitle": "Не удалось загрузить доску",
+    "sortOptions": {
+      "newest": "Сначала новые",
+      "oldest": "Сначала старые",
+      "price_asc": "Цена: по возрастанию",
+      "price_desc": "Цена: по убыванию"
+    },
+    "dateShort": "{date}"
+  },
+  "district": {
+    "UNIVERSITY_CAMPUS": "Университетский кампус",
+    "SINO": "Сино",
+    "FIRDAVSI": "Фирдавси",
+    "SHOHMANSUR": "Шохмансур",
+    "ISMOILI_SOMONI": "Исмоили Сомони",
+    "OTHER": "Другой район"
+  },
+  "price": {
+    "free": "Бесплатно",
+    "ask": "Цену назовёт автор",
+    "once": "{amount} сомони",
+    "perHour": "{amount} сомони / час",
+    "perMonth": "{amount} сомони / месяц"
   }
 }

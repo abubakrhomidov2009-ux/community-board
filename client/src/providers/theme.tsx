@@ -9,18 +9,13 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from 'react';
+import { DARK_QUERY, STORAGE_KEY } from './theme-script';
 
 // A small Light / Dark / System switch. We wrote it ourselves because next-themes puts a <script>
 // inside a React component, and React 19 warns about that. The first-paint script lives in
 // THEME_SCRIPT (printed by the server layout), so there is no warning and no flash of the wrong theme.
 
 export type Theme = 'light' | 'dark' | 'system';
-
-const STORAGE_KEY = 'theme';
-const DARK_QUERY = '(prefers-color-scheme: dark)';
-
-/** Runs before the first paint: puts the `dark` class on <html> when needed. */
-export const THEME_SCRIPT = `try{var t=localStorage.getItem('${STORAGE_KEY}')||'system';var d=t==='dark'||(t==='system'&&matchMedia('${DARK_QUERY}').matches);var h=document.documentElement;h.classList.toggle('dark',d);h.style.colorScheme=d?'dark':'light'}catch(e){}`;
 
 type ThemeContextValue = { theme: Theme; setTheme: (theme: Theme) => void };
 

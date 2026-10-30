@@ -9,7 +9,8 @@
     "wordmarkEnd": "board",
     "skipToContent": "Skip to content",
     "close": "Close",
-    "loading": "Loading"
+    "loading": "Loading",
+    "retry": "Try again"
   },
   "nav": {
     "main": "Main",
@@ -25,8 +26,29 @@
     "pinPost": "Pin a post",
     "myProfile": "My profile",
     "language": "Language",
-    "languageName": { "en": "English", "ru": "Русский", "tg": "Тоҷикӣ" },
-    "languageShort": { "en": "En", "ru": "Ру", "tg": "Тҷ" }
+    "languageName": {
+      "en": "English",
+      "ru": "Русский",
+      "tg": "Тоҷикӣ"
+    },
+    "languageShort": {
+      "en": "En",
+      "ru": "Ру",
+      "tg": "Тҷ"
+    },
+    "search": "Search",
+    "me": "Me",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "notifications": "Notifications",
+    "notificationsUnread": "Notifications, {count} unread",
+    "savedSlips": "Saved slips",
+    "settings": "Settings",
+    "adminPanel": "Admin panel",
+    "adminOnly": "admins only",
+    "logOut": "Log out",
+    "themeLabel": "Theme"
   },
   "about": {
     "badge": "Dushanbe · our university",
@@ -62,8 +84,13 @@
       "item5": "Be kind in comments and messages.",
       "item6": "Stamp it resolved when it’s done."
     },
-    "cta": { "line1": "Pin your first slip", "line2": "in a minute." },
-    "footer": { "madeIn": "Made in Dushanbe" },
+    "cta": {
+      "line1": "Pin your first slip",
+      "line2": "in a minute."
+    },
+    "footer": {
+      "madeIn": "Made in Dushanbe"
+    },
     "examples": {
       "lost": {
         "time": "2 h ago",
@@ -158,12 +185,6 @@
     "INTERNAL_ERROR": "Something went wrong on our side. Please try again.",
     "UNKNOWN": "Something went wrong. Please try again."
   },
-  "home": {
-    "title": "The board",
-    "soon": "The board itself is coming in the next step.",
-    "signedInAs": "Logged in as {name}",
-    "logout": "Log out"
-  },
   "notFound": {
     "stamp": "404",
     "title": "This slip isn’t on the board",
@@ -172,5 +193,56 @@
     "search": "Search slips",
     "about": "Go to the About page",
     "login": "Log in"
+  },
+  "board": {
+    "title": "The board",
+    "dateLine": "{date} · Dushanbe",
+    "searchLabel": "Search the board",
+    "searchPlaceholder": "Keys, IELTS, room near campus…",
+    "searchShort": "Search the board",
+    "categoryLabel": "Category",
+    "all": "All",
+    "where": "Where",
+    "sort": "Sort",
+    "price": "Price",
+    "priceTitle": "Price, somoni",
+    "filters": "Filters",
+    "filtersCount": "Filters · {count}",
+    "filtersTitle": "Filter the board",
+    "what": "What",
+    "min": "Min",
+    "max": "Max",
+    "reset": "Reset",
+    "apply": "Apply",
+    "showResults": "Show results ({count})",
+    "showMore": "Show more slips",
+    "showing": "Showing {shown} of {total}",
+    "loadingMore": "Loading…",
+    "emptyTitle": "Nothing pinned here yet",
+    "emptyText": "Try another word or clear the filters.",
+    "clear": "Clear filters",
+    "errorTitle": "Could not load the board",
+    "sortOptions": {
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "price_asc": "Price: low to high",
+      "price_desc": "Price: high to low"
+    },
+    "dateShort": "{date}"
+  },
+  "district": {
+    "UNIVERSITY_CAMPUS": "University campus",
+    "SINO": "Sino",
+    "FIRDAVSI": "Firdavsi",
+    "SHOHMANSUR": "Shohmansur",
+    "ISMOILI_SOMONI": "Ismoili Somoni",
+    "OTHER": "Other area"
+  },
+  "price": {
+    "free": "Free",
+    "ask": "Ask the author",
+    "once": "{amount} somoni",
+    "perHour": "{amount} somoni / hour",
+    "perMonth": "{amount} somoni / month"
   }
 }

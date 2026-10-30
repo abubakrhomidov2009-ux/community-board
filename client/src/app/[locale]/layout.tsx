@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { preload } from 'react-dom';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -8,7 +9,7 @@ import type { ReactNode } from 'react';
 import { routing } from '@/i18n/routing';
 import { SESSION_HINT_COOKIE } from '@/lib/session-hint';
 import { Providers } from '@/providers/Providers';
-import { THEME_SCRIPT } from '@/providers/theme';
+import { THEME_SCRIPT } from '@/providers/theme-script';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -49,10 +50,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} data-scroll-behavior="smooth" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-      </head>
       <body>
+        {/* Puts the Light / Dark choice on the page before the first paint (no flash). */}
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }}
+        />
         <NextIntlClientProvider>
           <Providers initialSessionHint={initialSessionHint}>{children}</Providers>
         </NextIntlClientProvider>
