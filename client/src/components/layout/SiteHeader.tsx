@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import { Plus, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { Avatar } from '@/components/shared/Avatar';
@@ -120,6 +120,16 @@ function Navbar() {
               <ThemeToggle />
               <LanguageSwitcher />
               <NotificationBell />
+              {(session.user.role === 'ADMIN' || session.user.role === 'SUPER_ADMIN') && (
+                <Link
+                  href="/admin"
+                  aria-label={t('adminPanel')}
+                  title={t('adminPanel')}
+                  className="flex size-11 items-center justify-center rounded-full bg-soft text-ink no-underline"
+                >
+                  <ShieldCheck size={19} strokeWidth={2} aria-hidden="true" />
+                </Link>
+              )}
               <Link href="/posts/new" className={pillClass('green', 'md', 'ml-1 gap-2')}>
                 <Plus size={17} strokeWidth={2.4} aria-hidden="true" />
                 {t('pinPost')}

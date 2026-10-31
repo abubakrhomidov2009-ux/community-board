@@ -9,11 +9,11 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from 'react';
-import { DARK_QUERY, STORAGE_KEY } from './theme-script';
+import { STORAGE_KEY, THEME_COOKIE } from './theme-script';
 
-// A small Light / Dark / System switch. We wrote it ourselves because next-themes puts a <script>
-// inside a React component, and React 19 warns about that. The first-paint script lives in
-// THEME_SCRIPT (printed by the server layout), so there is no warning and no flash of the wrong theme.
+// A small Light / Dark / System switch, written by us (next-themes puts a <script> inside a React component and
+// React 19 warns about that). The choice is saved in localStorage and in a cookie: the server reads the cookie and
+// puts the class on <html> before the first paint, and "System" is handled by CSS. No script, no flash.
 
 export type Theme = 'light' | 'dark' | 'system';
 
@@ -24,10 +24,11 @@ const ThemeContext = createContext<ThemeContextValue>({ theme: 'system', setThem
 export const useTheme = () => useContext(ThemeContext);
 
 function apply(theme: Theme) {
-  const dark = theme === 'dark' || (theme === 'system' && matchMedia(DARK_QUERY).matches);
   const root = document.documentElement;
-  root.classList.toggle('dark', dark);
-  root.style.colorScheme = dark ? 'dark' : 'light';
+  // "system" = no class: the CSS follows the device setting.
+  root.classList.toggle('dark', theme === 'dark');
+  root.classList.toggle('light', theme === 'light');
+  document.cookie = `${THEME_COOKIE}=${theme}; path=/; max-age=31536000; samesite=lax`;
 }
 
 function readSaved(): Theme {
@@ -42,10 +43,17 @@ function readSaved(): Theme {
 const listeners = new Set<() => void>();
 const subscribe = (listener: () => void) => {
   listeners.add(listener);
-  window.addEventListener('storage', listener);
+  const onStorage = (event: StorageEvent) => {
+    // Another tab changed the theme: follow it.
+    if (event.key === STORAGE_KEY) {
+      apply(readSaved());
+      listener();
+    }
+  };
+  window.addEventListener('storage', onStorage);
   return () => {
     listeners.delete(listener);
-    window.removeEventListener('storage', listener);
+    window.removeEventListener('storage', onStorage);
   };
 };
 
@@ -53,21 +61,18 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // The saved choice lives in localStorage; the server (and the first paint) say "system".
   const theme = useSyncExternalStore(subscribe, readSaved, () => 'system' as Theme);
 
+  // Make the page match the saved choice (also fixes a cookie that is missing or old).
   useEffect(() => {
-    apply(theme);
-    if (theme !== 'system') return;
-    const query = matchMedia(DARK_QUERY);
-    const onChange = () => apply('system');
-    query.addEventListener('change', onChange);
-    return () => query.removeEventListener('change', onChange);
-  }, [theme]);
+    apply(readSaved());
+  }, []);
 
   const setTheme = useCallback((next: Theme) => {
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {
-      // Private mode: nothing to save.
+      // Private mode: the choice lasts until the page closes.
     }
+    apply(next);
     listeners.forEach((listener) => listener());
   }, []);
 

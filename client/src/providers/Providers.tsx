@@ -7,6 +7,7 @@ import { useState, type ReactNode } from 'react';
 import { AuthProvider } from '@/features/auth/components/AuthProvider';
 import { InitialSessionHintContext } from '@/features/auth/queries';
 import { makeQueryClient } from '@/lib/query-client';
+import { RegisterServiceWorker } from './RegisterServiceWorker';
 import { ThemeProvider } from './theme';
 
 // Only in development, and only downloaded then.
@@ -29,6 +30,7 @@ export function Providers({
 
   return (
     <ThemeProvider>
+      <RegisterServiceWorker />
       {/* People who asked their device for less motion get simple fades instead of sliding and scaling. */}
       <MotionConfig reducedMotion="user">
         <QueryClientProvider client={queryClient}>

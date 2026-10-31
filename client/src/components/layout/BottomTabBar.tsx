@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils';
 export function BottomTabBar() {
   const t = useTranslations('nav');
   const pathname = usePathname();
+  // A chat is full screen on a phone: no tab bar over the message box.
+  if (pathname.startsWith('/messages/')) return null;
 
   const active = pathname.startsWith('/saved')
     ? 'saved'

@@ -1,7 +1,7 @@
 'use client';
 
 import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { fetchPostCounts, getPost, listPosts, type PostFilters } from './api';
+import { fetchMapPins, fetchPostCounts, getPost, listPosts, type PostFilters } from './api';
 
 export const postKeys = {
   all: ['posts'] as const,
@@ -39,4 +39,20 @@ export function usePostCounts(filters: PostFilters) {
 /** One post for the detail and edit pages. A 404 (POST_NOT_FOUND) is not retried. */
 export function usePost(id: string, enabled = true) {
   return useQuery({ queryKey: postKeys.detail(id), queryFn: () => getPost(id), enabled });
+}
+
+export function useMapPins(filters: PostFilters, enabled: boolean) {
+  return useQuery({
+    queryKey: [
+      'posts',
+      'map',
+      filters.q,
+      filters.category,
+      filters.district,
+      filters.minPrice,
+      filters.maxPrice,
+    ],
+    queryFn: () => fetchMapPins(filters),
+    enabled,
+  });
 }

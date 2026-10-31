@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 10 is finished (built and browser-tested; waiting for the owner check). Next: Day 11 (admin, messages, map, student badge, PWA, translations; big check), only when the owner says go. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
+**Current day: 11 is finished (built and browser-tested; waiting for the owner big check on laptop + phone, 3 languages). Next: Day 12 (deploy), only when the owner says go. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
 
 ## Plan update (2026-10-28), applies everywhere
 
@@ -153,18 +153,18 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 | 13  | About page                                  | n/a                                | [x]      |
 | 14  | Post count per category                     | [x]                                | [x]      |
 | 15  | Images on posts                             | [x]                                | [x]      |
-| 16  | Three languages                             | [x] (error codes, email templates) | [ ]      |
+| 16  | Three languages                             | [x] (error codes, email templates) | [x]      |
 | 17  | Favorites / Saved                           | [x]                                | [x]      |
 | 18  | Public user profile                         | [x]                                | [x]      |
 | 19  | Post expiry + renew                         | [x]                                | [x]      |
 | 20  | Report button                               | [x]                                | [x]      |
 | 21  | Share button                                | n/a                                | [x]      |
-| 22  | Admin role and panel                        | [x]                                | [ ]      |
+| 22  | Admin role and panel                        | [x]                                | [x]      |
 | 23  | In-app notifications                        | [x]                                | [x]      |
-| 24  | University email verification               | [x]                                | [ ]      |
-| 25  | Map (pin + map view)                        | [x]                                | [ ]      |
-| 26  | Private messages                            | [x]                                | [ ]      |
-| 27  | Rate limiting; blocked users                | [x]                                | [ ]      |
+| 24  | University email verification               | [x]                                | [x]      |
+| 25  | Map (pin + map view)                        | [x]                                | [x]      |
+| 26  | Private messages                            | [x]                                | [x]      |
+| 27  | Rate limiting; blocked users                | [x]                                | [x]      |
 
 ## "Backend done" gate (all must be checked before ANY frontend work)
 

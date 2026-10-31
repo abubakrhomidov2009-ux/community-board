@@ -1,7 +1,6 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
-import Script from 'next/script';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { preload } from 'react-dom';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -9,8 +8,10 @@ import type { ReactNode } from 'react';
 import { routing } from '@/i18n/routing';
 import { SESSION_HINT_COOKIE } from '@/lib/session-hint';
 import { Providers } from '@/providers/Providers';
-import { THEME_SCRIPT } from '@/providers/theme-script';
+import { THEME_COOKIE } from '@/providers/theme-script';
 import '../globals.css';
+
+export const viewport: Viewport = { themeColor: '#0f766e', viewportFit: 'cover' };
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -26,7 +27,14 @@ export async function generateMetadata({
     locale: hasLocale(routing.locales, locale) ? locale : 'en',
     namespace: 'meta',
   });
-  return { title: t('title'), description: t('description') };
+  const safe = hasLocale(routing.locales, locale) ? locale : 'en';
+  return {
+    title: t('title'),
+    description: t('description'),
+    manifest: `/${safe}/manifest.webmanifest`,
+    icons: { icon: '/icons/icon-192.png', apple: '/icons/icon-192.png' },
+    appleWebApp: { capable: true, title: 'Community Board', statusBarStyle: 'default' },
+  };
 }
 
 export default async function LocaleLayout({
@@ -47,16 +55,19 @@ export default async function LocaleLayout({
 
   // The "has a login" hint cookie, so the very first paint already shows the right header.
   const initialSessionHint = (await cookies()).has(SESSION_HINT_COOKIE);
+  // The saved Light / Dark choice, so the very first paint already has the right colors. "System" has no class:
+  // the CSS follows the device setting (no script needed).
+  const saved = (await cookies()).get(THEME_COOKIE)?.value;
+  const themeClass = saved === 'dark' ? 'dark' : saved === 'light' ? 'light' : undefined;
 
   return (
-    <html lang={locale} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={themeClass}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body>
-        {/* Puts the Light / Dark choice on the page before the first paint (no flash). */}
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }}
-        />
         <NextIntlClientProvider>
           <Providers initialSessionHint={initialSessionHint}>{children}</Providers>
         </NextIntlClientProvider>

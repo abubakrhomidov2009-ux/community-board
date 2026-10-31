@@ -2,6 +2,7 @@
 
 import { Dialog } from '@base-ui/react/dialog';
 import { useTranslations } from 'next-intl';
+import type { ReactNode } from 'react';
 import { pillClass } from './pill-button';
 
 /**
@@ -17,6 +18,7 @@ export function ConfirmDialog({
   pending,
   error,
   onConfirm,
+  children,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -26,6 +28,8 @@ export function ConfirmDialog({
   pending?: boolean;
   error?: string;
   onConfirm: () => void;
+  /** Extra content under the text (for example a reason box). */
+  children?: ReactNode;
 }) {
   const t = useTranslations('post');
   return (
@@ -44,6 +48,7 @@ export function ConfirmDialog({
             <Dialog.Description className="mb-0 mt-3 text-base leading-relaxed text-body">
               {text}
             </Dialog.Description>
+            {children}
             {error && (
               <p role="alert" className="mb-0 mt-3 text-sm font-semibold text-danger">
                 {error}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>Community Board</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box;
+        font-family: system-ui, sans-serif; background: #ecf1ee; color: #0e1a17;
+        background-image: radial-gradient(rgba(14,26,23,.1) 1px, transparent 1.3px); background-size: 18px 18px; }
+      .slip { position: relative; max-width: 420px; background: #fff; border: 1px solid #d9e1dd; border-radius: 8px 8px 24px 24px;
+        padding: 36px 28px 28px; text-align: center; }
+      .pin { position: absolute; top: -11px; left: 50%; margin-left: -11px; width: 22px; height: 22px; border-radius: 50%;
+        background: #f59e0b; border: 4px solid #fff; box-shadow: 0 0 0 1px #d9e1dd; box-sizing: border-box; }
+      h1 { margin: 0 0 10px; font-size: 24px; }
+      p { margin: 0 0 22px; line-height: 1.55; color: #2b3835; }
+      button { height: 48px; padding: 0 26px; border: 0; border-radius: 999px; background: #0f766e; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; }
+      @media (prefers-color-scheme: dark) {
+        body { background: #0b1412; color: #e6efec; background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.3px); }
+        .slip { background: #13201d; border-color: #22332f; }
+        p { color: #b4c4bf; }
+        button { background: #2dd4bf; color: #042f2c; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="slip">
+      <span class="pin"></span>
+      <h1 id="t"></h1>
+      <p id="p"></p>
+      <button id="b" type="button" onclick="location.reload()"></button>
+    </main>
+    <script>
+      var texts = {
+        en: ['No internet', 'The board needs a connection. Check your internet and try again.', 'Try again'],
+        ru: ['Нет интернета', 'Доске нужно подключение. Проверьте интернет и попробуйте снова.', 'Повторить'],
+        tg: ['Интернет нест', 'Барои тахта пайвастшавӣ лозим аст. Интернетро санҷед ва дубора кӯшиш кунед.', 'Дубора кӯшиш кунед'],
+      };
+      var lang = (location.pathname.split('/')[1] || '').toLowerCase();
+      if (!texts[lang]) lang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+      var l = texts[lang] || texts.en;
+      document.documentElement.lang = texts[lang] ? lang : 'en';
+      document.getElementById('t').textContent = l[0];
+      document.getElementById('p').textContent = l[1];
+      document.getElementById('b').textContent = l[2];
+    </script>
+  </body>
+</html>

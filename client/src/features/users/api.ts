@@ -42,3 +42,9 @@ export const uploadAvatar = (file: File) => {
 
 /** The backend answers 204 (no body): the page sets avatarUrl to null itself. */
 export const removeAvatar = () => api.delete('/users/me/avatar').then(() => undefined);
+
+export const requestUniversityEmail = (universityEmail: string) =>
+  api.post('/users/me/university-email', { universityEmail }).then(() => undefined);
+
+export const verifyUniversityEmail = (token: string) =>
+  api.post<User>('/users/me/university-email/verify', { token }).then((r) => r.data);

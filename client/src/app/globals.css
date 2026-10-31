@@ -4,7 +4,16 @@
 @import './fonts.css';
 
 /* Dark mode is the `.dark` class on <html> (set by src/providers/theme.tsx: Light / Dark / System). */
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:not(.light, .light *)) {
+      @slot;
+    }
+  }
+}
 
 /*
  * Design tokens for "Notice Slips" (docs/11-DESIGN-SYSTEM.md section 0).
@@ -105,6 +114,52 @@
   --overlay: rgba(2, 8, 7, 0.72);
 }
 
+/* "System" mode: no class on <html>, so the phone or laptop setting decides (no script, no flash). */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    --board: #0b1412;
+    --board-dot: rgba(255, 255, 255, 0.06);
+    --paper: #13201d;
+    --border: #22332f;
+    --line: #2c403b;
+    --soft: #182724;
+    --ink: #e6efec;
+    --on-ink: #0b1412;
+    --body: #b4c4bf;
+    --body-2: #b4c4bf;
+    --muted: #97aaa4;
+    --primary: #2dd4bf;
+    --primary-hover: #5eead4;
+    --on-primary: #042f2c;
+    --primary-soft: #123b36;
+    --primary-soft-ink: #99f6e4;
+    --pin: #f59e0b;
+    --note: #2a2412;
+    --note-border: #4a3f1e;
+    --note-ink: #f3e9c4;
+    --note-pin: #ef4444;
+    --danger: #f87171;
+    --danger-soft: #3a1c1c;
+    --lost: #f97316;
+    --lost-ink: #fdba74;
+    --tutor: #3b82f6;
+    --tutor-ink: #93c5fd;
+    --rent: #22c55e;
+    --rent-ink: #86efac;
+    --other: #94a3b8;
+    --other-ink: #cbd5e1;
+    --stamp-resolved: #2dd4bf;
+    --stamp-expired: #94a3b8;
+    --stamp-student: #93c5fd;
+    --stamp-scam: #f87171;
+    --ghost: #1a2b27;
+    --cta: #0f766e;
+    --on-cta: #ffffff;
+    --hero-board: #0b4f4a;
+    --overlay: rgba(2, 8, 7, 0.72);
+  }
+}
+
 @theme inline {
   --color-board: var(--board);
   --color-paper: var(--paper);
@@ -161,6 +216,11 @@
   }
   html.dark {
     color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    html:not(.light):not(.dark) {
+      color-scheme: dark;
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -252,4 +312,18 @@
 html:lang(tg) .font-display {
   font-family: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.01em;
+}
+
+/* Maps (Leaflet): the pin is our own amber dot, so no marker images are needed. */
+.cb-pin {
+  background: var(--pin);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 4px 10px rgba(14, 26, 23, 0.3);
+}
+.leaflet-container {
+  font-family: inherit;
+  border-radius: inherit;
 }

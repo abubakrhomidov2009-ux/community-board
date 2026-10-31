@@ -80,3 +80,16 @@ export const uploadImages = (id: string, files: File[]) => {
 
 export const deleteImage = (id: string, imageId: string) =>
   api.delete(`/posts/${id}/images/${imageId}`).then(() => undefined);
+
+export type MapPin = components['schemas']['MapPinResponseDto'];
+
+/** Posts that have a pin on the map, for the board's map view (the same filters as the list, without sort). */
+export const fetchMapPins = (filters: PostFilters) => {
+  const { q, category, district, minPrice, maxPrice } = filters;
+  return api
+    .get<MapPin[]>('/posts/map', { params: { q, category, district, minPrice, maxPrice } })
+    .then((response) => response.data);
+};
+
+/** Dushanbe city centre: where the maps open. */
+export const DUSHANBE: [number, number] = [38.5598, 68.787];

@@ -2,7 +2,7 @@
 
 import { SearchX, TriangleAlert } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { SlipSkeleton } from '@/components/shared/PostSlip';
 import { StateSlip } from '@/components/shared/StateSlip';
 import { pillClass } from '@/components/shared/pill-button';
@@ -16,13 +16,16 @@ import { FilterSheet } from './FilterSheet';
 import { PriceFilter } from './PriceFilter';
 import { SearchBox } from './SearchBox';
 import { SlipGrid } from './SlipGrid';
+import { BoardMapView } from './Maps';
 import { SortSelect } from './SortSelect';
+import { ViewToggle, type BoardView } from './ViewToggle';
 
 /** The Home page: search, category tabs, filters, sort and the slips. Design: Main (laptop), HomeMobile (phone). */
 export function BoardPage() {
   const t = useTranslations();
   const locale = useLocale();
   const { filters, update, clear } = useBoardFilters();
+  const [view, setView] = useState<BoardView>('list');
   const posts = usePostsInfinite(filters);
   const counts = usePostCounts(filters);
 
@@ -84,9 +87,10 @@ export function BoardPage() {
         />
 
         {/* Phone: filters button and sort */}
-        <div className="flex gap-2 md:hidden">
+        <div className="flex flex-wrap gap-2 md:hidden">
           <FilterSheet filters={filters} total={undefined} onApply={update} />
           <SortSelect value={filters.sort} onChange={(sort) => update({ sort })} />
+          <ViewToggle value={view} onChange={setView} />
         </div>
 
         {/* Laptop: where, sort, price */}
@@ -107,6 +111,7 @@ export function BoardPage() {
           ))}
           <span className="flex-1" />
           <SortSelect value={filters.sort} onChange={(sort) => update({ sort })} />
+          <ViewToggle value={view} onChange={setView} />
           <PriceFilter
             value={{ minPrice: filters.minPrice, maxPrice: filters.maxPrice }}
             onApply={(range) => update(range)}
@@ -114,9 +119,13 @@ export function BoardPage() {
         </div>
       </div>
 
-      {posts.isPending && <GridSkeleton />}
+      {view === 'map' && (
+        <BoardMapView filters={filters} popupLabel={(pin) => `${t(`category.${pin.category}`)}`} />
+      )}
 
-      {posts.isError && (
+      {view === 'list' && posts.isPending && <GridSkeleton />}
+
+      {view === 'list' && posts.isError && (
         <StateSlip
           icon={<TriangleAlert size={34} strokeWidth={1.6} aria-hidden="true" />}
           title={t('board.errorTitle')}
@@ -133,7 +142,7 @@ export function BoardPage() {
         />
       )}
 
-      {posts.isSuccess && items.length === 0 && (
+      {view === 'list' && posts.isSuccess && items.length === 0 && (
         <StateSlip
           icon={<SearchX size={34} strokeWidth={1.6} aria-hidden="true" />}
           title={t('board.emptyTitle')}
@@ -148,7 +157,7 @@ export function BoardPage() {
         />
       )}
 
-      {items.length > 0 && (
+      {view === 'list' && items.length > 0 && (
         <>
           <SlipGrid
             posts={items}

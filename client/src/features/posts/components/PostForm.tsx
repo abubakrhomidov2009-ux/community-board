@@ -25,6 +25,7 @@ import {
   type PostFormValues,
 } from '../schemas';
 import { ImageUploader, type NewPhoto } from './ImageUploader';
+import { MapPicker } from './Maps';
 
 const STRIP = { lost: 'bg-lost', tutor: 'bg-tutor', rent: 'bg-rent', other: 'bg-other' } as const;
 
@@ -55,6 +56,11 @@ export function PostForm({ post }: { post?: Post }) {
   const [removedIds, setRemovedIds] = useState<string[]>([]);
   const [stage, setStage] = useState<'idle' | 'saving' | 'uploading'>('idle');
   const [serverError, setServerError] = useState('');
+  const [pin, setPin] = useState<{ lat: number; lng: number } | null>(
+    post?.latitude != null && post?.longitude != null
+      ? { lat: post.latitude, lng: post.longitude }
+      : null,
+  );
 
   const form = useForm<PostFormInput, unknown, PostFormValues>({
     resolver: zodResolver(postSchema),
@@ -79,7 +85,7 @@ export function PostForm({ post }: { post?: Post }) {
     setServerError('');
     setStage('saving');
     try {
-      const body = toBody(values);
+      const body = { ...toBody(values), latitude: pin?.lat ?? null, longitude: pin?.lng ?? null };
       const saved = post ? await update.mutateAsync(body) : await create.mutateAsync(body);
 
       let photosFailed = false;
@@ -296,6 +302,11 @@ export function PostForm({ post }: { post?: Post }) {
                 className={inputClass}
               />
             </Field>
+          </div>
+
+          <div className="flex flex-col gap-2.5">
+            <span className={labelClass}>{t('form.step6')}</span>
+            <MapPicker value={pin} onChange={setPin} />
           </div>
 
           {serverError && (

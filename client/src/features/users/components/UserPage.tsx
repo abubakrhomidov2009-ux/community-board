@@ -8,6 +8,8 @@ import { SlipSkeleton } from '@/components/shared/PostSlip';
 import { StateSlip } from '@/components/shared/StateSlip';
 import { pillClass } from '@/components/shared/pill-button';
 import { SlipGrid } from '@/features/posts/components/SlipGrid';
+import { useSession } from '@/features/auth/queries';
+import { Link } from '@/i18n/navigation';
 import { toApiError } from '@/lib/api/errors';
 import { usePublicUser, useUserPosts } from '../queries';
 import { ProfileSkeleton } from './ProfilePage';
@@ -16,6 +18,7 @@ import { ProfileSkeleton } from './ProfilePage';
 export function UserPage({ username }: { username: string }) {
   const t = useTranslations();
   const locale = useLocale();
+  const session = useSession();
   const user = usePublicUser(username);
   const posts = useUserPosts(username);
 
@@ -66,6 +69,14 @@ export function UserPage({ username }: { username: string }) {
             })}
           </p>
         </div>
+        {session.user && session.user.username !== data.username && (
+          <Link
+            href={`/messages/new?to=${encodeURIComponent(data.username)}`}
+            className={pillClass('green', 'lg', 'h-[52px] text-[15px]')}
+          >
+            {t('profile.sendMessage')}
+          </Link>
+        )}
       </section>
 
       <h2 className="m-0 font-display text-[22px] font-bold">

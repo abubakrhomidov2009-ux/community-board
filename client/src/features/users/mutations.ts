@@ -2,7 +2,15 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authKeys } from '@/features/auth/queries';
-import { changePassword, removeAvatar, updateMe, uploadAvatar, type User } from './api';
+import {
+  changePassword,
+  removeAvatar,
+  requestUniversityEmail,
+  updateMe,
+  uploadAvatar,
+  verifyUniversityEmail,
+  type User,
+} from './api';
 
 /** The new user from the server replaces the one in the cache: header and profile update at once. */
 function useSaveUser() {
@@ -38,4 +46,13 @@ export function useRemoveAvatar() {
       queryClient.setQueryData<User>(authKeys.me, (me) => (me ? { ...me, avatarUrl: null } : me));
     },
   });
+}
+
+export function useRequestUniversityEmail() {
+  return useMutation({ mutationFn: requestUniversityEmail });
+}
+
+export function useVerifyUniversityEmail() {
+  const save = useSaveUser();
+  return useMutation({ mutationFn: verifyUniversityEmail, onSuccess: save });
 }

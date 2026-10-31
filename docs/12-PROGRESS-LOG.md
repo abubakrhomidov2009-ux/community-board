@@ -264,13 +264,27 @@ Updated at the end of every day: what was finished, what the owner checked and t
 **Open:** Settings page (language, theme, university email) is day 11; Messages and the Admin panel are day 11; the "Send a message" button on public profiles comes with Messages. Slip action menu on My profile (the post page has Edit / Resolve / Renew / Delete).
 **Next:** Day 11 (admin, messages, map, student badge, installable app, translations check; big check) when the owner says go.
 
-## Day 11: Admin, messages, map, PWA, translations (big check)
+## Day 11: Admin, messages, map, PWA, translations (2026-10-31)
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished**
+
+- **Admin panel** (own frame: dark rail on a laptop, top strip on a phone; only admins get in, everybody else sees "You cannot open this page"): Overview (numbers, newest reports), Reports (filter by status, dismiss), Slips (search, filter), **admin slip page** `/admin/posts/[id]` (details, photos, every report, the author; take down with a reason, put back, dismiss reports, block / unblock the author), Users (search, role filter, blocked filter), **admin user page** `/admin/users/[id]` (numbers, their slips, block / unblock; **Make admin / Remove admin only for the super admin**). Admins cannot act on other admins (hidden buttons + backend 403).
+- **Admin link:** admins and the super admin land on the Home board like everybody else; the Admin panel link is in the laptop navbar (shield icon), the phone menu and Settings; the admin pages have "Back to the board".
+- **Messages** `/messages`, `/messages/[id]`, `/messages/new?to=name` (MessagesDesktop, MessagesMobile, ChatMobile): list + chat on a laptop, list then full-screen chat on a phone, bubbles, day labels, new messages appear by themselves (checked every 5 s), "Send a message" on public profiles, unread numbers.
+- **Settings** `/settings`: account, appearance, language, university email (Student ✓ link flow, page `/settings/verify-email`), admin card, log out.
+- **Map:** pin picker on the create/edit form (OpenStreetMap + Leaflet, loaded only when needed), map on the post page, List | Map switch on the board.
+- **Installable app:** manifest in en / ru / tg, icons, offline page in 3 languages, service worker (offline page + fonts + icons only; pages and API are never cached).
+- Texts in en, ru, tg (501 keys). The Light / Dark / System theme no longer uses any script: the server reads a cookie and CSS handles System (this removed the React "script tag" console warning for good).
+- Tests: 38 frontend unit tests, lint, tsc, i18n clean; 50 real-browser checks (Edge, laptop + phone) for settings, language switch, messages (with live reply), map, admin as admin and as super admin, manifest, offline page: all passed. Theme checked separately (first paint, language switches, Light / Dark / System, reload): 0 console errors.
+
+**Problems and fixes**
+
+- Admin rail had a link inside a link: fixed. Phone board: the List | Map switch overlapped the Sort box: fixed (row wraps).
+- The browser test hit the real rate limits (10 new slips per hour, 5 logins per minute) after many runs; for the final run the API was started with `THROTTLE_DISABLED=true` and then restarted normally. Limits are unchanged.
+- Dev only: the Next.js dev proxy sometimes resets a connection (HTTP 500 for one request); pages retry GET requests by themselves. Production (Vercel to Render) does not use this proxy.
+
+**Open:** big check by the owner (docs/08 Part B) on laptop and phone in all 3 languages; ru / tg texts need a native speaker; SUPER ADMIN and demo accounts: see CLAUDE.md. The "install" hint banner is not built (browsers show their own install button).
+**Next:** owner big check, then Day 12 (deploy) when the owner says go.
 
 ## Day 12: Deploy
 

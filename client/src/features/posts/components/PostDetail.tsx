@@ -30,6 +30,7 @@ import { useDeletePost, useRenewPost, useResolvePost } from '../mutations';
 import { usePost } from '../queries';
 import { ReportButton } from '@/features/reports/components/ReportDialog';
 import { ImageGallery } from './ImageGallery';
+import { PostMap } from './Maps';
 import { ShareButton } from './ShareButton';
 
 const TEXT = {
@@ -334,6 +335,14 @@ export function PostDetail({ id }: { id: string }) {
             <p className="m-0 text-sm text-muted">{t('post.noContact')}</p>
           )}
         </section>
+
+        {data.latitude != null && data.longitude != null && (
+          <PostMap
+            lat={data.latitude}
+            lng={data.longitude}
+            district={t(`district.${data.district}`)}
+          />
+        )}
 
         <CommentsSection postId={data.id} authorUsername={data.author.username} canWrite={active} />
       </div>
