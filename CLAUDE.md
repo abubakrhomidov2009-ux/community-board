@@ -1,8 +1,8 @@
-# CLAUDE.md: Community Board
+#[x]|CLAUDE.md:[x]|Community[x]|Board[x]|[x]|[x]|[x]|[x]|[x]|[x]|[x]|[x]|[x]|[x]|
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 7 is finished (backend gate passed, tag `api-v1.0.0`). Next: Day 8 (frontend), but ONLY when the owner says to start. Do not touch `client/` before that. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
+**Current day: 8 is finished (owner checked, 2026-10-31). Day 9 (post detail, comments, create/edit with photos) is in progress. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
 
 ## Plan update (2026-10-28), applies everywhere
 

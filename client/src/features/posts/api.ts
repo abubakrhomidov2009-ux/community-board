@@ -45,3 +45,38 @@ export const fetchPostCounts = (filters: PostFilters) => {
     .get<PostCounts>('/posts/counts', { params: { q, district, minPrice, maxPrice } })
     .then((response) => response.data);
 };
+
+export type CreatePostBody = components['schemas']['CreatePostDto'];
+export type UpdatePostBody = components['schemas']['UpdatePostDto'];
+export type PriceUnit = NonNullable<Post['priceUnit']>;
+
+export const getPost = (id: string) =>
+  api.get<Post>(`/posts/${id}`).then((response) => response.data);
+
+export const createPost = (body: CreatePostBody) =>
+  api.post<Post>('/posts', body).then((response) => response.data);
+
+export const updatePost = (id: string, body: UpdatePostBody) =>
+  api.patch<Post>(`/posts/${id}`, body).then((response) => response.data);
+
+export const deletePost = (id: string) => api.delete(`/posts/${id}`).then(() => undefined);
+
+export const resolvePost = (id: string) =>
+  api.post<Post>(`/posts/${id}/resolve`).then((response) => response.data);
+
+export const renewPost = (id: string) =>
+  api.post<Post>(`/posts/${id}/renew`).then((response) => response.data);
+
+/** Photos go to the backend as multipart (field "files"); the backend sends them to Cloudinary. */
+export const uploadImages = (id: string, files: File[]) => {
+  const form = new FormData();
+  files.forEach((file) => form.append('files', file));
+  return api
+    .post<Post['images']>(`/posts/${id}/images`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    .then((response) => response.data);
+};
+
+export const deleteImage = (id: string, imageId: string) =>
+  api.delete(`/posts/${id}/images/${imageId}`).then(() => undefined);

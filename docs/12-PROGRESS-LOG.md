@@ -215,21 +215,32 @@ Updated at the end of every day: what was finished, what the owner checked and t
 
 ---
 
-## Day 8: Frontend shell + auth
+## Day 8: Frontend shell + auth: FINISHED (2026-10-31)
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished:** step 1 (About page, Log in / Create account modal, foundation) and step 2 (Home board, phone tab bar and menu, bell, theme button). See the two entries above.
+**Owner check and result:** step 1 checked by the owner (reported the "script tag" error and the missing theme button: fixed). Step 2: the owner tested it and said it looks good.
+**Bugs found and fixed:** "script tag" console error (own theme switch), no Light/Dark button in the navbar (added), random 500s (proxy keep-alive and database pool, fixed).
+**Open:** ru/tg native-speaker review; links to pages that do not exist yet give the 404 page (they come in days 9 to 11).
+**Next:** Day 9 (started 2026-10-31).
 
-## Day 9: Browse + posts
+## Day 9: Browse + posts (2026-10-31)
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished**
+
+- Post page `/posts/[id]` (PostDesktop, PostMobile): photo gallery (Embla: swipe, arrows, keyboard, thumbnails), slip card with category strip, price, district, author, Telegram / Call / Save tabs, description, days left, stamps for resolved / expired / removed.
+- Comments ("Notes on this slip"): list with "Show more notes", add, delete own note (admins any), author badge, notes closed on inactive posts.
+- Owner tools on the post page: Edit, Stamp resolved, Renew 30 days (last 3 days or expired), Take it down with a confirmation dialog.
+- Create and edit form `/posts/new`, `/posts/[id]/edit` (CreateDesktop/Mobile, EditDesktop/Mobile): category cards, title, details, price + unit (only tutoring and rentals), district, up to 5 photos (compressed in the browser to about 1600 px / 0.8 MB, camera or gallery on a phone), Telegram and phone, live preview on a laptop, translated validation (same rules as the backend).
+- Texts in en, ru and tg (285 keys). Unknown post shows the 404 page.
+- Tests: 38 frontend unit tests, lint, tsc, i18n clean; 29 real-browser checks (Edge, laptop + phone): open a post, comment, delete comment, form errors, create with a real photo upload to Cloudinary, see it on the board, edit, stamp resolved, delete (the test post and its photo are removed), 404 page.
+
+**Problems and fixes**
+
+- After deleting a post the page asked for it again (a 404 flash): the page stops asking once the post is deleted.
+- Lint rules for refs and `Date.now` in render fixed.
+
+**Open:** Share and Report buttons (day 10), map on the post page (day 11), author page `/users/[username]` (day 10), profile, Saved, notifications pages (day 10). On a phone the Back button sits above the photo (the design has it on the photo).
+**Next:** Day 10 (profiles, Saved page, report, share, renew, notifications page) when the owner says go.
 
 ## Day 10: Profiles, saved, report, share, notifications
 

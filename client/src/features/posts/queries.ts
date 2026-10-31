@@ -1,11 +1,13 @@
 'use client';
 
 import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { fetchPostCounts, listPosts, type PostFilters } from './api';
+import { fetchPostCounts, getPost, listPosts, type PostFilters } from './api';
 
 export const postKeys = {
   all: ['posts'] as const,
   lists: ['posts', 'list'] as const,
+  detail: (id: string) => ['posts', 'detail', id] as const,
+  mine: ['posts', 'mine'] as const,
   list: (filters: PostFilters) => ['posts', 'list', filters] as const,
   counts: (filters: PostFilters) =>
     [
@@ -32,4 +34,9 @@ export function usePostCounts(filters: PostFilters) {
     queryFn: () => fetchPostCounts(filters),
     placeholderData: keepPreviousData,
   });
+}
+
+/** One post for the detail and edit pages. A 404 (POST_NOT_FOUND) is not retried. */
+export function usePost(id: string, enabled = true) {
+  return useQuery({ queryKey: postKeys.detail(id), queryFn: () => getPost(id), enabled });
 }

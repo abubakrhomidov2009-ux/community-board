@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { postKeys } from '@/features/posts/queries';
-import type { PostPage } from '@/features/posts/api';
+import type { Post, PostPage } from '@/features/posts/api';
 import { saveFavorite, unsaveFavorite } from './api';
 
 type Lists = InfiniteData<PostPage>;
@@ -32,10 +32,15 @@ export function useToggleFavorite() {
             }
           : data,
       );
-      return { before };
+      // The post page shows the same heart.
+      const detailKey = postKeys.detail(id);
+      const detail = queryClient.getQueryData<Post>(detailKey);
+      if (detail) queryClient.setQueryData(detailKey, { ...detail, isFavorite: save });
+      return { before, detail, id };
     },
     onError: (_error, _vars, context) => {
       context?.before.forEach(([key, data]) => queryClient.setQueryData(key, data));
+      if (context?.detail) queryClient.setQueryData(postKeys.detail(context.id), context.detail);
     },
   });
 }
