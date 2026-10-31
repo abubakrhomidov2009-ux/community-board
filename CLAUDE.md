@@ -138,21 +138,21 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 
 | #   | Feature                                     | Backend                            | Frontend |
 | --- | ------------------------------------------- | ---------------------------------- | -------- |
-| 1   | Register / login / logout, unique username  | [x]                                | [ ]      |
-| 2   | Create, edit, delete own posts              | [x]                                | [ ]      |
-| 3   | Categories                                  | [x]                                | [ ]      |
-| 4   | Browse: category filter, search, pagination | [x]                                | [ ]      |
-| 5   | Comments                                    | [x]                                | [ ]      |
-| 6   | Post detail + mark as resolved              | [x]                                | [ ]      |
+| 1   | Register / login / logout, unique username  | [x]                                | [x]      |
+| 2   | Create, edit, delete own posts              | [x]                                | [x]      |
+| 3   | Categories                                  | [x]                                | [x]      |
+| 4   | Browse: category filter, search, pagination | [x]                                | [x]      |
+| 5   | Comments                                    | [x]                                | [x]      |
+| 6   | Post detail + mark as resolved              | [x]                                | [x]      |
 | 7   | My profile with my posts                    | [x]                                | [ ]      |
-| 8   | Price + unit                                | [x]                                | [ ]      |
-| 9   | District + filter                           | [x]                                | [ ]      |
-| 10  | Contact options (Telegram / phone)          | [x]                                | [ ]      |
-| 11  | Sort options                                | [x]                                | [ ]      |
-| 12  | Dark mode                                   | n/a                                | [ ]      |
-| 13  | About page                                  | n/a                                | [ ]      |
-| 14  | Post count per category                     | [x]                                | [ ]      |
-| 15  | Images on posts                             | [x]                                | [ ]      |
+| 8   | Price + unit                                | [x]                                | [x]      |
+| 9   | District + filter                           | [x]                                | [x]      |
+| 10  | Contact options (Telegram / phone)          | [x]                                | [x]      |
+| 11  | Sort options                                | [x]                                | [x]      |
+| 12  | Dark mode                                   | n/a                                | [x]      |
+| 13  | About page                                  | n/a                                | [x]      |
+| 14  | Post count per category                     | [x]                                | [x]      |
+| 15  | Images on posts                             | [x]                                | [x]      |
 | 16  | Three languages                             | [x] (error codes, email templates) | [ ]      |
 | 17  | Favorites / Saved                           | [x]                                | [ ]      |
 | 18  | Public user profile                         | [x]                                | [ ]      |
