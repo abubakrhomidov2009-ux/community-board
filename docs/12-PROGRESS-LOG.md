@@ -234,6 +234,8 @@ Updated at the end of every day: what was finished, what the owner checked and t
 - Texts in en, ru and tg (285 keys). Unknown post shows the 404 page.
 - Tests: 38 frontend unit tests, lint, tsc, i18n clean; 29 real-browser checks (Edge, laptop + phone): open a post, comment, delete comment, form errors, create with a real photo upload to Cloudinary, see it on the board, edit, stamp resolved, delete (the test post and its photo are removed), 404 page.
 
+- Demo pictures: every demo post now has one picture (themed illustrations in `server/prisma/seed-images`, uploaded to Cloudinary by `npm run db:seed-images` in `server/`; safe to run again).
+
 **Problems and fixes**
 
 - After deleting a post the page asked for it again (a 404 flash): the page stops asking once the post is deleted.
