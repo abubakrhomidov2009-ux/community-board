@@ -3,6 +3,7 @@
 import { Plus } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
+import { Avatar } from '@/components/shared/Avatar';
 import { Skeleton } from '@/components/shared/Skeleton';
 import { pillClass } from '@/components/shared/pill-button';
 import { useAuth } from '@/features/auth/components/AuthProvider';
@@ -15,8 +16,6 @@ import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
 import { NotificationBell } from './NotificationBell';
 import { ThemeToggle } from './ThemeToggle';
-
-const initials = (username: string) => username.slice(0, 2).toUpperCase();
 
 /**
  * The floating pill navbar on a laptop and the top bar on a phone.
@@ -128,9 +127,13 @@ function Navbar() {
               <Link
                 href="/profile"
                 aria-label={t('myProfile')}
-                className="flex size-11 items-center justify-center rounded-full bg-note text-sm font-bold text-note-ink no-underline"
+                className="flex rounded-full no-underline"
               >
-                {initials(session.user.username)}
+                <Avatar
+                  username={session.user.username}
+                  avatarUrl={session.user.avatarUrl}
+                  size={44}
+                />
               </Link>
             </div>
           </>

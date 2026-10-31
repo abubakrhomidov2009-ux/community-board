@@ -202,7 +202,11 @@
     "IMAGE_LIMIT_EXCEEDED": "A slip can have up to 5 photos.",
     "IMAGE_TYPE_INVALID": "Photos must be JPG, PNG or WebP, up to 5 MB.",
     "UPLOAD_FAILED": "The photo could not be uploaded. Try again.",
-    "RENEW_NOT_ALLOWED": "This slip can be renewed only in its last 3 days or after it expired."
+    "RENEW_NOT_ALLOWED": "This slip can be renewed only in its last 3 days or after it expired.",
+    "CURRENT_PASSWORD_INCORRECT": "Your current password is not right.",
+    "REPORT_OWN_POST": "You cannot report your own slip.",
+    "REPORT_ALREADY_EXISTS": "You already reported this slip.",
+    "USER_NOT_FOUND": "This person is not on the board."
   },
   "notFound": {
     "stamp": "404",
@@ -345,5 +349,90 @@
     "previewTip": "A clear title, real photos, the price and the district get the most replies.",
     "justNow": "Just now",
     "photosFailed": "The slip is saved, but some photos did not upload. Add them again here."
+  },
+  "profile": {
+    "since": "@{username} · on the board since {date}",
+    "activeCount": "{count} active",
+    "resolvedCount": "{count} resolved",
+    "expiredCount": "{count} expired",
+    "tabsLabel": "My slips",
+    "tabs": {
+      "ACTIVE": "Active",
+      "RESOLVED": "Resolved",
+      "EXPIRED": "Expired",
+      "REMOVED": "Removed"
+    },
+    "publicProfile": "Public profile",
+    "settings": "Settings",
+    "edit": "Edit profile",
+    "emptyTitle": "Nothing here yet",
+    "emptyText": "Slips you pin will show up here.",
+    "emptyAction": "Pin a slip",
+    "pinnedBy": "Pinned by {name}",
+    "noPosts": "{name} has no slips on the board right now.",
+    "showMore": "Show more slips",
+    "userSince": "@{username} · on the board since {date} · {count} active slips",
+    "editTitle": "Edit profile",
+    "picture": "Profile picture",
+    "upload": "Upload a picture",
+    "removePicture": "Remove picture",
+    "pictureHint": "JPG, PNG or WebP, up to 5 MB. It is cut to a square.",
+    "username": "Username",
+    "saveName": "Save name",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "changePassword": "Change password",
+    "passwordTitle": "Password",
+    "saved": "Saved.",
+    "passwordChanged": "Password changed. Your other devices were logged out.",
+    "done": "Done"
+  },
+  "saved": {
+    "title": "Saved slips",
+    "only": "Only you can see this list",
+    "count": "{count} saved",
+    "emptyTitle": "Nothing saved yet",
+    "emptyText": "Tap Save on a slip to keep it here.",
+    "emptyAction": "Browse the board"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "newCount": "{count} new",
+    "allRead": "All read",
+    "markAll": "Mark all as read",
+    "today": "Today",
+    "earlier": "Earlier",
+    "unread": "Unread",
+    "emptyTitle": "No notifications yet",
+    "emptyText": "When someone leaves a note on your slip, you will see it here.",
+    "showMore": "Show more",
+    "NEW_COMMENT": "{actor} left a note on your slip.",
+    "POST_EXPIRING": "Your slip comes down soon. Renew it to keep it up.",
+    "POST_REMOVED": "An admin took down your slip. It broke the house rules.",
+    "NEW_MESSAGE": "New message from {actor}.",
+    "someone": "Someone"
+  },
+  "report": {
+    "button": "Report",
+    "title": "Report this slip",
+    "reasonLabel": "Why are you reporting it?",
+    "reasons": {
+      "SPAM": "Spam",
+      "SCAM": "Scam or fraud",
+      "OFFENSIVE": "Offensive",
+      "OTHER": "Something else"
+    },
+    "details": "Tell us more (optional)",
+    "send": "Send report",
+    "sent": "Thank you. An admin will look at it.",
+    "close": "Close"
+  },
+  "share": {
+    "button": "Share",
+    "title": "Share this slip",
+    "copy": "Copy link",
+    "copied": "Link copied",
+    "telegram": "Telegram",
+    "more": "More…"
   }
 }

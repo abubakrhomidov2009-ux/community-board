@@ -1,16 +1,13 @@
 'use client';
 
 import { SearchX, TriangleAlert } from 'lucide-react';
-import { motion } from 'motion/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo } from 'react';
-import { PostSlip, SlipSkeleton } from '@/components/shared/PostSlip';
+import { SlipSkeleton } from '@/components/shared/PostSlip';
+import { StateSlip } from '@/components/shared/StateSlip';
 import { pillClass } from '@/components/shared/pill-button';
-import { useToggleFavorite } from '@/features/favorites/mutations';
 import { toApiError } from '@/lib/api/errors';
-import { staggerItem } from '@/lib/motion';
 import { DISTRICTS } from '../api';
-import { toSlip, type Translate } from '../format';
 import { usePostCounts, usePostsInfinite } from '../queries';
 import { useBoardFilters } from '../useBoardFilters';
 import { CategoryTabs } from './CategoryTabs';
@@ -18,10 +15,8 @@ import { Chip } from './Chip';
 import { FilterSheet } from './FilterSheet';
 import { PriceFilter } from './PriceFilter';
 import { SearchBox } from './SearchBox';
+import { SlipGrid } from './SlipGrid';
 import { SortSelect } from './SortSelect';
-
-// A small, steady tilt for each slip so the board looks pinned by hand (under 1 degree).
-const TILTS = [-0.6, 0.5, -0.3, 0.4, -0.5, 0.3];
 
 /** The Home page: search, category tabs, filters, sort and the slips. Design: Main (laptop), HomeMobile (phone). */
 export function BoardPage() {
@@ -30,14 +25,11 @@ export function BoardPage() {
   const { filters, update, clear } = useBoardFilters();
   const posts = usePostsInfinite(filters);
   const counts = usePostCounts(filters);
-  const favorite = useToggleFavorite();
 
   const errorCode = posts.isError ? toApiError(posts.error).errorCode : '';
   const errorText = t.has(`errors.${errorCode}` as never)
     ? t(`errors.${errorCode}` as never)
     : t('errors.UNKNOWN');
-  // The slip helpers only need a plain "key, values" translator.
-  const translate: Translate = (key, values) => t(key as never, values as never);
 
   const items = useMemo(() => posts.data?.pages.flatMap((page) => page.items) ?? [], [posts.data]);
   const total = posts.data?.pages[0]?.total ?? 0;
@@ -158,28 +150,13 @@ export function BoardPage() {
 
       {items.length > 0 && (
         <>
-          <div
+          <SlipGrid
+            posts={items}
             className={
               'grid grid-cols-1 gap-x-7 gap-y-10 pt-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ' +
               (posts.isPlaceholderData ? 'opacity-60 transition-opacity' : 'transition-opacity')
             }
-          >
-            {items.map((post, index) => (
-              <motion.div
-                key={post.id}
-                variants={staggerItem}
-                custom={index % 12}
-                initial="hidden"
-                animate="visible"
-              >
-                <PostSlip
-                  interactive
-                  item={{ ...toSlip(post, translate, locale), tilt: TILTS[index % TILTS.length] }}
-                  onToggleSave={() => favorite.mutate({ id: post.id, save: !post.isFavorite })}
-                />
-              </motion.div>
-            ))}
-          </div>
+          />
 
           <div className="flex flex-col items-center gap-2.5">
             {posts.hasNextPage && (
@@ -214,35 +191,6 @@ function GridSkeleton() {
       {Array.from({ length: 8 }, (_, i) => (
         <SlipSkeleton key={i} photo={i % 2 === 0} />
       ))}
-    </div>
-  );
-}
-
-/** Empty and error states: a slip with an icon, a line and (maybe) one action. */
-function StateSlip({
-  icon,
-  title,
-  text,
-  action,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-  action?: React.ReactNode;
-}) {
-  return (
-    <div
-      role="status"
-      className="relative mx-auto flex w-full max-w-[460px] flex-col items-center gap-3 rounded-[8px_8px_24px_24px] border border-border bg-paper px-6 py-10 text-center animate-in fade-in duration-300 motion-reduce:animate-none"
-    >
-      <span
-        aria-hidden="true"
-        className="pin-dot absolute -top-[11px] left-1/2 -ml-[11px] size-[22px] rounded-full"
-      />
-      <span className="text-body-2">{icon}</span>
-      <h2 className="m-0 font-display text-xl font-bold tracking-[-0.5px]">{title}</h2>
-      <p className="m-0 text-base text-body">{text}</p>
-      {action && <div className="mt-2">{action}</div>}
     </div>
   );
 }

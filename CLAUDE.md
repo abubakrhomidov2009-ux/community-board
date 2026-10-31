@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 8 is finished (owner checked, 2026-10-31). Day 9 (post detail, comments, create/edit with photos) is in progress. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
+**Current day: 10 is finished (built and browser-tested; waiting for the owner check). Next: Day 11 (admin, messages, map, student badge, PWA, translations; big check), only when the owner says go. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
 
 ## Plan update (2026-10-28), applies everywhere
 
@@ -144,7 +144,7 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 | 4   | Browse: category filter, search, pagination | [x]                                | [x]      |
 | 5   | Comments                                    | [x]                                | [x]      |
 | 6   | Post detail + mark as resolved              | [x]                                | [x]      |
-| 7   | My profile with my posts                    | [x]                                | [ ]      |
+| 7   | My profile with my posts                    | [x]                                | [x]      |
 | 8   | Price + unit                                | [x]                                | [x]      |
 | 9   | District + filter                           | [x]                                | [x]      |
 | 10  | Contact options (Telegram / phone)          | [x]                                | [x]      |
@@ -154,13 +154,13 @@ Needs from the owner: day 4 Cloudinary keys · day 5 Brevo key + verified Gmail 
 | 14  | Post count per category                     | [x]                                | [x]      |
 | 15  | Images on posts                             | [x]                                | [x]      |
 | 16  | Three languages                             | [x] (error codes, email templates) | [ ]      |
-| 17  | Favorites / Saved                           | [x]                                | [ ]      |
-| 18  | Public user profile                         | [x]                                | [ ]      |
-| 19  | Post expiry + renew                         | [x]                                | [ ]      |
-| 20  | Report button                               | [x]                                | [ ]      |
-| 21  | Share button                                | n/a                                | [ ]      |
+| 17  | Favorites / Saved                           | [x]                                | [x]      |
+| 18  | Public user profile                         | [x]                                | [x]      |
+| 19  | Post expiry + renew                         | [x]                                | [x]      |
+| 20  | Report button                               | [x]                                | [x]      |
+| 21  | Share button                                | n/a                                | [x]      |
 | 22  | Admin role and panel                        | [x]                                | [ ]      |
-| 23  | In-app notifications                        | [x]                                | [ ]      |
+| 23  | In-app notifications                        | [x]                                | [x]      |
 | 24  | University email verification               | [x]                                | [ ]      |
 | 25  | Map (pin + map view)                        | [x]                                | [ ]      |
 | 26  | Private messages                            | [x]                                | [ ]      |

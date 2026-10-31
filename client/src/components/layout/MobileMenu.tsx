@@ -15,6 +15,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState, type ComponentType } from 'react';
 import { Drawer } from 'vaul';
+import { Avatar } from '@/components/shared/Avatar';
 import { useLogoutMutation } from '@/features/auth/mutations';
 import type { User } from '@/features/auth/api';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
@@ -24,8 +25,6 @@ import { cn } from '@/lib/utils';
 
 const LOCALES: Locale[] = ['tg', 'ru', 'en'];
 const THEMES: Theme[] = ['light', 'dark', 'system'];
-
-const initials = (username: string) => username.slice(0, 2).toUpperCase();
 
 /** The phone menu (the ☰ button): a drawer from the right with links, language, theme and Log out. */
 export function MobileMenu({ user }: { user: User }) {
@@ -100,9 +99,7 @@ export function MobileMenu({ user }: { user: User }) {
             onClick={() => setOpen(false)}
             className="flex items-center gap-3 rounded-[18px] bg-ink p-3.5 text-on-ink no-underline"
           >
-            <span className="flex size-[46px] items-center justify-center rounded-full bg-note text-[15px] font-bold text-note-ink">
-              {initials(user.username)}
-            </span>
+            <Avatar username={user.username} avatarUrl={user.avatarUrl} size={46} />
             <span className="flex min-w-0 flex-col gap-0.5">
               <span className="truncate text-base font-bold">{user.username}</span>
               <span className="truncate text-[13px] opacity-70">

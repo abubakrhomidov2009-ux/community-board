@@ -28,7 +28,9 @@ import { cn } from '@/lib/utils';
 import { KIND_OF, priceText, timeAgo, type Translate } from '../format';
 import { useDeletePost, useRenewPost, useResolvePost } from '../mutations';
 import { usePost } from '../queries';
+import { ReportButton } from '@/features/reports/components/ReportDialog';
 import { ImageGallery } from './ImageGallery';
+import { ShareButton } from './ShareButton';
 
 const TEXT = {
   lost: { strip: 'bg-lost', label: 'text-lost-ink' },
@@ -262,6 +264,11 @@ export function PostDetail({ id }: { id: string }) {
       </div>
 
       <div className="mx-4 flex flex-col gap-4 md:mx-0 md:max-w-[calc(100%-472px)] md:min-w-[520px]">
+        <div className="flex flex-wrap gap-2.5">
+          <ShareButton title={data.title} />
+          {!isOwner && <ReportButton postId={data.id} />}
+        </div>
+
         {isOwner && (
           <div className="flex flex-col gap-3 rounded-[20px] border border-note-border bg-note p-4 text-note-ink">
             <p className="m-0 text-sm font-bold">{t('post.yourSlip')}</p>

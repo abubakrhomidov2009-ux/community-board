@@ -244,13 +244,25 @@ Updated at the end of every day: what was finished, what the owner checked and t
 **Open:** Share and Report buttons (day 10), map on the post page (day 11), author page `/users/[username]` (day 10), profile, Saved, notifications pages (day 10). On a phone the Back button sits above the photo (the design has it on the photo).
 **Next:** Day 10 (profiles, Saved page, report, share, renew, notifications page) when the owner says go.
 
-## Day 10: Profiles, saved, report, share, notifications
+## Day 10: Profiles, saved, report, share, notifications (2026-10-31)
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished**
+
+- **My profile** `/profile` (ProfileDesktop/Mobile): dark header (picture or initials, username, Student stamp, "on the board since", counts), tabs Active / Resolved / Expired / Removed with real totals, my slips, **Edit profile** (change picture with upload and remove, change username, change password with the current password), Public profile link, **Log out**.
+- **Public profile** `/users/[username]` (UserDesktop/Mobile): picture, username, Student stamp, active slips, their slips. Unknown user shows the 404 page.
+- **Saved** `/saved` (SavedDesktop/Mobile): my saved slips, count, empty state. The heart is now optimistic in every list (board, Saved, profiles) and on the post page.
+- **Report** (dialog: reason + note; one report per person per slip, clear message on a second try; no button on my own slip) and **Share** (copy link, Telegram, and the phone share sheet when the browser has one) on the post page.
+- **Notifications** `/notifications` (NotificationsDesktop/Mobile): list grouped Today / Earlier, unread dot, tap opens the post or chat and marks read, "Mark all as read", the bell number updates.
+- Picture in the navbar and menu now shows the real profile picture.
+- Texts in en, ru, tg (360 keys). Renew is on the post page (day 9).
+
+**Problems and fixes**
+
+- A short server hiccup on `/auth/me` was treated as "logged out" and sent people to the Log in modal. Now only a real 401 means logged out; other errors are retried.
+- Removing the profile picture crashed the page (the backend answers 204 without a body). Fixed.
+
+**Open:** Settings page (language, theme, university email) is day 11; Messages and the Admin panel are day 11; the "Send a message" button on public profiles comes with Messages. Slip action menu on My profile (the post page has Edit / Resolve / Renew / Delete).
+**Next:** Day 11 (admin, messages, map, student badge, installable app, translations check; big check) when the owner says go.
 
 ## Day 11: Admin, messages, map, PWA, translations (big check)
 
