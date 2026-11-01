@@ -286,13 +286,25 @@ Updated at the end of every day: what was finished, what the owner checked and t
 **Open:** big check by the owner (docs/08 Part B) on laptop and phone in all 3 languages; ru / tg texts need a native speaker; SUPER ADMIN and demo accounts: see CLAUDE.md. The "install" hint banner is not built (browsers show their own install button).
 **Next:** owner big check, then Day 12 (deploy) when the owner says go.
 
-## Day 12: Deploy
+## Day 12: Deploy (2026-11-01)
 
-**Finished:**
-**Owner check and result:**
-**Bugs found and fixed:**
-**Open:**
-**Next:**
+**Finished**
+
+- Code pushed to GitHub (public): https://github.com/abubakrhomidov2009-ux/community-board (branch `main`, tag `api-v1.0.0`). No secret is in the history (checked).
+- **Neon** database (Frankfurt, pooled string): 3 migrations applied with the direct (non-pooled) address. The super admin is created by the server at start (no seed on Neon, so no demo accounts with known passwords).
+- **Render** API (Free, Frankfurt): https://community-board-u8eh.onrender.com (build `npm install --include=dev && npx prisma generate && npm run build`, start `npm run start:prod`, health `/api/health`). Settings were pasted from `server/.env.render` (git-ignored, made by a script; `DATABASE_URL` has `pgbouncer=true&connection_limit=5`). Auto-deploy on commit is ON.
+- **Vercel** website (Hobby, root `client`): https://community-board-hazel.vercel.app (`API_PROXY_TARGET` = Render address, `NEXT_PUBLIC_SITE_URL` = the Vercel address). `CLIENT_URL` and `SITE_URL` on Render = the Vercel address.
+- Rate limits now count the real visitor: first address of `X-Forwarded-For` (`AppThrottlerGuard.getTracker`).
+- `.github/workflows/ci.yml` (lint, tests, build for both apps) and `keep-awake.yml` (pings `API_HEALTH_URL` every 14 min).
+- Live check from outside (through the Vercel proxy): guest 401, super admin login 200 with HttpOnly + Secure + SameSite cookies, `/auth/me` role SUPER_ADMIN, posts list 200, refresh 200, admin stats 200, logout 204, manifest 200, `sw.js` 200.
+
+**Problems and fixes**
+
+- The verification e-mail link uses `SITE_URL` (not `CLIENT_URL`); locally it pointed to localhost, so a phone could not open it. Now `SITE_URL` is set.
+- Render showed another person's GitHub account; the public repository address was used instead.
+
+**Open:** keep-awake needs the GitHub variable `API_HEALTH_URL`; `ALLOWED_UNIVERSITY_DOMAINS` on Render is the placeholder `university.tj` (locally `gmail.com` for tests; set the real school domain before real students use it); the live board is empty (no demo data on purpose); Brevo mail may land in spam.
+**Next:** Day 13 (live check on laptop + phone, Lighthouse), after the owner's tests.
 
 ## Day 13: Production fixes (big check)
 

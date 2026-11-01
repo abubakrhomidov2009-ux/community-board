@@ -2,7 +2,7 @@
 
 > **At the start of every session, read this file and docs/12-PROGRESS-LOG.md and tell me in 3–5 lines what day we are on, what is done, what is next, and whether you need anything from me. You write all the code; I only test. Never start frontend work until every box of the "Backend done" gate is checked. Ask me for things in the "🙋 I NEED YOUR HELP" format, tell me when something is ready with "✅ READY TO CHECK", and end every day with a "🔍 DAILY CHECK". Explain everything in simple English.**
 
-**Current day: 11 is finished (built and browser-tested; waiting for the owner big check on laptop + phone, 3 languages). Next: Day 12 (deploy), only when the owner says go. The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
+**Current day: 12 (deploy) is done: the site is live at https://community-board-hazel.vercel.app (API https://community-board-u8eh.onrender.com). Day 11 big check is still open on the owner side. Next: Day 13 (live checks, Lighthouse). The logo is at `docs/design/logo.png`, the design canvas files at `docs/design/canvas/` (canvas link: https://claude.ai/artifact/LZnqH7GxYFAvqZPdfcrrGC).**
 
 ## Plan update (2026-10-28), applies everywhere
 
