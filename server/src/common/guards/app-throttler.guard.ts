@@ -10,4 +10,15 @@ export class AppThrottlerGuard extends ThrottlerGuard {
   protected shouldSkip(): Promise<boolean> {
     return Promise.resolve(process.env.THROTTLE_DISABLED === 'true');
   }
+
+  /**
+   * Count requests per real visitor. Behind Vercel and Render the socket address is a proxy, so the first
+   * address of X-Forwarded-For (set by Vercel) is the visitor. Locally there is no header: use req.ip.
+   */
+  protected getTracker(req: Record<string, any>): Promise<string> {
+    const header = req.headers?.['x-forwarded-for'];
+    const raw = Array.isArray(header) ? header[0] : header;
+    const first = typeof raw === 'string' ? raw.split(',')[0]?.trim() : '';
+    return Promise.resolve(first || req.ip || 'unknown');
+  }
 }

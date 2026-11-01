@@ -114,7 +114,7 @@ export function ProfilePage() {
       <div
         role="tablist"
         aria-label={t('profile.tabsLabel')}
-        className="-mx-4 flex gap-1.5 self-start overflow-x-auto rounded-none px-4 md:mx-0 md:rounded-full md:border md:border-border md:bg-paper md:p-[5px] [scrollbar-width:none]"
+        className="-mx-4 flex gap-1.5 self-stretch overflow-x-auto rounded-none px-4 md:mx-0 md:self-start md:rounded-full md:border md:border-border md:bg-paper md:p-[5px] [scrollbar-width:none]"
       >
         {STATUSES.map((status) => (
           <button
